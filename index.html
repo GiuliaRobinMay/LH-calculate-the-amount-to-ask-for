@@ -6,509 +6,174 @@
 <meta name="robots" content="noindex">
 <title>How Much Should I Ask For? · Lesko Help</title>
 <style>
-/* ==================================================================
-   Lesko Help — How Much Should I Ask For?
-   Sister tool to "What Should I Ask For?". Same visual language as the
-   other Lesko Toolbox tools: cream paper, navy ink, red italic accents,
-   yellow pills, card suits, hairline borders, the four-color frame.
-   System fonts only — nothing to load, nothing to break inside a
-   Mighty Networks embed. Light only: this brand does not go dark.
-
-   Everything the member types stays in this browser (localStorage).
-   No account, no server, and the tool never asks for an SSN, a bank
-   or card number, or a password.
-   ================================================================== */
-
+/* Lesko Help — How Much Should I Ask For?
+   Sister to "What Should I Ask For?". Same look: cream paper, navy ink,
+   red italics, yellow pills, card suits, the four-color frame. Light only.
+   Everything stays in this browser. No SSN, no bank, no account. */
 :root {
-  --paper: #faf6ec;
-  --paper-2: #fffefa;
-  --ink: #16223f;
-  --ink-soft: #4a5570;
-  --ink-faint: #8a93a8;
-  --hairline: rgba(22, 34, 63, 0.22);
-  --hairline-soft: rgba(22, 34, 63, 0.12);
-
-  --red: #e8453c;
-  --yellow: #f6c544;
-  --blue: #2e43c8;
-  --green: #2e9e5b;
-  --gold-2: #e9a725;
-
-  --tint-yellow: #fdf1d4;
-  --tint-red: #fce7e5;
-  --tint-blue: #e9edfc;
-  --tint-green: #e3f3e9;
-
-  --radius: 16px;
-  --radius-sm: 10px;
-
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
-    "Times New Roman", serif;
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --paper: #faf6ec; --paper-2: #fffefa;
+  --ink: #16223f; --ink-soft: #4a5570; --ink-faint: #8a93a8;
+  --hairline: rgba(22,34,63,.22); --hairline-soft: rgba(22,34,63,.12);
+  --red: #e8453c; --yellow: #f6c544; --blue: #2e43c8; --green: #2e9e5b; --gold-2: #e9a725;
+  --tint-yellow: #fdf1d4; --tint-red: #fce7e5; --tint-green: #e3f3e9;
+  --radius: 16px; --radius-sm: 10px;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --suit-font: "DejaVu Sans", "Segoe UI Symbol", "Apple Symbols", var(--sans);
-
   color-scheme: light;
 }
-html { color-scheme: light; }
-
+html { color-scheme: light; scroll-behavior: smooth; }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 16.5px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
-
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
 .wrap { width: min(1080px, 94vw); margin: 0 auto; padding-bottom: 40px; }
-
 a { color: var(--red); }
-
-.mono-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
+.mono-label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
 .fine { font-size: 13px; color: var(--ink-faint); margin: 10px 0 0; }
-
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
 
-.sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  html { scroll-behavior: auto; }
-}
-
-/* ---------------------------------------------------------------- frame */
 .brand-frame { position: fixed; inset: 0; pointer-events: none; z-index: 90; }
 .brand-frame i { position: absolute; display: block; }
-.brand-frame .t, .brand-frame .b {
-  left: 0; right: 0; height: 5px;
-  background: repeating-linear-gradient(90deg,
-    var(--yellow) 0 44px, var(--green) 44px 88px, var(--blue) 88px 132px, var(--red) 132px 176px);
-}
-.brand-frame .t { top: 0; }
-.brand-frame .b { bottom: 0; }
-.brand-frame .l, .brand-frame .r {
-  top: 0; bottom: 0; width: 5px;
-  background: repeating-linear-gradient(180deg,
-    var(--yellow) 0 44px, var(--green) 44px 88px, var(--blue) 88px 132px, var(--red) 132px 176px);
-}
-.brand-frame .l { left: 0; }
-.brand-frame .r { right: 0; }
+.brand-frame .t, .brand-frame .b { left: 0; right: 0; height: 5px; background: repeating-linear-gradient(90deg, var(--yellow) 0 44px, var(--green) 44px 88px, var(--blue) 88px 132px, var(--red) 132px 176px); }
+.brand-frame .t { top: 0; } .brand-frame .b { bottom: 0; }
+.brand-frame .l, .brand-frame .r { top: 0; bottom: 0; width: 5px; background: repeating-linear-gradient(180deg, var(--yellow) 0 44px, var(--green) 44px 88px, var(--blue) 88px 132px, var(--red) 132px 176px); }
+.brand-frame .l { left: 0; } .brand-frame .r { right: 0; }
 
-/* --------------------------------------------------------------- header */
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0 6px; }
 .brand { display: flex; align-items: center; gap: 11px; }
-.brand-mark {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: var(--blue); color: #fff;
-  display: grid; place-items: center;
-  font-family: var(--serif); font-size: 19px; font-weight: 700;
-  user-select: none; transition: transform 0.18s ease; flex: 0 0 auto;
-}
+.brand-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-family: var(--serif); font-size: 19px; font-weight: 700; user-select: none; transition: transform .18s ease; flex: 0 0 auto; }
 .brand-mark:hover { transform: rotate(-12deg) scale(1.08); }
 .brand-name { font-family: var(--serif); line-height: 1.05; }
 .brand-name i { display: block; color: var(--red); font-size: 19px; font-style: italic; }
 .brand-name b { display: block; font-size: 19px; font-weight: 400; }
-
 .suits { display: flex; gap: 10px; font-size: 18px; font-family: var(--suit-font); }
 .suits span { animation: bob 3.4s ease-in-out infinite; }
-.suits span:nth-child(1) { color: var(--blue); }
-.suits span:nth-child(2) { color: var(--red); animation-delay: 0.25s; }
-.suits span:nth-child(3) { color: var(--yellow); animation-delay: 0.5s; }
-.suits span:nth-child(4) { color: var(--green); animation-delay: 0.75s; }
-@keyframes bob {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-5px) rotate(8deg); }
-}
+.suits span:nth-child(1) { color: var(--blue); } .suits span:nth-child(2) { color: var(--red); animation-delay: .25s; }
+.suits span:nth-child(3) { color: var(--yellow); animation-delay: .5s; } .suits span:nth-child(4) { color: var(--green); animation-delay: .75s; }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(8deg); } }
 
-/* ------------------------------------------------------------------ hero */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
-  gap: 28px; align-items: start; padding: 14px 0 4px;
-}
-h1 {
-  font-family: var(--serif); font-weight: 400;
-  font-size: clamp(34px, 5vw, 52px); line-height: 1.08;
-  margin: 0 0 14px; text-wrap: balance;
-}
+.hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr); gap: 28px; align-items: start; padding: 14px 0 4px; }
+h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin: 0 0 14px; text-wrap: balance; }
 h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
 .hero-sub { font-size: 18.5px; color: var(--ink-soft); max-width: 54ch; margin: 0; }
-
-.privacy-chip {
-  border: 1px solid rgba(46, 158, 91, 0.4);
-  border-radius: var(--radius);
-  background: var(--tint-green);
-  padding: 14px 18px; font-size: 14.5px;
-}
+.privacy-chip { border: 1px solid rgba(46,158,91,.4); border-radius: var(--radius); background: var(--tint-green); padding: 14px 18px; font-size: 14.5px; }
 .privacy-chip .mono-label { color: var(--ink); }
 .privacy-chip p { margin: 6px 0 0; }
 @media (max-width: 760px) { .hero { grid-template-columns: 1fr; gap: 16px; } }
 
-/* ------------------------------------------------------------- tab pills */
-.tabbar {
-  display: flex; flex-wrap: wrap; gap: 9px;
-  padding: 14px 0 16px;
-  border-bottom: 1px solid var(--hairline-soft);
-  margin-bottom: 26px;
-}
-.tab {
-  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 10px 18px; border: 1px solid var(--hairline); border-radius: 999px;
-  background: var(--paper-2); color: var(--ink-soft); cursor: pointer;
-  transition: transform 0.12s ease, background 0.12s ease; white-space: nowrap;
-}
+.tabbar { display: flex; flex-wrap: wrap; gap: 9px; padding: 14px 0 16px; border-bottom: 1px solid var(--hairline-soft); margin-bottom: 26px; }
+.tab { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; padding: 10px 18px; border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper-2); color: var(--ink-soft); cursor: pointer; transition: transform .12s ease, background .12s ease; white-space: nowrap; }
 .tab:hover { transform: translateY(-1px); background: var(--tint-yellow); }
 .tab.active { background: var(--yellow); border-color: var(--ink); color: var(--ink); font-weight: 700; }
-.tab .bub {
-  display: inline-grid; place-items: center; min-width: 17px; height: 17px; padding: 0 4px;
-  margin-left: 6px; border-radius: 999px; background: var(--red); color: #fff;
-  font-size: 10px; font-weight: 700; vertical-align: -3px;
-}
+.tab .bub { display: inline-grid; place-items: center; min-width: 17px; height: 17px; padding: 0 4px; margin-left: 6px; border-radius: 999px; background: var(--red); color: #fff; font-size: 10px; font-weight: 700; vertical-align: -3px; }
 
-/* --------------------------------------------------------------- panels */
-.panel { animation: panel-in 0.28s ease; }
+.panel { animation: panel-in .28s ease; }
 @keyframes panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.panel h2 {
-  font-family: var(--serif); font-weight: 400;
-  font-size: clamp(26px, 3.4vw, 34px); line-height: 1.12; margin: 0 0 8px; text-wrap: balance;
-}
+.panel h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.12; margin: 0 0 8px; text-wrap: balance; }
 .panel .lead { color: var(--ink-soft); max-width: 62ch; margin: 0 0 22px; font-size: 16px; }
-
-/* ---------------------------------------------------------------- cards */
-.card {
-  border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper-2);
-  box-shadow: 0 1px 2px rgba(22, 34, 63, 0.05), 0 14px 30px -20px rgba(22, 34, 63, 0.5);
-  padding: 20px 22px; margin-bottom: 16px;
-}
-.mini {
-  position: relative; overflow: hidden;
-  border: 1px solid var(--card-line, var(--hairline)); border-radius: var(--radius);
-  background: var(--card-bg, var(--paper-2)); padding: 14px 17px; margin-bottom: 12px; font-size: 15px;
-}
+.card { border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper-2); box-shadow: 0 1px 2px rgba(22,34,63,.05), 0 14px 30px -20px rgba(22,34,63,.5); padding: 20px 22px; margin-bottom: 16px; }
+.mini { position: relative; overflow: hidden; border: 1px solid var(--card-line, var(--hairline)); border-radius: var(--radius); background: var(--card-bg, var(--paper-2)); padding: 14px 17px; margin-bottom: 12px; font-size: 15px; }
 .mini p { margin: 5px 0 0; position: relative; z-index: 1; max-width: 68ch; }
 .mini .mono-label { position: relative; z-index: 1; }
-.mini::after {
-  content: attr(data-suit); position: absolute; right: -8px; bottom: -26px;
-  font-family: var(--suit-font); font-size: 84px; line-height: 1;
-  color: var(--card-accent, var(--ink)); opacity: 0.1; pointer-events: none;
-}
-.mini.t-yellow { --card-bg: var(--tint-yellow); --card-line: rgba(203,150,20,0.4);  --card-accent: #b8860b; }
-.mini.t-red    { --card-bg: var(--tint-red);    --card-line: rgba(232,69,60,0.34);  --card-accent: var(--red); }
-.mini.t-blue   { --card-bg: var(--tint-blue);   --card-line: rgba(46,67,200,0.34);  --card-accent: var(--blue); }
-.mini.t-green  { --card-bg: var(--tint-green);  --card-line: rgba(46,158,91,0.36);  --card-accent: var(--green); }
+.mini::after { content: attr(data-suit); position: absolute; right: -8px; bottom: -26px; font-family: var(--suit-font); font-size: 84px; line-height: 1; color: var(--card-accent, var(--ink)); opacity: .1; pointer-events: none; }
+.mini.t-yellow { --card-bg: var(--tint-yellow); --card-line: rgba(203,150,20,.4); --card-accent: #b8860b; }
+.mini.t-red { --card-bg: var(--tint-red); --card-line: rgba(232,69,60,.34); --card-accent: var(--red); }
+.mini.t-green { --card-bg: var(--tint-green); --card-line: rgba(46,158,91,.36); --card-accent: var(--green); }
 
-/* -------------------------------------------------------------- buttons */
-.btn {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 10px 16px; border: 1px solid var(--ink); border-radius: 999px;
-  background: var(--yellow); color: var(--ink); cursor: pointer;
-  transition: transform 0.12s ease, filter 0.12s ease; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 6px;
-}
+.btn { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid var(--ink); border-radius: 999px; background: var(--yellow); color: var(--ink); cursor: pointer; transition: transform .12s ease, filter .12s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
 .btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
 .btn:active { transform: translateY(1px); }
 .btn.ghost { background: var(--paper-2); }
 .btn.red { background: var(--red); border-color: var(--red); color: #fff; }
 .btn.big { font-size: 12.5px; padding: 13px 24px; font-weight: 700; }
-.btn[disabled] { opacity: 0.35; cursor: default; transform: none; }
-.btn.small { font-size: 10px; padding: 7px 12px; }
+.btn[disabled] { opacity: .35; cursor: default; transform: none; }
 
-/* ---------------------------------------------------------- the wizard */
-#panel-quiz .qcard { max-width: 860px; margin: 0 auto; }
-.qcard {
-  border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper-2);
-  box-shadow: 0 1px 2px rgba(22, 34, 63, 0.05), 0 18px 36px -24px rgba(22, 34, 63, 0.5);
-  padding: 22px 24px 18px;
-}
+#panel-quiz .qcard { max-width: 820px; margin: 0 auto; }
+.qcard { border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper-2); box-shadow: 0 1px 2px rgba(22,34,63,.05), 0 18px 36px -24px rgba(22,34,63,.5); padding: 22px 24px 18px; }
 .qhead { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 .qhead .mono-label { flex: 0 0 auto; }
 .qtrack { flex: 1; height: 6px; border-radius: 999px; background: var(--hairline-soft); overflow: hidden; }
-.qtrack i {
-  display: block; height: 100%; width: 0; border-radius: 999px;
-  background: var(--yellow); border-right: 1px solid rgba(203, 150, 20, 0.8); transition: width 0.3s ease;
-}
-.qtitle {
-  font-family: var(--serif); font-weight: 400;
-  font-size: clamp(23px, 3vw, 29px); line-height: 1.15; margin: 0 0 6px; text-wrap: balance;
-}
-.qtitle .s { font-family: var(--suit-font); font-size: 0.7em; color: var(--ink-faint); margin-right: 8px; vertical-align: 2px; }
+.qtrack i { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--yellow); border-right: 1px solid rgba(203,150,20,.8); transition: width .3s ease; }
+.qtitle { font-family: var(--serif); font-weight: 400; font-size: clamp(23px, 3vw, 29px); line-height: 1.15; margin: 0 0 6px; text-wrap: balance; }
+.qtitle .s { font-family: var(--suit-font); font-size: .7em; color: var(--ink-faint); margin-right: 8px; vertical-align: 2px; }
 .qhelp { font-size: 15px; color: var(--ink-soft); margin: 0 0 18px; max-width: 62ch; }
-.qfoot {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  border-top: 1px solid var(--hairline-soft); margin-top: 20px; padding-top: 15px;
-}
+.qfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--hairline-soft); margin-top: 20px; padding-top: 15px; }
 .qfoot .fine { margin: 0; text-align: center; }
-
-/* option pills */
 .opts { display: flex; flex-wrap: wrap; gap: 9px; }
-.opt {
-  position: relative; display: inline-flex; align-items: center; gap: 9px;
-  border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper);
-  padding: 10px 16px 10px 12px; font-size: 15.5px; cursor: pointer;
-  transition: transform 0.1s ease, background 0.12s ease, border-color 0.12s ease; user-select: none;
-}
+.opt { position: relative; display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper); padding: 10px 16px 10px 12px; font-size: 15.5px; cursor: pointer; transition: transform .1s ease, background .12s ease, border-color .12s ease; user-select: none; }
 .opt:hover { transform: translateY(-1px); background: var(--tint-yellow); }
 .opt input { position: absolute; opacity: 0; pointer-events: none; }
-.opt .dot {
-  flex: 0 0 auto; width: 19px; height: 19px; border-radius: 50%;
-  border: 1.5px solid var(--hairline); background: var(--paper-2);
-  display: grid; place-items: center; font-size: 12px; line-height: 1; color: transparent;
-  transition: background 0.12s ease, border-color 0.12s ease;
-}
-.opt.sq .dot { border-radius: 6px; }
+.opt .dot { flex: 0 0 auto; width: 19px; height: 19px; border-radius: 50%; border: 1.5px solid var(--hairline); background: var(--paper-2); display: grid; place-items: center; font-size: 12px; line-height: 1; color: transparent; transition: background .12s ease, border-color .12s ease; }
 .opt.on { background: var(--tint-yellow); border-color: var(--gold-2); }
 .opt.on .dot { background: var(--yellow); border-color: var(--ink); color: var(--ink); }
 .opt.on .dot::before { content: "✓"; font-weight: 700; }
 .opt:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
-.opt .sub { color: var(--ink-faint); font-size: 13px; }
-.optgroup { margin: 0 0 18px; }
-.optgroup .mono-label { display: flex; align-items: center; gap: 8px; margin: 0 0 9px; }
+.optgroup { margin: 18px 0 0; }
+.optgroup .mono-label { display: block; margin: 0 0 9px; }
 
-/* fields */
-.field { margin-bottom: 15px; }
-.field > label { display: block; font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
-.field input, .field select, .field textarea, .line input, .line select, .amt-in {
-  width: 100%; font: inherit; font-size: 16px; padding: 11px 13px;
-  border: 1px solid var(--hairline); border-radius: var(--radius-sm);
-  background: var(--paper-2); color: var(--ink);
-}
-.field input:focus, .field select:focus, .line input:focus, .line select:focus, .amt-in:focus {
-  outline: 2px solid var(--gold-2); outline-offset: 1px;
-}
-.field input::placeholder, .line input::placeholder, .amt-in::placeholder { color: var(--ink-faint); }
-.field .hint { font-size: 13px; color: var(--ink-soft); margin: 5px 0 0; }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2316223f' stroke-width='1.8' stroke-linecap='round'/></svg>");
-  background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px;
-}
-
-/* money input with a $ */
-.money { position: relative; }
-.money::before {
-  content: "$"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-  color: var(--ink-faint); font-size: 15px; pointer-events: none;
-}
-.money input { padding-left: 26px; font-variant-numeric: tabular-nums; }
-
-/* the line editor — one row = one cost */
-.lines { display: grid; gap: 10px; margin: 4px 0 12px; }
-.line {
-  display: grid; grid-template-columns: minmax(0, 1.4fr) 118px minmax(0, 1.1fr) minmax(0, 1fr) 36px;
-  gap: 8px; align-items: center;
-}
-.line .lbl { display: none; }
-.line .x {
-  border: 0; background: none; font-size: 20px; line-height: 1; color: var(--ink-faint);
-  cursor: pointer; padding: 6px; border-radius: 50%; justify-self: center;
-}
-.line .x:hover { color: var(--red); }
-.line-hd {
-  display: grid; grid-template-columns: minmax(0, 1.4fr) 118px minmax(0, 1.1fr) minmax(0, 1fr) 36px; gap: 8px;
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
-  padding: 0 4px;
-}
-@media (max-width: 720px) {
-  .line-hd { display: none; }
-  .line {
-    grid-template-columns: 1fr 1fr; grid-template-areas: "what what" "amt from" "freq x";
-    border: 1px solid var(--hairline-soft); border-radius: var(--radius-sm); padding: 10px; background: var(--paper);
-  }
-  .line .f-what { grid-area: what; } .line .f-amt { grid-area: amt; } .line .f-from { grid-area: from; }
-  .line .f-freq { grid-area: freq; } .line .x { grid-area: x; justify-self: end; }
-  .line .lbl { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 3px; }
-}
-.line.guess input.what, .line.guess .money input { border-color: rgba(203,150,20,0.6); }
-.running {
-  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
-  border-top: 1px dashed var(--hairline); padding-top: 12px; margin-top: 4px;
-}
-.running b { font-family: var(--serif); font-weight: 400; font-size: 26px; font-variant-numeric: tabular-nums; }
-.running .mono-label { font-size: 10px; }
-
-/* covered / extras rows: a pill with an amount beside it */
-.pick-rows { display: grid; gap: 9px; }
-.pick-row { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 10px; align-items: center; }
-.pick-row .money { visibility: hidden; }
-.pick-row.on .money { visibility: visible; }
-@media (max-width: 560px) { .pick-row { grid-template-columns: 1fr; } .pick-row .money { display: none; } .pick-row.on .money { display: block; } }
-.other-row { display: flex; gap: 8px; margin-top: 10px; max-width: 460px; }
-.other-row input {
-  flex: 1; font: inherit; font-size: 15px; padding: 9px 14px;
-  border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper-2); color: var(--ink);
-}
+.amount { display: flex; align-items: center; gap: 10px; max-width: 300px; margin: 6px 0 4px; }
+.amount .money { position: relative; flex: 1; }
+.amount .money::before { content: "$"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); font-family: var(--serif); font-size: 22px; pointer-events: none; }
+.amount input { width: 100%; font: inherit; font-family: var(--serif); font-size: 28px; padding: 10px 14px 10px 34px; border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--paper-2); color: var(--ink); font-variant-numeric: tabular-nums; }
+.amount input:focus { outline: 2px solid var(--gold-2); outline-offset: 1px; }
+.amount input::placeholder { color: var(--ink-faint); font-size: 18px; }
+.other-row { display: flex; gap: 8px; margin-top: 12px; max-width: 460px; }
+.other-row input { flex: 1; font: inherit; font-size: 15px; padding: 9px 14px; border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
 .other-row input::placeholder { color: var(--ink-faint); }
 .other-row input:focus { outline: 2px solid var(--gold-2); outline-offset: 1px; }
 
-/* -------------------------------------------------------- my number */
-.sheet-top {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
-}
+.sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
 .sheet-actions { display: flex; gap: 9px; flex-wrap: wrap; }
-.point-chip {
-  display: inline-block; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
-  background: var(--yellow); color: var(--ink); border-radius: 999px; padding: 4px 11px;
-  vertical-align: 6px; margin-left: 10px; white-space: nowrap;
-}
-
-.number-card {
-  position: relative; overflow: hidden;
-  border: 1px solid rgba(203,150,20,0.5); border-radius: var(--radius); background: var(--tint-yellow);
-  padding: 20px 22px 18px; margin-bottom: 16px;
-}
-.number-card::after {
-  content: "?"; position: absolute; right: 8px; bottom: -40px;
-  font-family: var(--serif); font-size: 150px; line-height: 1; color: #b8860b; opacity: 0.1; pointer-events: none;
-}
-.number-card .big {
-  font-family: var(--serif); font-size: clamp(44px, 7vw, 64px); line-height: 1; margin: 6px 0 4px;
-  font-variant-numeric: tabular-nums; position: relative;
-}
-.number-card .big small { font-family: var(--sans); font-size: 15px; color: var(--ink-soft); margin-left: 6px; }
-.number-card .how { margin: 0; font-size: 15px; color: var(--ink-soft); max-width: 62ch; position: relative; }
+.point-chip { display: inline-block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; background: var(--yellow); color: var(--ink); border-radius: 999px; padding: 4px 11px; vertical-align: 6px; margin-left: 10px; white-space: nowrap; }
+.number-card { position: relative; overflow: hidden; border: 1px solid rgba(203,150,20,.5); border-radius: var(--radius); background: var(--tint-yellow); padding: 22px 24px 20px; margin-bottom: 16px; max-width: 820px; }
+.number-card::after { content: "?"; position: absolute; right: 10px; bottom: -44px; font-family: var(--serif); font-size: 160px; line-height: 1; color: #b8860b; opacity: .1; pointer-events: none; }
+.number-card .big { font-family: var(--serif); font-size: clamp(52px, 9vw, 84px); line-height: 1; margin: 6px 0 8px; font-variant-numeric: tabular-nums; position: relative; }
+.number-card .how { margin: 0; font-size: 16px; color: var(--ink-soft); max-width: 58ch; position: relative; }
 .number-card .how b { color: var(--ink); }
-
-.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 14px 0 4px; position: relative; }
-.stat { border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--paper-2); padding: 12px 14px; }
-.stat b { display: block; font-family: var(--serif); font-weight: 400; font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.stat span { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
-
-.say { border-left: 2px solid var(--red); padding: 4px 0 4px 14px; margin: 8px 0 12px; max-width: 74ch; }
-.say .said { margin: 3px 0 0; font-style: italic; font-family: var(--serif); font-size: 17px; line-height: 1.45; }
-
-.flags { display: grid; gap: 9px; margin: 0 0 16px; }
-.flag {
-  display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px;
-  border: 1px solid rgba(232,69,60,0.3); border-radius: var(--radius-sm); background: var(--tint-red); padding: 10px 14px;
-}
-.flag .s { font-family: var(--suit-font); color: var(--red); flex: 0 0 auto; }
-.flag b { color: var(--ink); }
-.flag.ok { border-color: rgba(46,158,91,0.36); background: var(--tint-green); }
-.flag.ok .s { color: var(--green); }
-
-/* budget table */
-.tablewrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper-2); margin: 0 0 16px; }
-table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14.5px; }
-th {
-  text-align: left; padding: 11px 14px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--hairline); background: var(--paper);
-}
-td { padding: 10px 14px; border-bottom: 1px solid var(--hairline-soft); vertical-align: top; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-tr.total td { font-weight: 700; border-top: 1px solid var(--hairline); background: var(--tint-yellow); }
-tr.minus td { color: var(--ink-soft); }
-td .tag {
-  display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: 1px;
-}
-td .tag.guess { background: var(--tint-red); color: var(--red); }
-td .tag.paper { background: var(--tint-green); color: var(--green); }
-td .tag.month { background: var(--tint-blue); color: var(--blue); }
-
-/* doors */
-.doors { list-style: none; margin: 0; padding: 0; }
-.doors li {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; align-items: baseline;
-  padding: 10px 0; border-top: 1px solid var(--hairline-soft); font-size: 15px;
-}
-.doors li:first-child { border-top: 0; }
-.doors .d-name { font-weight: 600; }
-.doors .d-range { font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; white-space: nowrap; }
-.doors .d-note { grid-column: 1 / -1; font-size: 13.5px; color: var(--ink-soft); margin-top: -2px; }
-.doors .d-note a { color: var(--ink-soft); }
-@media (max-width: 560px) { .doors li { grid-template-columns: 1fr; } .doors .d-range { text-align: left; white-space: normal; } }
-
-/* community links */
-.comm { list-style: none; margin: 0; padding: 0; }
-.comm li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-top: 1px solid var(--hairline-soft); font-size: 15px; }
-.comm li:first-child { border-top: 0; }
-.comm .s { font-family: var(--suit-font); flex: 0 0 16px; }
-.comm .c-what { color: var(--ink-soft); }
-
+.say { border-left: 2px solid var(--red); padding: 4px 0 4px 14px; margin: 8px 0 14px; max-width: 70ch; }
+.say .said { margin: 3px 0 0; font-style: italic; font-family: var(--serif); font-size: 18px; line-height: 1.45; }
 .empty-sheet { text-align: center; padding: 40px 18px; }
 .empty-sheet .q { font-family: var(--serif); font-size: 54px; color: var(--gold-2); line-height: 1; margin-bottom: 10px; }
 .empty-sheet h3 { font-family: var(--serif); font-weight: 400; font-size: 24px; margin: 0 0 8px; }
 .empty-sheet p { color: var(--ink-soft); font-size: 15px; max-width: 46ch; margin: 0 auto 16px; }
 
-/* ---------------------------------------------------------------- foot */
-.foot {
-  border-top: 1px solid var(--hairline-soft); margin-top: 34px; padding: 18px 0 8px;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-}
+.foot { border-top: 1px solid var(--hairline-soft); margin-top: 34px; padding: 18px 0 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .foot .mono-label { font-size: 10px; }
-.foot-suit {
-  width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: #fff;
-  display: grid; place-items: center; font-family: var(--serif); font-size: 16px; font-weight: 700;
-}
-.toast {
-  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(80px);
-  background: var(--ink); color: #fdfbf4; font-size: 14.5px; padding: 11px 20px; border-radius: 999px;
-  box-shadow: 0 10px 30px rgba(22, 34, 63, 0.35); opacity: 0;
-  transition: transform 0.25s ease, opacity 0.25s ease; pointer-events: none; z-index: 60; max-width: 88vw; text-align: center;
-}
+.foot-suit { width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-family: var(--serif); font-size: 16px; font-weight: 700; }
+.toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(80px); background: var(--ink); color: #fdfbf4; font-size: 14.5px; padding: 11px 20px; border-radius: 999px; box-shadow: 0 10px 30px rgba(22,34,63,.35); opacity: 0; transition: transform .25s ease, opacity .25s ease; pointer-events: none; z-index: 60; max-width: 88vw; text-align: center; }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-/* ---------------------------------------------------------------- print */
 @media print {
   body { background: #fff; font-size: 12.5px; }
   .topbar .suits, .tabbar, .foot, .toast, .sheet-actions, .brand-frame, .hero, .noprint { display: none !important; }
   .wrap { width: 100%; }
   .panel { display: block !important; }
   #panel-quiz, #panel-privacy { display: none !important; }
-  .card, .number-card, .flag, .tablewrap { box-shadow: none; break-inside: avoid; }
+  .card, .number-card { box-shadow: none; break-inside: avoid; }
   .number-card { background: #fff; border: 1.5px solid var(--ink); }
   a { color: var(--ink); }
-  .print-head { display: block !important; }
 }
-.print-head { display: none; margin: 0 0 14px; }
-.print-head .mono-label { font-size: 10px; }
 </style>
 </head>
 <body>
 <div class="brand-frame" aria-hidden="true"><i class="t"></i><i class="r"></i><i class="b"></i><i class="l"></i></div>
 
 <div class="wrap">
-
-  <!-- ============================================================ masthead -->
   <header class="topbar">
     <div class="brand">
       <div class="brand-mark" aria-hidden="true">?</div>
       <div class="brand-name"><i>Lesko</i><b>Help</b></div>
     </div>
-    <div class="suits" aria-hidden="true">
-      <span>&spades;</span><span>&hearts;</span><span>&diams;</span><span>&clubs;</span>
-    </div>
+    <div class="suits" aria-hidden="true"><span>&spades;</span><span>&hearts;</span><span>&diams;</span><span>&clubs;</span></div>
   </header>
 
-  <!-- ================================================================ hero -->
   <section class="hero">
     <div>
       <h1>Get clear on how much to <em>ask for.</em></h1>
-      <p class="hero-sub">Take the quiz. It turns your bills and quotes into one
-      number to ask for — and the reasons behind it.</p>
+      <p class="hero-sub">Take the quiz. A few quick questions, and you get one number to
+      ask for — and what to say.</p>
     </div>
     <aside class="privacy-chip">
       <span class="mono-label">🔒&nbsp; 100% Private</span>
@@ -517,27 +182,21 @@ td .tag.month { background: var(--tint-blue); color: var(--blue); }
     </aside>
   </section>
 
-  <!-- ================================================================ tabs -->
   <nav class="tabbar" aria-label="Sections">
     <button class="tab active" data-tab="quiz">01 · The Quiz</button>
-    <button class="tab" data-tab="sheet">02 · My Number<span class="bub" id="bub-sheet" hidden>0</span></button>
+    <button class="tab" data-tab="sheet">02 · My Number<span class="bub" id="bub-sheet" hidden>1</span></button>
     <button class="tab" data-tab="privacy">03 · Privacy</button>
   </nav>
 
-  <!-- ======================================================== 01 THE QUIZ -->
   <section class="panel" id="panel-quiz">
-    <div class="qcard" id="qcard"><!-- rendered by script --></div>
+    <div class="qcard" id="qcard"></div>
   </section>
 
-  <!-- ======================================================= 02 MY NUMBER -->
   <section class="panel" id="panel-sheet" hidden>
-    <div class="print-head">
-      <span class="mono-label">Lesko Help · How Much Should I Ask For? · <span id="print-date"></span></span>
-    </div>
     <div class="sheet-top">
       <div>
         <h2>Here’s how much to <em>ask for</em><span class="point-chip">This number is the point</span></h2>
-        <p class="lead" id="sheet-lead">One number, the math behind it, and what to say when you ask.</p>
+        <p class="lead">One number, and what to say when you ask.</p>
       </div>
       <div class="sheet-actions noprint">
         <button class="btn ghost" id="btn-copy">⧉ Copy as text</button>
@@ -547,310 +206,77 @@ td .tag.month { background: var(--tint-blue); color: var(--blue); }
     <div id="sheet-body"></div>
   </section>
 
-  <!-- ========================================================== 03 PRIVACY -->
   <section class="panel" id="panel-privacy" hidden>
     <h2>Your business stays <em>your business</em></h2>
     <p class="lead">This tool was built the Lesko Help way: private, simple, and on your side.</p>
-
     <div class="mini t-green" data-suit="♣">
       <span class="mono-label">Everything stays on your device</span>
-      <p>Your costs, your answers and your number are saved only in this browser, on this
-      device — like notes on your own refrigerator. Nothing is sent to us, to Lesko Help, or
-      to anyone else. There is no account, no email, no tracking of what you type.</p>
+      <p>Your answers and your number are saved only in this browser, on this device — like
+      notes on your own refrigerator. Nothing is sent to us, to Lesko Help, or to anyone else.
+      There is no account, no email, no tracking of what you type.</p>
     </div>
-
     <div class="mini t-red" data-suit="♥">
       <span class="mono-label">Never type these anywhere in this tool</span>
-      <p>Your Social Security number, bank or card numbers, or passwords. This tool never
-      asks for them — and neither does any honest program at the "how much do you need" stage.
-      Anyone who demands your SSN plus a fee before they'll "release your grant" is a scammer.</p>
+      <p>Your Social Security number, bank or card numbers, or passwords. This tool never asks
+      for them. Anyone who demands your SSN plus a fee before they'll "release your grant" is
+      a scammer.</p>
     </div>
-
-    <div class="card">
-      <span class="mono-label">Good to know</span>
-      <ul style="margin:10px 0 4px;padding-left:22px;font-size:15px;line-height:1.6;max-width:70ch">
-        <li>Clearing your browser data, or switching devices or browsers, means your saved
-        number won't follow you — print it or copy it somewhere safe if you want a backup.</li>
-        <li>The "typical amounts" shown with your number are public figures from the programs
-        themselves, with the date we last checked them. They are a guide, not a promise — what
-        you get is decided by the people you ask.</li>
-        <li>This tool does one thing: it turns your costs into one clear amount with the reasons
-        behind it. The community's guides, classes and Questions Channel take it from there.</li>
-      </ul>
-    </div>
-
     <div class="card">
       <span class="mono-label">Start over</span>
-      <p style="margin:8px 0 12px;max-width:66ch">This wipes your costs, answers and number from
+      <p style="margin:8px 0 12px;max-width:66ch">This wipes your answers and your number from
       this device. There's no undo.</p>
       <button class="btn red" id="btn-wipe">🗑 Erase everything &amp; start fresh</button>
     </div>
   </section>
 
-  <!-- ================================================================ foot -->
   <footer class="foot">
-    <span class="mono-label">Lesko Help · How Much Should I Ask For? · Real numbers, one ask.</span>
+    <span class="mono-label">Lesko Help · How Much Should I Ask For? · One bill = one ask.</span>
     <div class="foot-suit" title="?">?</div>
   </footer>
-
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ==================================================================
-   DATA
-   ------------------------------------------------------------------
-   Every dollar figure in DOORS comes from the program itself or a
-   primary source, with the date it was last checked. Never invent a
-   number: if a door has no public figure, it is not listed.
-   ================================================================== */
-
-const CHECKED = "7 Sep 2026";
-
-/* the community — results link here and nowhere else */
+/* The questions. Each comes from a real rule of grant-seeking (research/),
+   but the member only sees a pill to tap. */
 const SPACES = {
   housing:   { n: "Home & Housing Help",               url: "https://lesko-help-2.mn.co/spaces/17886022" },
   bills:     { n: "Bills · Debt · Homes & Cars",       url: "https://lesko-help-2.mn.co/spaces/18392931" },
   business:  { n: "Business · Nonprofits & Career",    url: "https://lesko-help-2.mn.co/spaces/18083958" },
-  nonprofit: { n: "Launch A Nonprofit",                url: "https://lesko-help-2.mn.co/spaces/18453827" },
   health:    { n: "Healthcare Assistance",             url: "https://lesko-help-2.mn.co/spaces/18453836" },
   families:  { n: "Families · Seniors & Disabilities", url: "https://lesko-help-2.mn.co/spaces/20982263" },
   cars:      { n: "Cars & Car Repairs",                url: "https://lesko-help-2.mn.co/spaces/21731257" },
   questions: { n: "Questions Channel",                 url: "https://lesko-help-2.mn.co/spaces/11054387" },
-  callsheets:{ n: "Call Sheet Classes",                url: "https://lesko-help-2.mn.co/spaces/24440881" },
-  basics:    { n: "Grant Basics",                      url: "https://lesko-help-2.mn.co/spaces/16590945" },
-  success:   { n: "Success Stories",                   url: "https://lesko-help-2.mn.co/spaces/10351370" },
-  askfor:    { n: "What Should I Ask For?",            url: "https://lesko-help-2.mn.co/spaces/24870501" }
+  success:   { n: "Success Stories",                   url: "https://lesko-help-2.mn.co/spaces/10351370" }
 };
 const G_ = "https://lesko-help-2.mn.co/posts/";
-const GUIDES = {
-  rentev:      { n: "Guide: Rent & Eviction Help",                 url: G_ + "bills-debt-homes-cars-rent-eviction-help" },
-  utility:     { n: "Guide: Utility Assistance, Energy & Water",   url: G_ + "bills-debt-homes-cars-utility-assistance-energy-water" },
-  homerepair:  { n: "Guide: Home Repair & Energy Upgrade",         url: G_ + "bills-debt-homes-cars-home-repair-energy-upgrade" },
-  carrepair:   { n: "Guide: Car Repair & Vehicle Help",            url: G_ + "bills-debt-homes-cars-car-repair-vehicle-help" },
-  medbills:    { n: "Guide: Medical Bills Assistance",             url: G_ + "healthcare-assistance-medical-bills-assistance" },
-  meddebt:     { n: "Guide: Medical Debt Relief",                  url: G_ + "healthcare-assistance-medical-debt-relief" },
-  foodgrocery: { n: "Guide: Food & Grocery Help",                  url: G_ + "bills-debt-homes-cars-food-grocery-help" },
-  phoneg:      { n: "Guide: Phone, Internet & Devices Help",       url: G_ + "bills-debt-homes-cars-phone-internet-devices-help" },
-  forgivedebt: { n: "Guide: How to Get Companies to Forgive Debt & Bills", url: G_ + "bills-debt-homes-cars-how-to-get-companies-to-forgive-debt-bills" },
-  contact10:   { n: "Guide: Contact These 10 Key Organizations First", url: G_ + "bills-debt-homes-cars-contact-these-10-key-organizations-first" },
-  famchildren: { n: "Guide: Help for Families & Children",         url: G_ + "families-seniors-disabilities-help-for-families-children" },
-  bizgrants:   { n: "Guide: General Business Grants & Funding Opportunities", url: G_ + "business-nonprofits-career-general-business-grants-funding-opportunities" },
-  altloans:    { n: "Guide: Alternative Loans & Funding Options",  url: G_ + "business-nonprofits-career-alternative-loans-funding-options" },
-  bizmentor:   { n: "Guide: Get Started With a Free Business Mentor", url: G_ + "business-nonprofits-career-how-to-get-started-with-a-free-business-mentor" },
-  np10grants:  { n: "Guide: The 10 Best Grants to Start a Nonprofit", url: G_ + "business-nonprofits-career-the-10-best-grants-to-start-a-nonprofit" },
-  npfound:     { n: "Guide: Foundations & Grants — Mission-Driven Support", url: G_ + "business-nonprofits-career-foundations-grants-mission-driven-support" },
-  step5:       { n: "Grant Basics · Step 5: Documents & Financials Cheat Sheet", url: G_ + "grant-basics-step-5-prepare-for-grant-application-cheat-sheet" },
-  prospect:    { n: "Call Sheet Classes · AI Grant Prospecting Prompt", url: G_ + "call-sheet-classes-ai-grant-prospecting-prompt" }
-};
+const NEEDS = [
+  { id: "rent",     suit: "♠", label: "Rent, or a place to live",     say: "rent",              guide: { n: "Guide: Rent & Eviction Help", url: G_ + "bills-debt-homes-cars-rent-eviction-help" }, space: "housing" },
+  { id: "utility",  suit: "♦", label: "Electric, gas, water or heat", say: "my utility bill",   guide: { n: "Guide: Utility Assistance, Energy & Water", url: G_ + "bills-debt-homes-cars-utility-assistance-energy-water" }, space: "bills" },
+  { id: "repair",   suit: "♠", label: "Fixing my home",               say: "a home repair",     guide: { n: "Guide: Home Repair & Energy Upgrade", url: G_ + "bills-debt-homes-cars-home-repair-energy-upgrade" }, space: "housing" },
+  { id: "car",      suit: "♥", label: "My car",                       say: "my car",            guide: { n: "Guide: Car Repair & Vehicle Help", url: G_ + "bills-debt-homes-cars-car-repair-vehicle-help" }, space: "cars" },
+  { id: "medical",  suit: "♣", label: "A medical or dental bill",     say: "a medical bill",    guide: { n: "Guide: Medical Bills Assistance", url: G_ + "healthcare-assistance-medical-bills-assistance" }, space: "health" },
+  { id: "funeral",  suit: "♥", label: "A funeral",                    say: "a funeral",         guide: { n: "Guide: How to Get Companies to Forgive Debt & Bills", url: G_ + "bills-debt-homes-cars-how-to-get-companies-to-forgive-debt-bills" }, space: "families" },
+  { id: "food",     suit: "♥", label: "Food",                         say: "food",              guide: { n: "Guide: Food & Grocery Help", url: G_ + "bills-debt-homes-cars-food-grocery-help" }, space: "bills" },
+  { id: "school",   suit: "♦", label: "School or training",           say: "school",            guide: { n: "Guide: Help for Families & Children", url: G_ + "families-seniors-disabilities-help-for-families-children" }, space: "families" },
+  { id: "business", suit: "♠", label: "My business",                  say: "my business",       guide: { n: "Guide: General Business Grants & Funding Opportunities", url: G_ + "business-nonprofits-career-general-business-grants-funding-opportunities" }, space: "business" },
+  { id: "other",    suit: "♣", label: "Something else",               say: "this",              guide: { n: "Guide: Contact These 10 Key Organizations First", url: G_ + "bills-debt-homes-cars-contact-these-10-key-organizations-first" }, space: "bills" }
+];
+const FROMS  = [{ id: "paper", label: "A bill, a letter or a quote" }, { id: "told", label: "Someone told me the price" }, { id: "guess", label: "I'm guessing" }];
+const FREQS  = [{ id: "once", label: "One time" }, { id: "month", label: "Every month" }];
+const MONTHS = [{ id: "1", label: "1 month" }, { id: "2", label: "2 months" }, { id: "3", label: "3 months" }, { id: "4", label: "4 months" }, { id: "6", label: "6 months" }];
+const HELPED = [{ id: "no", label: "No, nothing yet" }, { id: "yes", label: "Yes, part of it" }];
+const WHO    = [{ id: "notyet", label: "Not yet" }, { id: "first", label: "Yes — first time asking them" }, { id: "again", label: "Yes — they helped me before" }];
 
-/* what is the money for? — page 1 */
-const PATHS = [
-  { id: "bill",     label: "A bill or cost I already have",            sub: "rent, a shut-off, a repair, a medical bill, a funeral, a deposit", suit: "♥" },
-  { id: "disaster", label: "Fixing my home after a storm, fire or flood", sub: "insurance first, then FEMA, then a loan", suit: "♥" },
-  { id: "school",   label: "School or training",                       sub: "tuition, books, a certificate", suit: "♦" },
-  { id: "biz",      label: "Starting or growing a business",           sub: "you set the number, a reviewer judges it", suit: "♠" },
-  { id: "np",       label: "A nonprofit or community project",         sub: "you set the number, a funder judges it", suit: "♣" }
-];
-const PROJECT = ["biz", "np"]; // path two: the member sets the number
-
-/* cost categories — path one */
-const CATS_BILL = [
-  { id: "rent",     label: "Rent or eviction" },
-  { id: "utility",  label: "Electric, gas, water, heat" },
-  { id: "repair",   label: "Home repair" },
-  { id: "car",      label: "Car repair or car costs" },
-  { id: "medical",  label: "Medical or dental bill" },
-  { id: "rx",       label: "Prescriptions" },
-  { id: "funeral",  label: "Funeral costs" },
-  { id: "food",     label: "Food" },
-  { id: "phone",    label: "Phone or internet" },
-  { id: "deposit",  label: "Deposit, moving or fees" },
-  { id: "school",   label: "School or training" },
-  { id: "other",    label: "Something else" }
-];
-/* cost categories — path two */
-const CATS_PROJECT = [
-  { id: "equipment", label: "Equipment or tools" },
-  { id: "supplies",  label: "Supplies, stock or materials" },
-  { id: "space",     label: "Space, rent or utilities" },
-  { id: "licence",   label: "Licences, permits, fees, insurance" },
-  { id: "marketing", label: "Website, marketing, signs" },
-  { id: "wages",     label: "Wages or contractors" },
-  { id: "training",  label: "Training or certification" },
-  { id: "capital",   label: "Working capital (cash to run on)" },
-  { id: "other",     label: "Something else" }
-];
-
-const FROMS = [
-  { id: "bill",     label: "A bill or notice I have",     paper: true },
-  { id: "quote",    label: "A written quote or price list", paper: true },
-  { id: "estimate", label: "Someone told me the price",    paper: false },
-  { id: "guess",    label: "My best guess",                paper: false }
-];
-const FREQS = [
-  { id: "once",  label: "One time" },
-  { id: "month", label: "Every month" }
-];
-
-/* what is already covering part of it? — page "covered" */
-const COVERS_BILL = [
-  { id: "own",     label: "Money I can put in myself" },
-  { id: "family",  label: "Family or friends" },
-  { id: "program", label: "Another program already said yes" },
-  { id: "charity", label: "A church or charity already helped" },
-  { id: "plan",    label: "A payment plan the company offered" },
-  { id: "insurance", label: "Insurance" }
-];
-const COVERS_DISASTER = [
-  { id: "insurance", label: "Insurance paid or will pay" },
-  { id: "fema",    label: "FEMA already paid" },
-  { id: "sba",     label: "An SBA disaster loan" },
-  { id: "own",     label: "Money I can put in myself" },
-  { id: "family",  label: "Family or friends" },
-  { id: "charity", label: "A church or charity already helped" }
-];
-const COVERS_PROJECT = [
-  { id: "own",      label: "Cash or savings I'm putting in" },
-  { id: "hours",    label: "My own hours (what they'd cost to hire)" },
-  { id: "owned",    label: "Equipment or space I already have" },
-  { id: "donated",  label: "Donated help, materials or space" },
-  { id: "loan",     label: "A loan I already have" },
-  { id: "othergrant", label: "Another grant already promised" }
-];
-
-/* the costs people forget — path one */
-const EXTRAS = [
-  { id: "sec",    label: "Security deposit",              cat: "deposit" },
-  { id: "first",  label: "First or last month's rent",     cat: "rent" },
-  { id: "late",   label: "Late fees or court fees",        cat: "deposit" },
-  { id: "hookup", label: "Reconnection or hook-up fee",    cat: "utility" },
-  { id: "moving", label: "Moving costs",                   cat: "deposit" },
-  { id: "app",    label: "Application fees",               cat: "deposit" },
-  { id: "tow",    label: "Towing or storage",              cat: "car" },
-  { id: "travel", label: "Getting to appointments",        cat: "medical" }
-];
-const EXTRAS_PROJECT = [
-  { id: "tax",     label: "Taxes on the grant (business grants count as income)", cat: "licence" },
-  { id: "insur",   label: "Insurance the funder requires",  cat: "licence" },
-  { id: "fees",    label: "Bank, card or platform fees",    cat: "licence" },
-  { id: "delivery",label: "Shipping or delivery",           cat: "supplies" },
-  { id: "install", label: "Installation or set-up",         cat: "equipment" },
-  { id: "book",    label: "Bookkeeping or an accountant",   cat: "wages" }
-];
-
-/* ------------------------------------------------------------------
-   DOORS — what one door typically gives.
-   Public figures, each with its source. `cats` = which cost categories
-   this door speaks to. Shown as a guide, never a promise.
-   ------------------------------------------------------------------ */
-const DOORS = [
-  { cats: ["rent","deposit"], n: "Emergency rental assistance (state and county programs)",
-    r: "about $4,700 on average · up to 12–18 months of rent, and deposits",
-    src: "NLIHC / U.S. Treasury", url: "https://nlihc.org/resource/treasury-data-show-emergency-rental-assistance-spending-slow-accelerating", cap: 4700 },
-  { cats: ["rent","utility","deposit","car","funeral","other"], n: "Salvation Army rent & utility help",
-    r: "$200–$600 · once per 12 months", src: "Salvation Army", url: "https://www.salvationarmyusa.org/utility-rent-assistance/", cap: 600 },
-  { cats: ["rent","utility","deposit","medical","funeral","car","other"], n: "Catholic Charities · St. Vincent de Paul",
-    r: "set locally · some up to $1,500 · usually once a year", src: "Catholic Charities Arlington · Notre Dame study", url: "https://provost.nd.edu/news/emergency-financial-aid-from-call-centers-effectively-prevents-homelessness/", cap: 1500 },
-  { cats: ["rent","utility","car","medical","funeral","deposit","other"], n: "Church benevolence funds",
-    r: "about $500 a year is a common limit · meant as a one-time gift", src: "Vanco · XPastor policy guides", url: "https://www.vancopayments.com/egiving/blog/benevolence-fund-church", cap: 500 },
-  { cats: ["rent","utility","car","medical","deposit","other"], n: "Modest Needs self-sufficiency grant",
-    r: "up to $1,000 · average about $180 · paid straight to your landlord or vendor", src: "Modest Needs", url: "http://www.modestneeds.org/explore/intro/", cap: 1000 },
-  { cats: ["rent","utility","car","deposit"], n: "County emergency help (TANF one-time)",
-    r: "amount set by your state · never more than 4 months", src: "Administration for Children and Families", url: "https://acf.gov/ofa/policy-guidance/examples-non-recurrent-short-term-benefits" },
-  { cats: ["utility"], n: "LIHEAP heating & cooling help",
-    r: "$200–$1,000 depending on your state · once per season", src: "LIHEAP Clearinghouse · NEUAC state sheets", url: "https://liheapch.acf.gov/tables/benefits.htm", cap: 1000 },
-  { cats: ["utility"], n: "Utility company hardship funds",
-    r: "$250–$600 · once", src: "Dollar Energy Fund · HeatShare", url: "https://www.dollarenergy.org/program/firstenergy-pennsylvania-hardship-program/", cap: 600 },
-  { cats: ["repair"], n: "USDA Section 504 home repair (age 62+, rural)",
-    r: "grant up to $10,000 · loan up to $40,000 at 1%", src: "USDA Rural Development", url: "https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants", cap: 10000 },
-  { cats: ["repair","utility"], n: "Weatherization Assistance Program",
-    r: "over $7,400 of work per home on average · done for you, not paid to you", src: "U.S. Department of Energy", url: "https://www.energy.gov/scep/wap/average-cost-dwelling-unit", cap: 7400 },
-  { cats: ["disaster"], n: "FEMA Individuals & Households Program",
-    r: "average award $3,446 · up to $43,600 for housing + $43,600 other needs · $770 one-time serious-needs payment", src: "Federal Register · CRS R48310", url: "https://www.federalregister.gov/documents/2024/10/24/2024-24700/notice-of-maximum-amount-of-assistance-under-the-individuals-and-households-program", cap: 43600 },
-  { cats: ["disaster"], n: "SBA disaster loan (must be paid back)",
-    r: "home up to $500,000 · belongings up to $100,000 · only for what insurance and FEMA didn't cover", src: "U.S. Small Business Administration", url: "https://www.sba.gov/funding-programs/disaster-assistance/physical-damage-loans" },
-  { cats: ["disaster"], n: "USDA 504 disaster repair (age 62+, rural, declared area)",
-    r: "grant up to $15,000", src: "USDA Rural Development", url: "https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants-presidentially-declared-disasters", cap: 15000 },
-  { cats: ["medical","rx"], n: "Hospital financial assistance (charity care)",
-    r: "often free below 200% of the poverty line · discounts up to 400% · ask the billing office", src: "IRS 501(r) · hospital policies survey", url: "https://coveredusa.org/en/blog/hospital-financial-assistance-100-largest-hospitals" },
-  { cats: ["food"], n: "SNAP (food stamps)",
-    r: "up to $994 a month for a family of four · about $188 per person on average", src: "USDA FNS · CBPP", url: "https://www.cbpp.org/research/food-assistance/a-quick-guide-to-snap-eligibility-and-benefits", cap: 994 },
-  { cats: ["phone"], n: "Lifeline phone & internet",
-    r: "$9.25 a month off your bill · $34.25 on Tribal lands", src: "FCC", url: "https://www.fcc.gov/lifeline-consumers" },
-  { cats: ["school"], n: "Federal Pell Grant",
-    r: "up to $7,395 a year (2025-26 and 2026-27)", src: "Federal Student Aid", url: "https://fsapartners.ed.gov/knowledge-center/library/dear-colleague-letters/2026-01-30/2026-27-federal-pell-grant-maximum-and-minimum-award-amounts", cap: 7395 },
-  { cats: ["biz"], n: "Hello Alice sponsor grants",
-    r: "$10,000–$50,000 · most are a flat $20,000", src: "OpenGrants", url: "https://opengrants.io/hello-alice-grant-marketplace-not-one-grant/", cap: 20000 },
-  { cats: ["biz"], n: "Amber Grant (women-owned)",
-    r: "$10,000 a month · $50,000 once a year · $15 to apply", src: "WomensNet", url: "https://ambergrantsforwomen.com/get-an-amber-grant/", cap: 10000 },
-  { cats: ["biz"], n: "Comcast RISE · FedEx small business grants",
-    r: "$5,000 plus services · $10,000", src: "Comcast · FedEx via Hello Alice", url: "https://helloalice.com/grants/fedex/", cap: 10000 },
-  { cats: ["np"], n: "Foundations giving to small nonprofits",
-    r: "largest single award: median $10,000 · median total $24,000 a year", src: "GrantStation, State of Grantseeking 2025", url: "https://grantstation.com/sites/default/files/imageLibrary/SoG/2025/2025%20State%20of%20Grantseeking%20Report.pdf", cap: 10000 },
-  { cats: ["biz","np"], n: "How often a yes comes",
-    r: "state & local 52% · foundations 30% · federal 25% · corporate 22%", src: "Instrumentl", url: "https://www.instrumentl.com/blog/grant-funder-success-rates" }
-];
-
-/* which community links go with which categories */
-const COMM = {
-  rent:     [GUIDES.rentev, "housing"],
-  deposit:  [GUIDES.rentev, "housing"],
-  utility:  [GUIDES.utility, "bills"],
-  repair:   [GUIDES.homerepair, "housing"],
-  car:      [GUIDES.carrepair, "cars"],
-  medical:  [GUIDES.medbills, GUIDES.meddebt, "health"],
-  rx:       [GUIDES.medbills, "health"],
-  funeral:  [GUIDES.forgivedebt, "families"],
-  food:     [GUIDES.foodgrocery, "bills"],
-  phone:    [GUIDES.phoneg, "bills"],
-  school:   [GUIDES.famchildren, "business"],
-  other:    [GUIDES.contact10, "bills"],
-  disaster: [GUIDES.homerepair, "housing"],
-  biz:      [GUIDES.bizgrants, GUIDES.altloans, GUIDES.bizmentor, "business"],
-  np:       [GUIDES.np10grants, GUIDES.npfound, "nonprofit"]
-};
-
-const STATES = [["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["DC","Washington, DC"],["FL","Florida"],["GA","Georgia"],["HI","Hawaii"],["ID","Idaho"],["IL","Illinois"],["IN","Indiana"],["IA","Iowa"],["KS","Kansas"],["KY","Kentucky"],["LA","Louisiana"],["ME","Maine"],["MD","Maryland"],["MA","Massachusetts"],["MI","Michigan"],["MN","Minnesota"],["MS","Mississippi"],["MO","Missouri"],["MT","Montana"],["NE","Nebraska"],["NV","Nevada"],["NH","New Hampshire"],["NJ","New Jersey"],["NM","New Mexico"],["NY","New York"],["NC","North Carolina"],["ND","North Dakota"],["OH","Ohio"],["OK","Oklahoma"],["OR","Oregon"],["PA","Pennsylvania"],["PR","Puerto Rico"],["RI","Rhode Island"],["SC","South Carolina"],["SD","South Dakota"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],["VT","Vermont"],["VA","Virginia"],["WA","Washington"],["WV","West Virginia"],["WI","Wisconsin"],["WY","Wyoming"],["AS","American Samoa"],["GU","Guam"],["MP","Northern Mariana Islands"],["VI","U.S. Virgin Islands"]];
-
-/* ==================================================================
-   App state
-   ================================================================== */
+/* state */
 const LS_KEY = "lh-howmuch-v1";
-
-const blank = () => ({
-  step: 0,
-  path: "",
-  lines: [],            // {id, what, amt, from, freq, cat, extra}
-  behind: "", ahead: "",
-  covers: {},           // id -> amount string ("" = checked, no amount yet)
-  coverOn: [],          // checked cover ids
-  extras: [],           // checked extra ids
-  door: { know: "", cap: "", capFrom: "", once: "" },
-  funder: { know: "", max: "", usual: "", first: "" },
-  state: "",
-  built: false
-});
+const blank = () => ({ step: 0, need: "", needOther: "", amt: "", from: "", freq: "", months: "", helped: "", covered: "", who: "", cap: "", built: false });
 let S = blank();
-
-let nextId = 1;
-const newLine = (cat, what, extra) => ({ id: "l" + (nextId++), what: what || "", amt: "", from: "", freq: "once", cat: cat || "", extra: extra || false });
-
 function loadS() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (raw) S = Object.assign(blank(), JSON.parse(raw));
-  } catch (e) {}
-  if (!Array.isArray(S.lines)) S.lines = [];
-  S.lines.forEach((l) => { const n = parseInt(String(l.id).slice(1), 10); if (n >= nextId) nextId = n + 1; });
-  if (!S.door) S.door = blank().door;
-  if (!S.funder) S.funder = blank().funder;
-  if (!S.covers) S.covers = {};
-  if (!Array.isArray(S.coverOn)) S.coverOn = [];
-  if (!Array.isArray(S.extras)) S.extras = [];
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
   if (typeof S.step !== "number" || S.step < 0) S.step = 0;
-  S.step = Math.min(S.step, Math.max(0, totalSteps() - 1));
+  S.step = Math.min(S.step, totalSteps() - 1);
 }
 function saveS() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
 
@@ -858,20 +284,11 @@ const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const num = (v) => { const n = parseFloat(String(v ?? "").replace(/[^0-9.]/g, "")); return isFinite(n) && n > 0 ? n : 0; };
 const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
-const isProject = () => PROJECT.includes(S.path);
-const stateName = () => { const f = STATES.find(([c]) => c === S.state); return f ? f[1] : ""; };
+const need = () => NEEDS.find((n) => n.id === S.need);
+const isBiz = () => S.need === "business";
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._h); toast._h = setTimeout(() => t.classList.remove("show"), 2600); }
 
-function toast(msg) {
-  const t = $("#toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(toast._h);
-  toast._h = setTimeout(() => t.classList.remove("show"), 2600);
-}
-
-/* ==================================================================
-   Tabs
-   ================================================================== */
+/* tabs */
 const PANELS = ["quiz", "sheet", "privacy"];
 function goTab(id) {
   PANELS.forEach((p) => { $("#panel-" + p).hidden = p !== id; });
@@ -880,697 +297,182 @@ function goTab(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 document.addEventListener("click", (e) => {
-  const tab = e.target.closest(".tab");
-  if (tab) { goTab(tab.dataset.tab); return; }
-  const go = e.target.closest("[data-goto]");
-  if (go) { e.preventDefault(); goTab(go.dataset.goto); }
+  const tab = e.target.closest(".tab"); if (tab) { goTab(tab.dataset.tab); return; }
+  const go = e.target.closest("[data-goto]"); if (go) { e.preventDefault(); goTab(go.dataset.goto); }
 });
 
-/* ==================================================================
-   The math — one place, used by the wizard, the result and the copy.
-   ================================================================== */
-function months() { return Math.max(0, Math.round(num(S.behind))) + Math.max(0, Math.round(num(S.ahead))); }
-function lineTotal(l) {
-  const a = num(l.amt);
-  if (l.freq === "month") return a * (months() || 1);
-  return a;
-}
-function hasMonthly() { return S.lines.some((l) => l.freq === "month" && num(l.amt) > 0); }
-function realLines() { return S.lines.filter((l) => l.what.trim() || num(l.amt) > 0); }
-function coveredTotal() { return S.coverOn.reduce((t, id) => t + num(S.covers[id]), 0); }
-
+/* the math: total − what's covered = the gap; never more than the door's limit */
 function calc() {
-  const lines = realLines();
-  const total = lines.reduce((t, l) => t + lineTotal(l), 0);
-  const covered = Math.min(coveredTotal(), total);
+  const m = S.freq === "month" ? Math.max(1, parseInt(S.months, 10) || 1) : 1;
+  const total = num(S.amt) * m;
+  const covered = S.helped === "yes" ? Math.min(num(S.covered), total) : 0;
   const gap = Math.max(0, total - covered);
-  const paper = lines.filter((l) => FROMS.find((f) => f.id === l.from)?.paper).length;
-  const guesses = lines.filter((l) => l.from === "guess" || !l.from).length;
-  const noAmt = lines.filter((l) => num(l.amt) <= 0).length;
-  const ongoing = lines.filter((l) => l.freq === "month");
-  const cap = isProject() ? num(S.funder.max) : num(S.door.cap);
-  const usual = isProject() ? num(S.funder.usual) : 0;
-  let ask = gap;
-  let remainder = 0;
-  if (cap > 0 && gap > cap) { ask = cap; remainder = gap - cap; }
-  const share = total > 0 ? ask / total : 0;
-  const cats = [...new Set(lines.map((l) => l.cat).filter(Boolean))];
-  if (S.path === "disaster") cats.unshift("disaster");
-  if (S.path === "biz") cats.unshift("biz");
-  if (S.path === "np") cats.unshift("np");
-  if (S.path === "school" && !cats.includes("school")) cats.unshift("school");
-  return { lines, total, covered, gap, ask, remainder, cap, usual, share, paper, guesses, noAmt, ongoing, cats };
+  const cap = S.who && S.who !== "notyet" ? num(S.cap) : 0;
+  const ask = cap > 0 && gap > cap ? cap : gap;
+  return { m, total, covered, gap, cap, ask, rest: gap - ask };
 }
 
-/* ==================================================================
-   Wizard — page list depends on the path and the answers so far
-   ================================================================== */
-function pages() {
-  if (!S.path) return ["path"];
-  if (isProject()) return ["path", "lines", "extras", "covered", "funder"];
-  const p = ["path", "lines"];
-  if (hasMonthly()) p.push("months");
-  p.push("covered", "extras", "door", "where");
-  return p;
-}
+/* the quiz: 5 pages, 6 if the cost comes every month */
+function pages() { const p = ["need", "amount", "freq"]; if (S.freq === "month") p.push("months"); p.push("helped", "who"); return p; }
 function totalSteps() { return pages().length; }
 function pageId() { return pages()[Math.min(S.step, totalSteps() - 1)]; }
 
-function optPill(kind, name, value, label, checked, sub) {
-  return `<label class="opt ${kind === "check" ? "sq" : ""} ${checked ? "on" : ""}">
-    <input type="${kind === "check" ? "checkbox" : "radio"}" name="${name}" value="${esc(value)}" ${checked ? "checked" : ""}>
-    <span class="dot" aria-hidden="true"></span>
-    <span>${label}${sub ? ` <span class="sub">${esc(sub)}</span>` : ""}</span>
-  </label>`;
+function optPill(name, value, label, checked) {
+  return `<label class="opt ${checked ? "on" : ""}"><input type="radio" name="${name}" value="${esc(value)}" ${checked ? "checked" : ""}>
+    <span class="dot" aria-hidden="true"></span><span>${label}</span></label>`;
 }
-
+function pills(name, list, current) { return `<div class="opts">${list.map((o) => optPill(name, o.id, esc(o.label), current === o.id)).join("")}</div>`; }
+function amountBox(key, placeholder) {
+  return `<div class="amount"><div class="money"><input inputmode="decimal" data-amt="${key}" value="${esc(S[key])}" placeholder="${esc(placeholder || "0")}" aria-label="Amount in dollars"></div></div>`;
+}
 function wizHead(n, title, help, suit) {
-  return `<div class="qhead">
-      <span class="mono-label">Page ${n} of ${totalSteps()}</span>
-      <div class="qtrack"><i style="width:${Math.round(((n - 1) / totalSteps()) * 100)}%"></i></div>
-    </div>
-    <h3 class="qtitle">${suit ? `<span class="s">${suit}</span>` : ""}${title}</h3>
-    <p class="qhelp">${help}</p>`;
+  return `<div class="qhead"><span class="mono-label">Page ${n} of ${totalSteps()}</span>
+    <div class="qtrack"><i style="width:${Math.round(((n - 1) / totalSteps()) * 100)}%"></i></div></div>
+    <h3 class="qtitle">${suit ? `<span class="s">${suit}</span>` : ""}${title}</h3><p class="qhelp">${help}</p>`;
 }
 function wizFoot(n, disabled) {
   const last = n === totalSteps();
-  return `<div class="qfoot">
-      <button class="btn ghost" data-wz="back" ${n === 1 ? "style='visibility:hidden'" : ""}>← Back</button>
-      <span class="fine">${n === 1 ? "A few short pages. Your bills and quotes in, one number out. Private. Not an application." : ""}</span>
-      <button class="btn ${last ? "big" : ""}" data-wz="next" ${disabled ? "disabled" : ""}>${last ? "Show my number →" : "Next →"}</button>
-    </div>`;
-}
-
-function selectHtml(cls, name, id, opts, val, placeholder) {
-  return `<select class="${cls}" data-f="${name}" data-id="${id}">
-    ${placeholder ? `<option value="" ${!val ? "selected" : ""}>${esc(placeholder)}</option>` : ""}
-    ${opts.map((o) => `<option value="${o.id}" ${o.id === val ? "selected" : ""}>${esc(o.label)}</option>`).join("")}
-  </select>`;
-}
-
-function lineRow(l) {
-  const cats = isProject() ? CATS_PROJECT : CATS_BILL;
-  return `<div class="line ${l.from === "guess" ? "guess" : ""}" data-line="${l.id}">
-    <div class="f-what"><span class="lbl">What</span>
-      <input class="what" data-f="what" data-id="${l.id}" maxlength="80" value="${esc(l.what)}" placeholder="${isProject() ? "e.g. Commercial fridge" : "e.g. Back rent, June–August"}"></div>
-    <div class="f-amt"><span class="lbl">Amount</span>
-      <div class="money"><input inputmode="decimal" data-f="amt" data-id="${l.id}" value="${esc(l.amt)}" placeholder="0" aria-label="Amount"></div></div>
-    <div class="f-from"><span class="lbl">Where the number is from</span>
-      ${selectHtml("", "from", l.id, FROMS, l.from, "Where is this number from?")}</div>
-    <div class="f-freq"><span class="lbl">What kind</span>
-      ${selectHtml("", "cat", l.id, cats, l.cat, "What kind of cost?")}</div>
-    <button class="x" data-rm="${l.id}" aria-label="Remove this line">×</button>
-  </div>`;
+  return `<div class="qfoot"><button class="btn ghost" data-wz="back" ${n === 1 ? "style='visibility:hidden'" : ""}>← Back</button>
+    <span class="fine">${n === 1 ? "A few quick questions. Private. Not an application." : ""}</span>
+    <button class="btn ${last ? "big" : ""}" data-wz="next" ${disabled ? "disabled" : ""}>${last ? "Show my number →" : "Next →"}</button></div>`;
 }
 
 function renderWizard(focus) {
-  const q = $("#qcard");
-  const n = S.step + 1;
-  const id = pageId();
-  let inner = "";
-  let disabled = false;
+  const q = $("#qcard"), n = S.step + 1, id = pageId();
+  let inner = "", disabled = false;
 
-  if (id === "path") {
-    inner = wizHead(n, "What do you need <em>money for?</em>",
-      "Pick the one that fits best. Different kinds of money get sized differently — the next pages change with your answer.");
-    inner += `<div class="opts" style="flex-direction:column;align-items:flex-start">
-      ${PATHS.map((p) => optPill("radio", "path", p.id, `<span style="font-family:var(--suit-font);color:var(--ink-faint);font-size:.85em;margin-right:4px">${p.suit}</span> ${p.label}`, S.path === p.id, p.sub)).join("")}
-    </div>`;
-    disabled = !S.path;
+  if (id === "need") {
+    inner = wizHead(n, "What do you need the money <em>for?</em>", "Pick the one that fits. One bill = one ask.");
+    inner += `<div class="opts">${NEEDS.map((x) => optPill("need", x.id, `<span style="font-family:var(--suit-font);font-size:.8em;color:var(--ink-faint)">${x.suit}</span> ${esc(x.label)}`, S.need === x.id)).join("")}</div>`;
+    if (S.need === "other") inner += `<div class="other-row"><input id="need-other" maxlength="80" value="${esc(S.needOther)}" placeholder="What is it? A few words is fine." aria-label="What is it?"></div>`;
+    disabled = !S.need;
+  } else if (id === "amount") {
+    inner = wizHead(n, isBiz() ? "How much does it <em>cost</em>, all together?" : "How much is the bill, <em>all together?</em>",
+      isBiz() ? "Add up everything the money needs to buy. A rough total is fine for now." : "Whatever it says on the bill, the letter or the quote. If it comes every month, put one month here.", "♥");
+    inner += amountBox("amt");
+    inner += `<div class="optgroup"><span class="mono-label">Where is that number from?</span>${pills("from", FROMS, S.from)}</div>`;
+    disabled = !num(S.amt) || !S.from;
+  } else if (id === "freq") {
+    inner = wizHead(n, "Is this one time, or <em>every month?</em>", "A car repair is one time. Rent is every month.", "♦");
+    inner += pills("freq", FREQS, S.freq);
+    disabled = !S.freq;
+  } else if (id === "months") {
+    inner = wizHead(n, "How many <em>months</em> do you need help with?", "Count the months you're behind, plus the months ahead you can't cover yet.", "♦");
+    inner += pills("months", MONTHS, S.months);
+    disabled = !S.months;
+  } else if (id === "helped") {
+    inner = wizHead(n, isBiz() ? "Can you put some of it in <em>yourself?</em>" : "Has anyone already paid <em>part of it?</em>",
+      isBiz() ? "Your own savings, your own hours, tools you already have. Funders like to see your share." : "You, family, a church, another program, insurance. Helpers like to be the last money in.", "♣");
+    inner += pills("helped", isBiz() ? [HELPED[0], { id: "yes", label: "Yes, some of it" }] : HELPED, S.helped);
+    if (S.helped === "yes") inner += `<div class="optgroup"><span class="mono-label">${isBiz() ? "How much can you put in?" : "How much is already paid?"}</span>${amountBox("covered")}</div>`;
+    disabled = !S.helped || (S.helped === "yes" && !num(S.covered));
+  } else if (id === "who") {
+    inner = wizHead(n, "Do you know who you'll <em>ask?</em>", "Most places help once a year, and give a bit less the first time. If you know their limit, put it in and your number stays inside it.", "♠");
+    inner += pills("who", WHO, S.who);
+    if (S.who && S.who !== "notyet") inner += `<div class="optgroup"><span class="mono-label">The most they give, if you know it</span>${amountBox("cap", "leave empty if you don't know")}</div>`;
+    disabled = !S.who;
   }
 
-  else if (id === "lines") {
-    if (!S.lines.length) S.lines.push(newLine());
-    const c = calc();
-    inner = wizHead(n,
-      isProject() ? "What will the money <em>buy?</em>" : "What does it <em>cost</em>, exactly?",
-      isProject()
-        ? "One line per thing. Say where each number comes from — a quote or price list beats a guess every time. Rent or wages that repeat go in as \"every month\" on the next page."
-        : "Add each cost, one line at a time. Say where the number comes from — the notice, the shut-off letter, the mechanic's quote. A guess is allowed, but your number will say so.",
-      "♥");
-    inner += `<div class="line-hd"><span>What</span><span>Amount</span><span>Where the number is from</span><span>What kind</span><span></span></div>
-      <div class="lines">${S.lines.map(lineRow).join("")}</div>
-      <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">
-        <button class="btn ghost" data-addline>＋ Add another cost</button>
-        <span class="fine" style="margin:0">Every month costs: mark the kind here, then tell us how many months on the next page.</span>
-      </div>
-      <div class="optgroup" style="margin-top:14px">
-        <span class="mono-label">Which of these come every month?</span>
-        <div class="opts" id="freq-pills">
-          ${S.lines.filter((l) => l.what.trim()).map((l) => optPill("check", "monthly", l.id, esc(l.what), l.freq === "month")).join("") || `<span class="fine" style="margin:0">Name a cost above and it shows up here.</span>`}
-        </div>
-      </div>
-      <div class="running"><span class="mono-label">So far</span><b id="running-total">${money(c.total)}</b>
-        <span class="fine" style="margin:0" id="running-note">${runningNote(c)}</span></div>`;
-    disabled = !realLines().some((l) => num(l.amt) > 0);
-  }
-
-  else if (id === "months") {
-    inner = wizHead(n, "How many <em>months?</em>",
-      "Emergency money is one-time. To turn a monthly hole into one number, count the months: how far behind you are, and how many months ahead you need help. Rent programs count months (up to 12–18); county emergency help stops at four.", "♥");
-    inner += `<div class="field-row">
-      <div class="field"><label for="f-behind">Months behind</label><input id="f-behind" inputmode="numeric" data-s="behind" value="${esc(S.behind)}" placeholder="e.g. 3"></div>
-      <div class="field"><label for="f-ahead">Months ahead you need help</label><input id="f-ahead" inputmode="numeric" data-s="ahead" value="${esc(S.ahead)}" placeholder="e.g. 2"></div>
-    </div>
-    <p class="fine" id="months-note">${monthsNote()}</p>`;
-  }
-
-  else if (id === "covered") {
-    const list = S.path === "disaster" ? COVERS_DISASTER : isProject() ? COVERS_PROJECT : COVERS_BILL;
-    inner = wizHead(n,
-      isProject() ? "What can you <em>cover</em> yourself?" : "What is <em>already</em> covering part of it?",
-      isProject()
-        ? "Never ask for 100%. Show your own share — cash, your own hours, things you already own, donated help. A first-time ask that covers 40–60% of the project is what funders expect."
-        : S.path === "disaster"
-          ? "By law it goes in this order: insurance first, then FEMA, then a loan. FEMA won't pay for a loss insurance already paid. Tell us what has already been paid, so your number is what's left."
-          : "Helpers like to be the last money in. If you can put in $300 and a church gave $500, a $2,000 ask is believable. Check what applies and add the amount.",
-      "♣");
-    inner += `<div class="pick-rows">
-      ${list.map((c) => {
-        const on = S.coverOn.includes(c.id);
-        return `<div class="pick-row ${on ? "on" : ""}">
-          ${optPill("check", "cover", c.id, esc(c.label), on)}
-          <div class="money"><input inputmode="decimal" data-cover="${c.id}" value="${esc(S.covers[c.id] || "")}" placeholder="amount" aria-label="Amount for ${esc(c.label)}"></div>
-        </div>`;
-      }).join("")}
-      <div class="pick-row ${!S.coverOn.length ? "on" : ""}">${optPill("check", "cover-none", "none", "Nothing yet", !S.coverOn.length)}<div></div></div>
-    </div>
-    <div class="running"><span class="mono-label">Covered so far</span><b id="running-cov">${money(coveredTotal())}</b></div>`;
-  }
-
-  else if (id === "extras") {
-    const list = isProject() ? EXTRAS_PROJECT : EXTRAS;
-    inner = wizHead(n, "The costs people <em>forget</em>",
-      isProject()
-        ? "Reviewers notice what is missing. Check anything that comes with your plan — each one becomes a line you can fill in."
-        : "A rent program will pay a deposit — if it is on the list. Check anything that comes with your problem; each one becomes a line you can fill in.",
-      "♠");
-    inner += `<div class="pick-rows">
-      ${list.map((x) => {
-        const on = S.extras.includes(x.id);
-        const l = S.lines.find((q) => q.extra === x.id);
-        return `<div class="pick-row ${on ? "on" : ""}">
-          ${optPill("check", "extra", x.id, esc(x.label), on)}
-          <div class="money"><input inputmode="decimal" data-extra="${x.id}" value="${esc(l ? l.amt : "")}" placeholder="amount" aria-label="Amount for ${esc(x.label)}"></div>
-        </div>`;
-      }).join("")}
-    </div>
-    <div class="other-row">
-      <input id="other-in" maxlength="80" placeholder="Something else that comes with it…" aria-label="Another cost">
-      <button class="btn ghost" data-addother>＋ Add</button>
-    </div>
-    <div class="running"><span class="mono-label">Real cost so far</span><b id="running-total">${money(calc().total)}</b></div>`;
-  }
-
-  else if (id === "door") {
-    inner = wizHead(n, "Have you <em>asked</em> here before?",
-      "Most doors help once per 12 months, and give less the first time. If you already know who you'll ask and what their limit is — from their website, a call, or your AI prospecting list — put it here and your number will stay inside it.",
-      "♦");
-    inner += `<div class="optgroup"><div class="opts">
-        ${optPill("radio", "know", "no", "I don't know where I'll ask yet", S.door.know === "no")}
-        ${optPill("radio", "know", "first", "I know — first time asking them", S.door.know === "first")}
-        ${optPill("radio", "know", "repeat", "I know — they helped me before", S.door.know === "repeat")}
-      </div></div>
-      <div id="door-more" ${S.door.know && S.door.know !== "no" ? "" : "hidden"}>
-        <div class="field-row">
-          <div class="field"><label for="f-cap">The most they give, if you know it</label>
-            <div class="money"><input id="f-cap" inputmode="decimal" data-d="cap" value="${esc(S.door.cap)}" placeholder="leave blank if you don't know"></div></div>
-          <div class="field"><label for="f-capfrom">Where that number is from</label>
-            <select id="f-capfrom" data-d="capFrom">
-              <option value="" ${!S.door.capFrom ? "selected" : ""}>Pick one</option>
-              <option value="site" ${S.door.capFrom === "site" ? "selected" : ""}>Their website</option>
-              <option value="call" ${S.door.capFrom === "call" ? "selected" : ""}>A phone call</option>
-              <option value="ai" ${S.door.capFrom === "ai" ? "selected" : ""}>My AI prospecting list</option>
-              <option value="unsure" ${S.door.capFrom === "unsure" ? "selected" : ""}>Not sure</option>
-            </select></div>
-        </div>
-        <div class="optgroup"><span class="mono-label">How often can you ask them?</span><div class="opts">
-          ${optPill("radio", "once", "year", "Once a year", S.door.once === "year")}
-          ${optPill("radio", "once", "more", "More often than that", S.door.once === "more")}
-          ${optPill("radio", "once", "unknown", "Don't know", S.door.once === "unknown")}
-        </div></div>
-      </div>`;
-    disabled = !S.door.know;
-  }
-
-  else if (id === "funder") {
-    inner = wizHead(n, "The funder's <em>habit</em>",
-      "Every funder has a ceiling and a usual amount. A $25,000 ask from a funder whose biggest gift is $5,000 is a red flag; first-timers usually get less than repeat grantees. If you don't know yet, Roger White's prospecting prompt in the Call Sheet Classes returns the maximum for every result.",
-      "♦");
-    inner += `<div class="optgroup"><div class="opts">
-        ${optPill("radio", "fknow", "no", "I don't know their amounts yet", S.funder.know === "no")}
-        ${optPill("radio", "fknow", "yes", "I know what they usually give", S.funder.know === "yes")}
-      </div></div>
-      <div id="funder-more" ${S.funder.know === "yes" ? "" : "hidden"}>
-        <div class="field-row">
-          <div class="field"><label for="f-max">Their biggest award</label>
-            <div class="money"><input id="f-max" inputmode="decimal" data-fu="max" value="${esc(S.funder.max)}" placeholder="e.g. 10000"></div></div>
-          <div class="field"><label for="f-usual">Their usual award</label>
-            <div class="money"><input id="f-usual" inputmode="decimal" data-fu="usual" value="${esc(S.funder.usual)}" placeholder="if you know it"></div></div>
-        </div>
-      </div>
-      <div class="optgroup"><span class="mono-label">First time applying to them?</span><div class="opts">
-        ${optPill("radio", "ffirst", "yes", "Yes, first time", S.funder.first === "yes")}
-        ${optPill("radio", "ffirst", "no", "No, they've funded me before", S.funder.first === "no")}
-      </div></div>`;
-    disabled = !S.funder.know;
-  }
-
-  else if (id === "where") {
-    inner = wizHead(n, "Where do you <em>live?</em>",
-      "Optional. Heating help, rent help and county emergency help are set by your state, so your number can say so. Skip it if you'd rather not.", "♣");
-    inner += `<div class="field" style="max-width:340px"><label for="f-state">State</label>
-      <select id="f-state" data-s="state">
-        <option value="" ${!S.state ? "selected" : ""}>Skip this</option>
-        ${STATES.map(([c, nm]) => `<option value="${c}" ${S.state === c ? "selected" : ""}>${nm}</option>`).join("")}
-      </select></div>`;
-  }
-
-  inner += wizFoot(n, disabled);
-  q.innerHTML = inner;
+  q.innerHTML = inner + wizFoot(n, disabled);
   wireWizard();
-  if (focus) { const el = document.getElementById(focus) || q.querySelector(`[data-id="${focus}"]`); if (el) el.focus(); }
-}
-
-function runningNote(c) {
-  if (!c.lines.length) return "";
-  const parts = [];
-  if (c.paper) parts.push(c.paper + (c.paper === 1 ? " line" : " lines") + " from a bill or quote");
-  if (c.guesses) parts.push(c.guesses + (c.guesses === 1 ? " guess" : " guesses"));
-  if (hasMonthly()) parts.push("monthly costs × " + (months() || 1) + (months() ? " months" : " month so far"));
-  return parts.join(" · ");
-}
-function monthsNote() {
-  const m = months();
-  if (!m) return "";
-  const monthly = S.lines.filter((l) => l.freq === "month").reduce((t, l) => t + num(l.amt), 0);
-  return "That's " + m + " months × " + money(monthly) + " a month = " + money(monthly * m) + " for the monthly costs.";
-}
-
-function addOther() {
-  const input = document.getElementById("other-in");
-  if (!input) return;
-  const t = input.value.trim().slice(0, 80);
-  if (!t) { input.focus(); return; }
-  S.lines.push(newLine(isProject() ? "other" : "other", t, "own-" + Date.now()));
-  saveS();
-  toast("Added. Put the amount in on the costs page, or leave it and your number will flag it.");
-  renderWizard("other-in");
+  if (focus) { const el = q.querySelector(focus); if (el) { el.focus(); if (el.setSelectionRange) el.setSelectionRange(el.value.length, el.value.length); } }
 }
 
 function wireWizard() {
   const q = $("#qcard");
-
-  // page 1: the path
-  q.querySelectorAll("input[name=path]").forEach((el) => el.addEventListener("change", () => {
-    const was = S.path;
-    S.path = el.value;
-    // switching between the two kinds of money resets categories, they don't match
-    if (was && PROJECT.includes(was) !== PROJECT.includes(S.path)) { S.lines.forEach((l) => { l.cat = ""; }); S.coverOn = []; S.covers = {}; S.extras = []; }
-    saveS(); renderWizard();
+  const next = () => q.querySelector("[data-wz=next]");
+  q.querySelectorAll("input[type=radio]").forEach((el) => el.addEventListener("change", () => {
+    q.querySelectorAll(`input[name=${el.name}]`).forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
+    S[el.name] = el.value;
+    if (el.name === "freq" && el.value !== "month") S.months = "";
+    saveS();
+    if (el.name === "need" || el.name === "helped" || el.name === "who") { renderWizard(el.name === "need" ? "#need-other" : "[data-amt]"); return; }
+    next().disabled = false;
   }));
-
-  // the line editor — update state in place so focus never jumps
-  q.querySelectorAll("[data-f]").forEach((el) => el.addEventListener("input", () => {
-    const l = S.lines.find((x) => x.id === el.dataset.id);
-    if (!l) return;
-    l[el.dataset.f] = el.value;
-    if (el.dataset.f === "from") el.closest(".line").classList.toggle("guess", el.value === "guess");
-    saveS(); liveTotals();
-    if (el.dataset.f === "what") refreshFreqPills();
+  q.querySelectorAll("[data-amt]").forEach((el) => el.addEventListener("input", () => {
+    S[el.dataset.amt] = el.value; saveS();
+    if (pageId() === "amount") next().disabled = !num(S.amt) || !S.from;
+    if (pageId() === "helped") next().disabled = !num(S.covered);
   }));
-  q.querySelectorAll("[data-rm]").forEach((b) => b.addEventListener("click", () => {
-    S.lines = S.lines.filter((x) => x.id !== b.dataset.rm);
-    if (!S.lines.length) S.lines.push(newLine());
-    saveS(); renderWizard();
-  }));
-  const add = q.querySelector("[data-addline]");
-  if (add) add.addEventListener("click", () => { const l = newLine(); S.lines.push(l); saveS(); renderWizard(l.id); });
-  wireFreqPills();
-
-  // months
-  q.querySelectorAll("[data-s]").forEach((el) => el.addEventListener("input", () => {
-    S[el.dataset.s] = el.value; saveS();
-    const mn = $("#months-note"); if (mn) mn.textContent = monthsNote();
-  }));
-
-  // covered
-  q.querySelectorAll("input[name=cover]").forEach((el) => el.addEventListener("change", () => {
-    el.closest(".opt").classList.toggle("on", el.checked);
-    el.closest(".pick-row").classList.toggle("on", el.checked);
-    if (el.checked) { if (!S.coverOn.includes(el.value)) S.coverOn.push(el.value); }
-    else S.coverOn = S.coverOn.filter((v) => v !== el.value);
-    const none = q.querySelector("input[name=cover-none]");
-    if (none) { none.checked = !S.coverOn.length; none.closest(".opt").classList.toggle("on", none.checked); }
-    if (el.checked) { const inp = q.querySelector(`[data-cover="${el.value}"]`); if (inp) inp.focus(); }
-    saveS(); liveTotals();
-  }));
-  const none = q.querySelector("input[name=cover-none]");
-  if (none) none.addEventListener("change", () => {
-    if (none.checked) {
-      S.coverOn = []; saveS();
-      q.querySelectorAll("input[name=cover]").forEach((c) => { c.checked = false; c.closest(".opt").classList.remove("on"); c.closest(".pick-row").classList.remove("on"); });
-      liveTotals();
-    } else { none.checked = true; }
-    none.closest(".opt").classList.toggle("on", none.checked);
-  });
-  q.querySelectorAll("[data-cover]").forEach((el) => el.addEventListener("input", () => {
-    S.covers[el.dataset.cover] = el.value; saveS(); liveTotals();
-  }));
-
-  // extras — each checked extra is a line with extra:<id>
-  const xlist = isProject() ? EXTRAS_PROJECT : EXTRAS;
-  q.querySelectorAll("input[name=extra]").forEach((el) => el.addEventListener("change", () => {
-    el.closest(".opt").classList.toggle("on", el.checked);
-    el.closest(".pick-row").classList.toggle("on", el.checked);
-    const x = xlist.find((e) => e.id === el.value);
-    if (el.checked) {
-      if (!S.extras.includes(el.value)) S.extras.push(el.value);
-      if (!S.lines.find((l) => l.extra === el.value)) S.lines.push(Object.assign(newLine(x.cat, x.label, el.value), { from: "estimate" }));
-      const inp = q.querySelector(`[data-extra="${el.value}"]`); if (inp) inp.focus();
-    } else {
-      S.extras = S.extras.filter((v) => v !== el.value);
-      S.lines = S.lines.filter((l) => l.extra !== el.value);
-    }
-    saveS(); liveTotals();
-  }));
-  q.querySelectorAll("[data-extra]").forEach((el) => el.addEventListener("input", () => {
-    const l = S.lines.find((x) => x.extra === el.dataset.extra);
-    if (l) { l.amt = el.value; saveS(); liveTotals(); }
-  }));
-  const ob = q.querySelector("[data-addother]");
-  if (ob) ob.addEventListener("click", addOther);
-  const oi = q.querySelector("#other-in");
-  if (oi) oi.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addOther(); } });
-
-  // the door (path one)
-  q.querySelectorAll("input[name=know]").forEach((el) => el.addEventListener("change", () => {
-    q.querySelectorAll("input[name=know]").forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
-    S.door.know = el.value; saveS();
-    $("#door-more").hidden = el.value === "no";
-    q.querySelector("[data-wz=next]").disabled = false;
-  }));
-  q.querySelectorAll("input[name=once]").forEach((el) => el.addEventListener("change", () => {
-    q.querySelectorAll("input[name=once]").forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
-    S.door.once = el.value; saveS();
-  }));
-  q.querySelectorAll("[data-d]").forEach((el) => el.addEventListener("input", () => { S.door[el.dataset.d] = el.value; saveS(); }));
-
-  // the funder (path two)
-  q.querySelectorAll("input[name=fknow]").forEach((el) => el.addEventListener("change", () => {
-    q.querySelectorAll("input[name=fknow]").forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
-    S.funder.know = el.value; saveS();
-    $("#funder-more").hidden = el.value !== "yes";
-    q.querySelector("[data-wz=next]").disabled = false;
-  }));
-  q.querySelectorAll("input[name=ffirst]").forEach((el) => el.addEventListener("change", () => {
-    q.querySelectorAll("input[name=ffirst]").forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
-    S.funder.first = el.value; saveS();
-  }));
-  q.querySelectorAll("[data-fu]").forEach((el) => el.addEventListener("input", () => { S.funder[el.dataset.fu] = el.value; saveS(); }));
-
-  // where
-  const st = q.querySelector("#f-state");
-  if (st) st.addEventListener("change", () => { S.state = st.value; saveS(); });
-
-  // back / next
+  const oth = q.querySelector("#need-other");
+  if (oth) oth.addEventListener("input", () => { S.needOther = oth.value; saveS(); });
   q.querySelectorAll("[data-wz]").forEach((b) => b.addEventListener("click", () => {
     if (b.dataset.wz === "back") { S.step = Math.max(0, S.step - 1); saveS(); renderWizard(); return; }
-    if (S.step >= totalSteps() - 1) { buildNumber(); return; }
-    S.step = Math.min(totalSteps() - 1, S.step + 1);
-    saveS(); renderWizard();
+    if (S.step >= totalSteps() - 1) { S.built = true; saveS(); updateBub(); goTab("sheet"); toast("Here’s your number."); return; }
+    S.step = Math.min(totalSteps() - 1, S.step + 1); saveS(); renderWizard();
   }));
 }
+function updateBub() { $("#bub-sheet").hidden = !S.built; }
 
-/* the "every month" pills under the line editor */
-function refreshFreqPills() {
-  const box = $("#freq-pills");
-  if (!box) return;
-  const named = S.lines.filter((l) => l.what.trim());
-  box.innerHTML = named.map((l) => optPill("check", "monthly", l.id, esc(l.what), l.freq === "month")).join("") ||
-    `<span class="fine" style="margin:0">Name a cost above and it shows up here.</span>`;
-  wireFreqPills();
+/* my number: one amount, one sentence, one place to take it */
+function whatFor() {
+  if (S.need === "other" && S.needOther.trim()) return S.needOther.trim();
+  const n = need(); return n ? n.say : "this";
 }
-function wireFreqPills() {
-  document.querySelectorAll("#freq-pills input[name=monthly]").forEach((el) => el.addEventListener("change", () => {
-    el.closest(".opt").classList.toggle("on", el.checked);
-    const l = S.lines.find((x) => x.id === el.value);
-    if (l) l.freq = el.checked ? "month" : "once";
-    saveS(); liveTotals();
-  }));
-}
-function liveTotals() {
-  const c = calc();
-  const t = $("#running-total"); if (t) t.textContent = money(c.total);
-  const nn = $("#running-note"); if (nn) nn.textContent = runningNote(c);
-  const cv = $("#running-cov"); if (cv) cv.textContent = money(coveredTotal());
-  const next = document.querySelector("#qcard [data-wz=next]");
-  if (next && pageId() === "lines") next.disabled = !realLines().some((l) => num(l.amt) > 0);
-  updateBub();
+function sentence(c) {
+  const paper = S.from === "paper" ? "I have the paperwork to show you. " : "";
+  if (isBiz()) {
+    return "My business needs " + money(c.total) + ". " + (c.covered ? "I'm putting in " + money(c.covered) + " myself. " : "") +
+      "I'm asking for " + money(c.ask) + ". " + paper + "What is the most you can help with, and who else should I talk to?";
+  }
+  const span = S.freq === "month" ? " for " + c.m + (c.m === 1 ? " month" : " months") + " of " + whatFor() : " for " + whatFor();
+  return "I need " + money(c.total) + span + ". " + (c.covered ? "I have " + money(c.covered) + " of it covered. " : "") +
+    "I'm asking for " + money(c.ask) + (c.rest > 0 ? " toward it" : "") + ". " + paper + "What is the most you can help with, and who else should I call?";
 }
 
-function updateBub() {
-  const bub = $("#bub-sheet");
-  const n = realLines().length;
-  bub.hidden = !S.built || !n;
-  bub.textContent = n;
-}
+function renderSheet() {
+  const el = $("#sheet-body");
+  if (!S.built) {
+    el.innerHTML = `<div class="empty-sheet"><div class="q" aria-hidden="true">?</div><h3>No number yet</h3>
+      <p>Take the quiz under <b>01 · The Quiz</b> and your number shows up here.</p>
+      <button class="btn big" data-goto="quiz">Take the quiz →</button></div>`;
+    return;
+  }
+  const c = calc(), n = need(), sp = SPACES[n ? n.space : "bills"];
+  const how = [];
+  how.push(S.freq === "month" ? `<b>${money(num(S.amt))}</b> a month × ${c.m} ${c.m === 1 ? "month" : "months"} = <b>${money(c.total)}</b>.` : `The bill is <b>${money(c.total)}</b>.`);
+  if (c.covered) how.push(`<b>${money(c.covered)}</b> is already covered.`);
+  if (c.rest > 0) how.push(`They give at most <b>${money(c.cap)}</b>, so ask them for that — and ask the next place for the other <b>${money(c.rest)}</b>.`);
+  else if (c.covered) how.push(`That's the gap — the part nobody has paid yet.`);
+  if (S.from === "guess") how.push(`Before you ask, get the bill or a quote. A number on paper is what they'll want to see.`);
 
-/* ==================================================================
-   The number — the whole product. One amount, the math, the sentence,
-   the flags, what one door gives, and where in the community to take it.
-   ================================================================== */
-function buildNumber() {
-  S.built = true;
-  saveS();
-  goTab("sheet");
-  toast("Here’s your number — with the math and what to say.");
+  el.innerHTML = `<div class="number-card"><span class="mono-label">Ask for</span><div class="big">${money(c.ask)}</div><p class="how">${how.join(" ")}</p></div>
+    <div class="card" style="max-width:820px"><span class="mono-label">Say it like this</span>
+      <div class="say"><p class="said">“${esc(sentence(c))}”</p></div>
+      <button class="btn ghost noprint" id="btn-copy-say">⧉ Copy the sentence</button></div>
+    <div class="mini t-yellow" data-suit="♦" style="max-width:820px"><span class="mono-label">Take your number here</span>
+      <p>${n ? `<a href="${n.guide.url}" target="_blank" rel="noopener">${esc(n.guide.n)}</a> · ` : ""}<a href="${sp.url}" target="_blank" rel="noopener">${esc(sp.n)}</a> · or paste your sentence in the <a href="${SPACES.questions.url}" target="_blank" rel="noopener">Questions Channel</a>.</p></div>
+    <div class="mini t-green" data-suit="♣" style="max-width:820px"><span class="mono-label">When you get a yes</span>
+      <p>Post it in <a href="${SPACES.success.url}" target="_blank" rel="noopener">Success Stories</a> — your number is the map for the next member.</p></div>`;
+  $("#btn-copy-say").addEventListener("click", () => copyText(sentence(c), "Copied. Say it just like that."));
 }
 
 async function copyText(txt, okMsg) {
   try { await navigator.clipboard.writeText(txt); toast(okMsg); }
   catch (e) {
-    const ta = document.createElement("textarea");
-    ta.value = txt; document.body.appendChild(ta); ta.select();
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select();
     try { document.execCommand("copy"); toast(okMsg); } catch (e2) { toast("Couldn't copy automatically — use Print instead."); }
     ta.remove();
   }
 }
-
-function topLines(c, k) {
-  return [...c.lines].sort((a, b) => lineTotal(b) - lineTotal(a)).slice(0, k).map((l) => l.what.trim() || "a cost");
-}
-function joinList(a) { return a.length <= 1 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
-
-function sentence(c) {
-  const where = stateName() ? "I'm in " + stateName() + ". " : "";
-  const what = joinList(topLines(c, 3));
-  const paper = c.paper ? (c.paper === c.lines.length ? "I have the bills and quotes to show you. " : "I have paperwork for " + c.paper + " of the " + c.lines.length + " costs. ") : "";
-  if (isProject()) {
-    const own = c.covered ? "I'm putting in " + money(c.covered) + " myself. " : "";
-    const first = S.funder.first === "yes" ? "This is my first application to you. " : "";
-    return "The project costs " + money(c.total) + " in total, for " + what + ". " + own +
-      "I'm asking for " + money(c.ask) + (c.remainder ? ", which is your maximum" : "") + ". " +
-      paper + first + "Every line has a reason behind it, and I can send the budget.";
-  }
-  const cov = c.covered ? "I have " + money(c.covered) + " covered already. " : "";
-  const askTxt = c.remainder
-    ? "I'm asking you for " + money(c.ask) + " toward it, and I'm working on the rest with other programs. "
-    : "I'm asking for " + money(c.ask) + ". ";
-  return where + "My total shortfall is " + money(c.gap) + " for " + what + ". " + cov + askTxt + paper +
-    "What is the most you can help with, and who else should I call?";
-}
-
-function flagsFor(c) {
-  const F = [];
-  const doorsFor = matchedDoors(c).filter((d) => d.cap);
-  if (c.noAmt) F.push(["<b>" + c.noAmt + (c.noAmt === 1 ? " cost has" : " costs have") + " no amount yet.</b> Your number doesn't include them. Get the price and come back."]);
-  if (c.guesses) F.push(["<b>" + c.guesses + (c.guesses === 1 ? " line is a guess." : " lines are guesses.") + "</b> A round number with nothing behind it reads as a guess to the person deciding. Get the bill, the quote or the letter before you apply."]);
-  if (c.remainder) F.push(["<b>Bigger than this door.</b> Your gap is " + money(c.gap) + " but the most they give is " + money(c.cap) + ". Ask them for " + money(c.ask) + " and plan on " + money(c.remainder) + " from other doors — and never ask two doors for the same bill."]);
-  if (!isProject() && !c.remainder && doorsFor.length) {
-    const biggest = Math.max(...doorsFor.map((d) => d.cap));
-    if (c.gap > biggest) F.push(["<b>Bigger than one door.</b> " + money(c.gap) + " is more than a single program usually gives (the largest typical amount below is " + money(biggest) + "). Split it: one bigger application plus two or three smaller doors, each for a different bill."]);
-  }
-  if (c.ongoing.length) F.push(isProject()
-    ? ["<b>" + c.ongoing.length + (c.ongoing.length === 1 ? " line repeats every month." : " lines repeat every month.") + "</b> Reviewers ask what happens when the grant ends. Say how those costs get paid after — sales, a second grant, your own share."]
-    : ["<b>Monthly costs, one-time money.</b> Emergency help pays a set number of months, not forever. Your number covers " + (months() || 1) + (months() === 1 ? " month" : " months") + " — say that when you ask, and ask what happens after."]);
-  if (isProject() && c.total > 0 && c.covered === 0) F.push(["<b>You're asking for 100%.</b> Funders want to see your share — cash, your own hours, equipment you own. Go back one page and add what you can put in."]);
-  if (isProject() && S.funder.first === "yes" && c.share > 0.6 && c.covered > 0) F.push(["<b>A big first ask.</b> You're asking for " + Math.round(c.share * 100) + "% of the project from a funder who has never funded you. First-timers usually get 40–60%. Consider asking for less, or splitting across two funders."]);
-  if (isProject() && c.usual > 0 && c.ask > c.usual && !c.remainder) F.push(["<b>Above their usual.</b> They usually give " + money(c.usual) + "; you're asking " + money(c.ask) + ". Inside their maximum, but expect a partial yes — most funders give part of what's asked."]);
-  if (c.lines.some((l) => /misc|contingen|buffer|just in case/i.test(l.what))) F.push(["<b>A \"miscellaneous\" line.</b> Funders reject it every time. Name what it's for, or take it out."]);
-  if (!isProject() && S.door.once === "year" && !c.remainder) F.push(["<b>Once a year.</b> This door helps once per 12 months. Ask for the full " + money(c.ask) + " now — asking too little means waiting a year to try again."]);
-  if (!F.length) F.push(["<b>Clean number.</b> Every line has an amount and a source, and it fits what you told us about the door. Print it and take it with you.", true]);
-  return F;
-}
-
-function matchedDoors(c) {
-  const cats = new Set(c.cats);
-  return DOORS.filter((d) => d.cats.some((k) => cats.has(k)));
-}
-function commLinks(c) {
-  const seen = new Set(); const out = [];
-  for (const cat of c.cats) {
-    for (const k of (COMM[cat] || [])) {
-      const item = typeof k === "string" ? SPACES[k] : k;
-      if (!seen.has(item.url)) { seen.add(item.url); out.push(item); }
-    }
-  }
-  return out.slice(0, 6);
-}
-
-function renderSheet() {
-  const el = $("#sheet-body");
-  const c = calc();
-  if (!S.built || !c.lines.length) {
-    el.innerHTML = `<div class="empty-sheet">
-      <div class="q" aria-hidden="true">?</div>
-      <h3>No number yet</h3>
-      <p>Take the quiz under <b>01 · The Quiz</b>. Your bills and quotes go in, one clear amount comes out — right here.</p>
-      <button class="btn big" data-goto="quiz">Take the quiz →</button>
-    </div>`;
-    return;
-  }
-  $("#print-date").textContent = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-  const pathLabel = PATHS.find((p) => p.id === S.path)?.label || "";
-  $("#sheet-lead").innerHTML = `<b>${esc(pathLabel)}</b>${stateName() ? " · " + esc(stateName()) : ""}. One number, the math behind it, and what to say when you ask.`;
-
-  const m = months();
-  let html = `<div class="number-card">
-    <span class="mono-label">Ask for</span>
-    <div class="big">${money(c.ask)}<small>${c.remainder ? "from this door · " + money(c.remainder) + " still to find" : isProject() ? "of a " + money(c.total) + " project" : "the gap after what's covered"}</small></div>
-    <p class="how">${c.lines.length} ${c.lines.length === 1 ? "cost" : "costs"} add up to <b>${money(c.total)}</b>${m && hasMonthly() ? " (monthly costs × " + m + " months)" : ""}.
-      ${c.covered ? "<b>" + money(c.covered) + "</b> is already covered. " : "Nothing is covered yet. "}
-      ${c.cap ? "The most this door gives is <b>" + money(c.cap) + "</b>. " : ""}</p>
-    <div class="stat-row">
-      <div class="stat"><b>${money(c.total)}</b><span>Real cost</span></div>
-      <div class="stat"><b>− ${money(c.covered)}</b><span>Already covered</span></div>
-      <div class="stat"><b>${c.paper} of ${c.lines.length}</b><span>From a bill or quote</span></div>
-    </div>
-  </div>`;
-
-  html += `<div class="card">
-    <span class="mono-label">Say it in one breath</span>
-    <div class="say"><p class="said" id="say-text">“${esc(sentence(c))}”</p></div>
-    <button class="btn small ghost noprint" id="btn-copy-say">⧉ Copy the sentence</button>
-  </div>`;
-
-  html += `<div class="flags">${flagsFor(c).map(([t, ok]) => `<div class="flag ${ok ? "ok" : ""}"><span class="s">${ok ? "♣" : "♥"}</span><span>${t}</span></div>`).join("")}</div>`;
-
-  const cats = isProject() ? CATS_PROJECT : CATS_BILL;
-  html += `<span class="mono-label">The budget — take this with you</span>
-  <div class="tablewrap" style="margin-top:8px"><table>
-    <thead><tr><th>What</th><th>Kind</th><th>Where the number is from</th><th class="num">Amount</th></tr></thead>
-    <tbody>
-      ${c.lines.map((l) => {
-        const f = FROMS.find((x) => x.id === l.from);
-        const tag = !f || l.from === "guess" ? `<span class="tag guess">guess</span>` : f.paper ? `<span class="tag paper">paper</span>` : "";
-        const mo = l.freq === "month" ? `<span class="tag month">× ${m || 1} mo</span>` : "";
-        return `<tr><td>${esc(l.what.trim() || "(no name)")}${mo}</td><td>${esc(cats.find((k) => k.id === l.cat)?.label || "—")}</td><td>${esc(f ? f.label : "Not said")}${tag}</td><td class="num">${num(l.amt) ? money(lineTotal(l)) : "—"}</td></tr>`;
-      }).join("")}
-      <tr class="total"><td colspan="3">Real cost</td><td class="num">${money(c.total)}</td></tr>
-      ${S.coverOn.filter((id) => num(S.covers[id]) > 0).map((id) => {
-        const list = S.path === "disaster" ? COVERS_DISASTER : isProject() ? COVERS_PROJECT : COVERS_BILL;
-        return `<tr class="minus"><td colspan="3">Covered · ${esc(list.find((x) => x.id === id)?.label || id)}</td><td class="num">− ${money(num(S.covers[id]))}</td></tr>`;
-      }).join("")}
-      <tr class="total"><td colspan="3">${isProject() ? "Asking for" : "The gap — what to ask for"}</td><td class="num">${money(c.gap)}</td></tr>
-      ${c.remainder ? `<tr><td colspan="3">From this door (their most)</td><td class="num">${money(c.ask)}</td></tr><tr><td colspan="3">Still to find elsewhere</td><td class="num">${money(c.remainder)}</td></tr>` : ""}
-    </tbody></table></div>`;
-
-  const doors = matchedDoors(c);
-  if (doors.length) {
-    html += `<div class="card">
-      <span class="mono-label">What one door typically gives · checked ${CHECKED} · a guide, not a promise</span>
-      <ul class="doors" style="margin-top:8px">
-        ${doors.map((d) => `<li><span class="d-name">${esc(d.n)}</span><span class="d-range">${esc(d.r)}</span><span class="d-note">Source: <a href="${d.url}" target="_blank" rel="noopener">${esc(d.src)}</a></span></li>`).join("")}
-      </ul>
-    </div>`;
-  }
-
-  const links = commLinks(c);
-  html += `<div class="mini t-yellow" data-suit="♦">
-    <span class="mono-label">Take your number here</span>
-    <ul class="comm" style="margin-top:8px">
-      ${links.map((l) => `<li><span class="s" style="color:#b8860b">♦</span><span><a href="${l.url}" target="_blank" rel="noopener">${esc(l.n)}</a></span></li>`).join("")}
-      <li><span class="s" style="color:var(--blue)">♠</span><span><a href="${SPACES.questions.url}" target="_blank" rel="noopener">Questions Channel</a> <span class="c-what">— paste your sentence and ask where to take it</span></span></li>
-      <li><span class="s" style="color:var(--red)">♥</span><span><a href="${SPACES.callsheets.url}" target="_blank" rel="noopener">Call Sheet Classes</a> <span class="c-what">— one problem = one call sheet; bring the budget</span></span></li>
-      <li><span class="s" style="color:var(--green)">♣</span><span><a href="${GUIDES.step5.url}" target="_blank" rel="noopener">${esc(GUIDES.step5.n)}</a> <span class="c-what">— the paperwork to gather before you apply</span></span></li>
-    </ul>
-  </div>
-  <div class="mini t-green" data-suit="♣">
-    <span class="mono-label">When you get a yes</span>
-    <p>Post it in <a href="${SPACES.success.url}" target="_blank" rel="noopener">Success Stories</a> — your number is the map for the next member.</p>
-  </div>`;
-
-  el.innerHTML = html;
-  const cs = $("#btn-copy-say");
-  if (cs) cs.addEventListener("click", () => copyText(sentence(c), "Copied. Say it just like that."));
-}
-
-/* ==================================================================
-   Copy as text
-   ================================================================== */
 function sheetAsText() {
-  const c = calc();
-  const cats = isProject() ? CATS_PROJECT : CATS_BILL;
-  const m = months();
-  const L = [];
-  L.push("HOW MUCH SHOULD I ASK FOR — Lesko Help");
-  L.push((stateName() ? stateName() + " · " : "") + new Date().toLocaleDateString("en-US"));
-  L.push("");
-  L.push("ASK FOR: " + money(c.ask) + (c.remainder ? " from this door · " + money(c.remainder) + " still to find" : ""));
-  L.push("");
-  L.push("THE BUDGET");
-  c.lines.forEach((l) => {
-    const f = FROMS.find((x) => x.id === l.from);
-    L.push("  " + (l.what.trim() || "(no name)") + (l.freq === "month" ? " × " + (m || 1) + " mo" : "") +
-      " — " + (num(l.amt) ? money(lineTotal(l)) : "no amount yet") +
-      " — " + (cats.find((k) => k.id === l.cat)?.label || "") +
-      " — " + (f ? f.label : "not said"));
-  });
-  L.push("  Real cost: " + money(c.total));
-  S.coverOn.filter((id) => num(S.covers[id]) > 0).forEach((id) => {
-    const list = S.path === "disaster" ? COVERS_DISASTER : isProject() ? COVERS_PROJECT : COVERS_BILL;
-    L.push("  Covered · " + (list.find((x) => x.id === id)?.label || id) + ": − " + money(num(S.covers[id])));
-  });
-  L.push("  " + (isProject() ? "Asking for" : "The gap") + ": " + money(c.gap));
-  L.push("");
-  L.push("SAY: “" + sentence(c) + "”");
-  L.push("");
-  L.push("WATCH OUT");
-  flagsFor(c).forEach(([t]) => L.push("  • " + t.replace(/<[^>]+>/g, "")));
-  const doors = matchedDoors(c);
-  if (doors.length) {
-    L.push("");
-    L.push("WHAT ONE DOOR TYPICALLY GIVES (checked " + CHECKED + " — a guide, not a promise)");
-    doors.forEach((d) => L.push("  • " + d.n + ": " + d.r + " (" + d.src + ")"));
-  }
-  L.push("");
-  L.push("TAKE IT HERE");
-  commLinks(c).forEach((l) => L.push("  " + l.n + ": " + l.url));
-  L.push("  Questions Channel: " + SPACES.questions.url);
-  L.push("  Call Sheet Classes: " + SPACES.callsheets.url);
-  L.push("  Got a yes? Success Stories: " + SPACES.success.url);
-  L.push("— Lesko Help · Real numbers, one ask.");
-  return L.join("\n");
+  const c = calc(), n = need();
+  return ["HOW MUCH SHOULD I ASK FOR — Lesko Help", new Date().toLocaleDateString("en-US"), "",
+    "ASK FOR: " + money(c.ask) + (c.rest > 0 ? " (their most) · " + money(c.rest) + " still to ask for elsewhere" : ""),
+    "Total: " + money(c.total) + (c.covered ? " · Covered: " + money(c.covered) : ""), "",
+    "SAY: “" + sentence(c) + "”", "",
+    n ? "Guide: " + n.guide.url : "", "Questions Channel: " + SPACES.questions.url,
+    "— Lesko Help · One bill = one ask."].join("\n");
 }
-
-/* ==================================================================
-   Buttons
-   ================================================================== */
 $("#btn-copy").addEventListener("click", () => copyText(sheetAsText(), "Copied. Paste it into notes, a text, or an email to yourself."));
 $("#btn-print").addEventListener("click", () => window.print());
 $("#btn-wipe").addEventListener("click", () => {
-  if (!confirm("Erase your costs, answers and number from this device? There's no undo.")) return;
+  if (!confirm("Erase your answers and your number from this device? There's no undo.")) return;
   try { localStorage.removeItem(LS_KEY); } catch (e) {}
   location.reload();
 });
 
-/* ==================================================================
-   Boot
-   ================================================================== */
-loadS();
-renderWizard();
-updateBub();
+loadS(); renderWizard(); updateBub();
 </script>
 </body>
 </html>
