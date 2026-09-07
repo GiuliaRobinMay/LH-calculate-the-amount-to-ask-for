@@ -19,47 +19,9 @@
     --red-soft: #fce7e5;
     --gold:     #b8860b;
     --gold-2:   #e9a725;
+    color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper:    #131b30;
-      --card:     #1a2440;
-      --ink:      #f0ead9;
-      --ink-soft: #b8bfd2;
-      --ink-faint:#7e88a3;
-      --line:     rgba(240,234,217,.22);
-      --line-soft:rgba(240,234,217,.12);
-      --red:      #ff6b5e;
-      --yellow:   #f6c544;
-      --yellow-soft:#3a3114;
-      --blue:     #8ea2ff;
-      --blue-soft:#1e2a52;
-      --green:    #57c383;
-      --green-soft:#1d3a2c;
-      --red-soft: #3d1f1d;
-      --gold:     #e9c05a;
-      --gold-2:   #e9a725;
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper:    #131b30;
-    --card:     #1a2440;
-    --ink:      #f0ead9;
-    --ink-soft: #b8bfd2;
-    --ink-faint:#7e88a3;
-    --line:     rgba(240,234,217,.22);
-    --line-soft:rgba(240,234,217,.12);
-    --red:      #ff6b5e;
-    --yellow:   #f6c544;
-    --yellow-soft:#3a3114;
-    --blue:     #8ea2ff;
-    --blue-soft:#1e2a52;
-    --green:    #57c383;
-    --green-soft:#1d3a2c;
-    --red-soft: #3d1f1d;
-    --gold:     #e9c05a;
-    --gold-2:   #e9a725;
-  }
+  html { color-scheme: light; }
 
   * { box-sizing: border-box; }
   body {
@@ -150,17 +112,23 @@
 
   /* thesis */
   .thesis {
-    border: 1px solid var(--line);
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(203,150,20,.4);
     border-radius: 14px;
-    background: var(--ink);
-    color: #fdfbf4;
+    background: var(--yellow-soft);
     padding: 20px 22px;
     margin: 26px 0 8px;
   }
-  .thesis .mono { color: var(--yellow); }
-  .thesis h3 { color: #fff; font-weight: 400; font-size: 22px; margin: 6px 0 8px; }
-  .thesis p { margin: 0; color: rgba(253,251,244,.88); font-size: 15px; }
-  .thesis b { color: #fff; }
+  .thesis::after {
+    content: "?";
+    position: absolute; right: 6px; bottom: -34px;
+    font-family: "Source Serif 4", Palatino, serif;
+    font-size: 120px; line-height: 1; color: var(--gold); opacity: .12; pointer-events: none;
+  }
+  .thesis .mono { color: var(--gold); }
+  .thesis h3 { font-weight: 400; font-size: 22px; margin: 6px 0 8px; position: relative; }
+  .thesis p { margin: 0; color: var(--ink-soft); font-size: 15px; position: relative; }
+  .thesis b { color: var(--ink); }
 
   /* two-kinds split */
   .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 6px; }
