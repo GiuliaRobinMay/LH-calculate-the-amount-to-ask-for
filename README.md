@@ -3,10 +3,10 @@
 A small quiz for the **Lesko Toolbox** (Mighty Networks space "Calculate My Funding Amount",
 space id 24870522). Sister to "What Should I Ask For?".
 
-Five quick questions (six if the cost comes every month): what the money is for, how much
-the bill is and where that number came from, one time or every month, whether part of it is
-already paid, and whether the member knows who they'll ask. Out comes one number to ask for,
-one sentence to say, and one link into the community.
+Three short pages: check your problems, put an amount next to each, and say whether you already
+have some of it. Out comes the total, the little budget, and one sentence to say.
+
+
 
 One static HTML file (`index.html`), vanilla JS, everything stays on the member's device,
 no sign-up, never asks for an SSN or bank details, light cream only.

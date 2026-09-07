@@ -119,6 +119,18 @@ h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
 .amount input { width: 100%; font: inherit; font-family: var(--serif); font-size: 28px; padding: 10px 14px 10px 34px; border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--paper-2); color: var(--ink); font-variant-numeric: tabular-nums; }
 .amount input:focus { outline: 2px solid var(--gold-2); outline-offset: 1px; }
 .amount input::placeholder { color: var(--ink-faint); font-size: 18px; }
+.rows { display: grid; gap: 10px; max-width: 560px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 12px; align-items: center; }
+.row .lbl { font-size: 16px; }
+.row .lbl .s { font-family: var(--suit-font); font-size: .8em; color: var(--ink-faint); margin-right: 6px; }
+.row .amount { margin: 0; max-width: none; }
+@media (max-width: 480px) { .row { grid-template-columns: 1fr; gap: 4px; } }
+.budget { list-style: none; margin: 0; padding: 0; max-width: 560px; position: relative; }
+.budget li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--hairline-soft); font-size: 16px; }
+.budget li:first-child { border-top: 0; }
+.budget li b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.budget li.minus { color: var(--ink-soft); }
+.budget li.total { border-top: 1px solid var(--hairline); font-weight: 700; }
 .other-row { display: flex; gap: 8px; margin-top: 12px; max-width: 460px; }
 .other-row input { flex: 1; font: inherit; font-size: 15px; padding: 9px 14px; border: 1px solid var(--hairline); border-radius: 999px; background: var(--paper-2); color: var(--ink); }
 .other-row input::placeholder { color: var(--ink-faint); }
@@ -172,8 +184,8 @@ h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
   <section class="hero">
     <div>
       <h1>Get clear on how much to <em>ask for.</em></h1>
-      <p class="hero-sub">Take the quiz. A few quick questions, and you get one number to
-      ask for — and what to say.</p>
+      <p class="hero-sub">Take the quiz. Check your problems, put a number next to each, and
+      it adds up to one amount to ask for — and what to say.</p>
     </div>
     <aside class="privacy-chip">
       <span class="mono-label">🔒&nbsp; 100% Private</span>
@@ -196,7 +208,7 @@ h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
     <div class="sheet-top">
       <div>
         <h2>Here’s how much to <em>ask for</em><span class="point-chip">This number is the point</span></h2>
-        <p class="lead">One number, and what to say when you ask.</p>
+        <p class="lead">Your little budget, one total, and what to say when you ask.</p>
       </div>
       <div class="sheet-actions noprint">
         <button class="btn ghost" id="btn-copy">⧉ Copy as text</button>
@@ -238,55 +250,69 @@ h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* The questions. Each comes from a real rule of grant-seeking (research/),
-   but the member only sees a pill to tap. */
+/* Lesko Help — How Much Should I Ask For?
+   A little budget: tick the problems, put an amount next to each, and the
+   app adds it up. Three pages. Everything stays in this browser. */
 const SPACES = {
-  housing:   { n: "Home & Housing Help",               url: "https://lesko-help-2.mn.co/spaces/17886022" },
-  bills:     { n: "Bills · Debt · Homes & Cars",       url: "https://lesko-help-2.mn.co/spaces/18392931" },
-  business:  { n: "Business · Nonprofits & Career",    url: "https://lesko-help-2.mn.co/spaces/18083958" },
-  health:    { n: "Healthcare Assistance",             url: "https://lesko-help-2.mn.co/spaces/18453836" },
-  families:  { n: "Families · Seniors & Disabilities", url: "https://lesko-help-2.mn.co/spaces/20982263" },
-  cars:      { n: "Cars & Car Repairs",                url: "https://lesko-help-2.mn.co/spaces/21731257" },
-  questions: { n: "Questions Channel",                 url: "https://lesko-help-2.mn.co/spaces/11054387" },
-  success:   { n: "Success Stories",                   url: "https://lesko-help-2.mn.co/spaces/10351370" }
+  questions: { n: "Questions Channel",      url: "https://lesko-help-2.mn.co/spaces/11054387" },
+  askfor:    { n: "What Should I Ask For?", url: "https://lesko-help-2.mn.co/spaces/24870501" },
+  callsheets:{ n: "Call Sheet Classes",     url: "https://lesko-help-2.mn.co/spaces/24440881" },
+  success:   { n: "Success Stories",        url: "https://lesko-help-2.mn.co/spaces/10351370" }
 };
-const G_ = "https://lesko-help-2.mn.co/posts/";
+
+/* the problems — same topics as the community, in member words */
 const NEEDS = [
-  { id: "rent",     suit: "♠", label: "Rent, or a place to live",     say: "rent",              guide: { n: "Guide: Rent & Eviction Help", url: G_ + "bills-debt-homes-cars-rent-eviction-help" }, space: "housing" },
-  { id: "utility",  suit: "♦", label: "Electric, gas, water or heat", say: "my utility bill",   guide: { n: "Guide: Utility Assistance, Energy & Water", url: G_ + "bills-debt-homes-cars-utility-assistance-energy-water" }, space: "bills" },
-  { id: "repair",   suit: "♠", label: "Fixing my home",               say: "a home repair",     guide: { n: "Guide: Home Repair & Energy Upgrade", url: G_ + "bills-debt-homes-cars-home-repair-energy-upgrade" }, space: "housing" },
-  { id: "car",      suit: "♥", label: "My car",                       say: "my car",            guide: { n: "Guide: Car Repair & Vehicle Help", url: G_ + "bills-debt-homes-cars-car-repair-vehicle-help" }, space: "cars" },
-  { id: "medical",  suit: "♣", label: "A medical or dental bill",     say: "a medical bill",    guide: { n: "Guide: Medical Bills Assistance", url: G_ + "healthcare-assistance-medical-bills-assistance" }, space: "health" },
-  { id: "funeral",  suit: "♥", label: "A funeral",                    say: "a funeral",         guide: { n: "Guide: How to Get Companies to Forgive Debt & Bills", url: G_ + "bills-debt-homes-cars-how-to-get-companies-to-forgive-debt-bills" }, space: "families" },
-  { id: "food",     suit: "♥", label: "Food",                         say: "food",              guide: { n: "Guide: Food & Grocery Help", url: G_ + "bills-debt-homes-cars-food-grocery-help" }, space: "bills" },
-  { id: "school",   suit: "♦", label: "School or training",           say: "school",            guide: { n: "Guide: Help for Families & Children", url: G_ + "families-seniors-disabilities-help-for-families-children" }, space: "families" },
-  { id: "business", suit: "♠", label: "My business",                  say: "my business",       guide: { n: "Guide: General Business Grants & Funding Opportunities", url: G_ + "business-nonprofits-career-general-business-grants-funding-opportunities" }, space: "business" },
-  { id: "other",    suit: "♣", label: "Something else",               say: "this",              guide: { n: "Guide: Contact These 10 Key Organizations First", url: G_ + "bills-debt-homes-cars-contact-these-10-key-organizations-first" }, space: "bills" }
+  { id: "rent",     suit: "♠", label: "Rent, or a place to live",      say: "rent" },
+  { id: "utility",  suit: "♦", label: "Electric, gas, water or heat",  say: "my utility bills" },
+  { id: "repair",   suit: "♠", label: "Fixing my home",                say: "a home repair" },
+  { id: "car",      suit: "♥", label: "My car",                        say: "my car" },
+  { id: "medical",  suit: "♣", label: "A medical or dental bill",      say: "a medical bill" },
+  { id: "rx",       suit: "♣", label: "Prescriptions",                 say: "prescriptions" },
+  { id: "food",     suit: "♥", label: "Food",                          say: "food" },
+  { id: "phone",    suit: "♦", label: "Phone or internet",             say: "my phone and internet" },
+  { id: "debt",     suit: "♦", label: "Debt or collectors",            say: "debt" },
+  { id: "funeral",  suit: "♥", label: "A funeral",                     say: "a funeral" },
+  { id: "kids",     suit: "♥", label: "Childcare or school costs",     say: "childcare and school costs" },
+  { id: "papers",   suit: "♣", label: "Social Security, ID or legal papers", say: "getting my papers in order" },
+  { id: "legal",    suit: "♣", label: "A lawyer or court costs",       say: "legal costs" },
+  { id: "moving",   suit: "♠", label: "Deposit or moving costs",       say: "a deposit and moving" },
+  { id: "business", suit: "♠", label: "My business",                   say: "my business" },
+  { id: "school",   suit: "♦", label: "School or training for me",     say: "school" }
 ];
-const FROMS  = [{ id: "paper", label: "A bill, a letter or a quote" }, { id: "told", label: "Someone told me the price" }, { id: "guess", label: "I'm guessing" }];
-const FREQS  = [{ id: "once", label: "One time" }, { id: "month", label: "Every month" }];
-const MONTHS = [{ id: "1", label: "1 month" }, { id: "2", label: "2 months" }, { id: "3", label: "3 months" }, { id: "4", label: "4 months" }, { id: "6", label: "6 months" }];
-const HELPED = [{ id: "no", label: "No, nothing yet" }, { id: "yes", label: "Yes, part of it" }];
-const WHO    = [{ id: "notyet", label: "Not yet" }, { id: "first", label: "Yes — first time asking them" }, { id: "again", label: "Yes — they helped me before" }];
 
 /* state */
-const LS_KEY = "lh-howmuch-v1";
-const blank = () => ({ step: 0, need: "", needOther: "", amt: "", from: "", freq: "", months: "", helped: "", covered: "", who: "", cap: "", built: false });
+const LS_KEY = "lh-howmuch-v2";
+const blank = () => ({ step: 0, picked: [], other: [], amts: {}, have: "", haveAmt: "", built: false });
 let S = blank();
 function loadS() {
   try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+  if (!Array.isArray(S.picked)) S.picked = [];
+  if (!Array.isArray(S.other)) S.other = [];
+  if (!S.amts) S.amts = {};
   if (typeof S.step !== "number" || S.step < 0) S.step = 0;
-  S.step = Math.min(S.step, totalSteps() - 1);
+  S.step = Math.min(S.step, TOTAL - 1);
 }
 function saveS() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
 
+const TOTAL = 3;
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const num = (v) => { const n = parseFloat(String(v ?? "").replace(/[^0-9.]/g, "")); return isFinite(n) && n > 0 ? n : 0; };
 const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
-const need = () => NEEDS.find((n) => n.id === S.need);
-const isBiz = () => S.need === "business";
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._h); toast._h = setTimeout(() => t.classList.remove("show"), 2600); }
+
+/* every item on the list: picked problems + the member's own words */
+function items() {
+  const out = NEEDS.filter((n) => S.picked.includes(n.id)).map((n) => ({ key: n.id, suit: n.suit, label: n.label, say: n.say }));
+  S.other.forEach((t, i) => out.push({ key: "o" + i, suit: "♣", label: t, say: t, own: true }));
+  return out;
+}
+function calc() {
+  const rows = items().map((it) => ({ ...it, amt: num(S.amts[it.key]) }));
+  const total = rows.reduce((t, r) => t + r.amt, 0);
+  const have = S.have === "yes" ? Math.min(num(S.haveAmt), total) : 0;
+  return { rows, total, have, ask: Math.max(0, total - have), missing: rows.filter((r) => !r.amt).length };
+}
 
 /* tabs */
 const PANELS = ["quiz", "sheet", "privacy"];
@@ -301,152 +327,128 @@ document.addEventListener("click", (e) => {
   const go = e.target.closest("[data-goto]"); if (go) { e.preventDefault(); goTab(go.dataset.goto); }
 });
 
-/* the math: total − what's covered = the gap; never more than the door's limit */
-function calc() {
-  const m = S.freq === "month" ? Math.max(1, parseInt(S.months, 10) || 1) : 1;
-  const total = num(S.amt) * m;
-  const covered = S.helped === "yes" ? Math.min(num(S.covered), total) : 0;
-  const gap = Math.max(0, total - covered);
-  const cap = S.who && S.who !== "notyet" ? num(S.cap) : 0;
-  const ask = cap > 0 && gap > cap ? cap : gap;
-  return { m, total, covered, gap, cap, ask, rest: gap - ask };
-}
-
-/* the quiz: 5 pages, 6 if the cost comes every month */
-function pages() { const p = ["need", "amount", "freq"]; if (S.freq === "month") p.push("months"); p.push("helped", "who"); return p; }
-function totalSteps() { return pages().length; }
-function pageId() { return pages()[Math.min(S.step, totalSteps() - 1)]; }
-
-function optPill(name, value, label, checked) {
-  return `<label class="opt ${checked ? "on" : ""}"><input type="radio" name="${name}" value="${esc(value)}" ${checked ? "checked" : ""}>
+/* the quiz — three pages */
+function optPill(kind, name, value, label, checked) {
+  return `<label class="opt ${kind === "check" ? "sq" : ""} ${checked ? "on" : ""}"><input type="${kind}" name="${name}" value="${esc(value)}" ${checked ? "checked" : ""}>
     <span class="dot" aria-hidden="true"></span><span>${label}</span></label>`;
 }
-function pills(name, list, current) { return `<div class="opts">${list.map((o) => optPill(name, o.id, esc(o.label), current === o.id)).join("")}</div>`; }
 function amountBox(key, placeholder) {
-  return `<div class="amount"><div class="money"><input inputmode="decimal" data-amt="${key}" value="${esc(S[key])}" placeholder="${esc(placeholder || "0")}" aria-label="Amount in dollars"></div></div>`;
+  return `<div class="amount"><div class="money"><input inputmode="decimal" data-amt="${esc(key)}" value="${esc(S.amts[key] ?? (key === "__have" ? S.haveAmt : ""))}" placeholder="${esc(placeholder || "0")}" aria-label="Amount in dollars"></div></div>`;
 }
 function wizHead(n, title, help, suit) {
-  return `<div class="qhead"><span class="mono-label">Page ${n} of ${totalSteps()}</span>
-    <div class="qtrack"><i style="width:${Math.round(((n - 1) / totalSteps()) * 100)}%"></i></div></div>
+  return `<div class="qhead"><span class="mono-label">Page ${n} of ${TOTAL}</span>
+    <div class="qtrack"><i style="width:${Math.round(((n - 1) / TOTAL) * 100)}%"></i></div></div>
     <h3 class="qtitle">${suit ? `<span class="s">${suit}</span>` : ""}${title}</h3><p class="qhelp">${help}</p>`;
 }
 function wizFoot(n, disabled) {
-  const last = n === totalSteps();
+  const last = n === TOTAL;
   return `<div class="qfoot"><button class="btn ghost" data-wz="back" ${n === 1 ? "style='visibility:hidden'" : ""}>← Back</button>
-    <span class="fine">${n === 1 ? "A few quick questions. Private. Not an application." : ""}</span>
-    <button class="btn ${last ? "big" : ""}" data-wz="next" ${disabled ? "disabled" : ""}>${last ? "Show my number →" : "Next →"}</button></div>`;
+    <span class="fine">${n === 1 ? "Three short pages. Private. Not an application." : ""}</span>
+    <button class="btn ${last ? "big" : ""}" data-wz="next" ${disabled ? "disabled" : ""}>${last ? "Add it up →" : "Next →"}</button></div>`;
 }
 
 function renderWizard(focus) {
-  const q = $("#qcard"), n = S.step + 1, id = pageId();
+  const q = $("#qcard"), n = S.step + 1;
   let inner = "", disabled = false;
 
-  if (id === "need") {
-    inner = wizHead(n, "What do you need the money <em>for?</em>", "Pick the one that fits. One bill = one ask.");
-    inner += `<div class="opts">${NEEDS.map((x) => optPill("need", x.id, `<span style="font-family:var(--suit-font);font-size:.8em;color:var(--ink-faint)">${x.suit}</span> ${esc(x.label)}`, S.need === x.id)).join("")}</div>`;
-    if (S.need === "other") inner += `<div class="other-row"><input id="need-other" maxlength="80" value="${esc(S.needOther)}" placeholder="What is it? A few words is fine." aria-label="What is it?"></div>`;
-    disabled = !S.need;
-  } else if (id === "amount") {
-    inner = wizHead(n, isBiz() ? "How much does it <em>cost</em>, all together?" : "How much is the bill, <em>all together?</em>",
-      isBiz() ? "Add up everything the money needs to buy. A rough total is fine for now." : "Whatever it says on the bill, the letter or the quote. If it comes every month, put one month here.", "♥");
-    inner += amountBox("amt");
-    inner += `<div class="optgroup"><span class="mono-label">Where is that number from?</span>${pills("from", FROMS, S.from)}</div>`;
-    disabled = !num(S.amt) || !S.from;
-  } else if (id === "freq") {
-    inner = wizHead(n, "Is this one time, or <em>every month?</em>", "A car repair is one time. Rent is every month.", "♦");
-    inner += pills("freq", FREQS, S.freq);
-    disabled = !S.freq;
-  } else if (id === "months") {
-    inner = wizHead(n, "How many <em>months</em> do you need help with?", "Count the months you're behind, plus the months ahead you can't cover yet.", "♦");
-    inner += pills("months", MONTHS, S.months);
-    disabled = !S.months;
-  } else if (id === "helped") {
-    inner = wizHead(n, isBiz() ? "Can you put some of it in <em>yourself?</em>" : "Has anyone already paid <em>part of it?</em>",
-      isBiz() ? "Your own savings, your own hours, tools you already have. Funders like to see your share." : "You, family, a church, another program, insurance. Helpers like to be the last money in.", "♣");
-    inner += pills("helped", isBiz() ? [HELPED[0], { id: "yes", label: "Yes, some of it" }] : HELPED, S.helped);
-    if (S.helped === "yes") inner += `<div class="optgroup"><span class="mono-label">${isBiz() ? "How much can you put in?" : "How much is already paid?"}</span>${amountBox("covered")}</div>`;
-    disabled = !S.helped || (S.helped === "yes" && !num(S.covered));
-  } else if (id === "who") {
-    inner = wizHead(n, "Do you know who you'll <em>ask?</em>", "Most places help once a year, and give a bit less the first time. If you know their limit, put it in and your number stays inside it.", "♠");
-    inner += pills("who", WHO, S.who);
-    if (S.who && S.who !== "notyet") inner += `<div class="optgroup"><span class="mono-label">The most they give, if you know it</span>${amountBox("cap", "leave empty if you don't know")}</div>`;
-    disabled = !S.who;
+  if (S.step === 0) {
+    inner = wizHead(n, "What do you need money <em>for?</em>", "Check everything that's weighing on you. Each one gets its own line in your budget.");
+    inner += `<div class="opts">${NEEDS.map((x) => optPill("checkbox", "need", x.id,
+      `<span style="font-family:var(--suit-font);font-size:.8em;color:var(--ink-faint)">${x.suit}</span> ${esc(x.label)}`, S.picked.includes(x.id))).join("")}
+      ${S.other.map((t, i) => `<span class="opt sq on"><span class="dot" aria-hidden="true"></span><span>${esc(t)}</span><button class="x" data-rmother="${i}" aria-label="Remove ${esc(t)}" style="border:0;background:none;font-size:18px;line-height:1;color:var(--ink-faint);cursor:pointer;padding:0 0 0 4px">×</button></span>`).join("")}
+    </div>
+    <div class="other-row"><input id="other-in" maxlength="80" placeholder="Something else — say it in your words" aria-label="Something else"><button class="btn ghost" data-addother>＋ Add</button></div>`;
+    disabled = !items().length;
+  } else if (S.step === 1) {
+    inner = wizHead(n, "How much for <em>each one?</em>", "Whatever the bill, the letter or the quote says. A close guess is fine — you can change it later.", "♥");
+    inner += `<div class="rows">${items().map((it) => `<div class="row">
+      <span class="lbl"><span class="s">${it.suit}</span>${esc(it.label)}</span>${amountBox(it.key)}</div>`).join("")}</div>
+      <div class="running" style="display:flex;align-items:baseline;gap:10px;border-top:1px dashed var(--hairline);padding-top:12px;margin-top:16px;max-width:560px">
+        <span class="mono-label">All together</span><b id="running-total" style="font-family:var(--serif);font-size:26px">${money(calc().total)}</b></div>`;
+    disabled = !calc().total;
+  } else {
+    inner = wizHead(n, "Do you already have <em>some of it?</em>", "Money you can put in, or help someone already promised. Helpers like to be the last money in.", "♣");
+    inner += `<div class="opts">${optPill("radio", "have", "no", "No, nothing yet", S.have === "no")}${optPill("radio", "have", "yes", "Yes, some of it", S.have === "yes")}</div>`;
+    if (S.have === "yes") inner += `<div class="optgroup"><span class="mono-label">How much do you have?</span>${amountBox("__have")}</div>`;
+    disabled = !S.have || (S.have === "yes" && !num(S.haveAmt));
   }
 
   q.innerHTML = inner + wizFoot(n, disabled);
   wireWizard();
-  if (focus) { const el = q.querySelector(focus); if (el) { el.focus(); if (el.setSelectionRange) el.setSelectionRange(el.value.length, el.value.length); } }
+  if (focus) { const el = q.querySelector(focus); if (el) el.focus(); }
+}
+
+function addOther() {
+  const input = $("#other-in"); if (!input) return;
+  const t = input.value.trim().slice(0, 80); if (!t) { input.focus(); return; }
+  S.other.push(t); saveS(); renderWizard("#other-in");
 }
 
 function wireWizard() {
   const q = $("#qcard");
   const next = () => q.querySelector("[data-wz=next]");
-  q.querySelectorAll("input[type=radio]").forEach((el) => el.addEventListener("change", () => {
-    q.querySelectorAll(`input[name=${el.name}]`).forEach((o) => o.closest(".opt").classList.toggle("on", o.checked));
-    S[el.name] = el.value;
-    if (el.name === "freq" && el.value !== "month") S.months = "";
-    saveS();
-    if (el.name === "need" || el.name === "helped" || el.name === "who") { renderWizard(el.name === "need" ? "#need-other" : "[data-amt]"); return; }
-    next().disabled = false;
+  q.querySelectorAll("input[name=need]").forEach((el) => el.addEventListener("change", () => {
+    el.closest(".opt").classList.toggle("on", el.checked);
+    if (el.checked) { if (!S.picked.includes(el.value)) S.picked.push(el.value); }
+    else { S.picked = S.picked.filter((v) => v !== el.value); delete S.amts[el.value]; }
+    saveS(); next().disabled = !items().length;
   }));
+  q.querySelectorAll("[data-rmother]").forEach((b) => b.addEventListener("click", () => {
+    S.other.splice(parseInt(b.dataset.rmother, 10), 1); S.amts = {}; saveS(); renderWizard();
+  }));
+  const ob = q.querySelector("[data-addother]"); if (ob) ob.addEventListener("click", addOther);
+  const oi = q.querySelector("#other-in"); if (oi) oi.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addOther(); } });
+
   q.querySelectorAll("[data-amt]").forEach((el) => el.addEventListener("input", () => {
-    S[el.dataset.amt] = el.value; saveS();
-    if (pageId() === "amount") next().disabled = !num(S.amt) || !S.from;
-    if (pageId() === "helped") next().disabled = !num(S.covered);
+    if (el.dataset.amt === "__have") S.haveAmt = el.value; else S.amts[el.dataset.amt] = el.value;
+    saveS();
+    const rt = $("#running-total"); if (rt) rt.textContent = money(calc().total);
+    next().disabled = S.step === 1 ? !calc().total : !num(S.haveAmt);
   }));
-  const oth = q.querySelector("#need-other");
-  if (oth) oth.addEventListener("input", () => { S.needOther = oth.value; saveS(); });
+  q.querySelectorAll("input[name=have]").forEach((el) => el.addEventListener("change", () => {
+    S.have = el.value; saveS(); renderWizard("[data-amt]");
+  }));
   q.querySelectorAll("[data-wz]").forEach((b) => b.addEventListener("click", () => {
     if (b.dataset.wz === "back") { S.step = Math.max(0, S.step - 1); saveS(); renderWizard(); return; }
-    if (S.step >= totalSteps() - 1) { S.built = true; saveS(); updateBub(); goTab("sheet"); toast("Here’s your number."); return; }
-    S.step = Math.min(totalSteps() - 1, S.step + 1); saveS(); renderWizard();
+    if (S.step >= TOTAL - 1) { S.built = true; saveS(); updateBub(); goTab("sheet"); toast("Here’s your budget."); return; }
+    S.step = Math.min(TOTAL - 1, S.step + 1); saveS(); renderWizard();
   }));
 }
-function updateBub() { $("#bub-sheet").hidden = !S.built; }
+function updateBub() { const b = $("#bub-sheet"); b.hidden = !S.built; b.textContent = items().length; }
 
-/* my number: one amount, one sentence, one place to take it */
-function whatFor() {
-  if (S.need === "other" && S.needOther.trim()) return S.needOther.trim();
-  const n = need(); return n ? n.say : "this";
-}
+/* my number: the total, the list, one sentence */
+function joinList(a) { return a.length <= 1 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
 function sentence(c) {
-  const paper = S.from === "paper" ? "I have the paperwork to show you. " : "";
-  if (isBiz()) {
-    return "My business needs " + money(c.total) + ". " + (c.covered ? "I'm putting in " + money(c.covered) + " myself. " : "") +
-      "I'm asking for " + money(c.ask) + ". " + paper + "What is the most you can help with, and who else should I talk to?";
-  }
-  const span = S.freq === "month" ? " for " + c.m + (c.m === 1 ? " month" : " months") + " of " + whatFor() : " for " + whatFor();
-  return "I need " + money(c.total) + span + ". " + (c.covered ? "I have " + money(c.covered) + " of it covered. " : "") +
-    "I'm asking for " + money(c.ask) + (c.rest > 0 ? " toward it" : "") + ". " + paper + "What is the most you can help with, and who else should I call?";
+  const parts = c.rows.filter((r) => r.amt).map((r) => money(r.amt) + " for " + r.say);
+  return "I need " + money(c.total) + " all together: " + joinList(parts) + ". " +
+    (c.have ? "I have " + money(c.have) + " of it. " : "") +
+    "I'm asking for help with " + money(c.ask) + ". What is the most you can help with, and who else should I call?";
 }
-
 function renderSheet() {
   const el = $("#sheet-body");
-  if (!S.built) {
+  const c = calc();
+  if (!S.built || !c.rows.length) {
     el.innerHTML = `<div class="empty-sheet"><div class="q" aria-hidden="true">?</div><h3>No number yet</h3>
-      <p>Take the quiz under <b>01 · The Quiz</b> and your number shows up here.</p>
+      <p>Take the quiz under <b>01 · The Quiz</b> and your budget shows up here.</p>
       <button class="btn big" data-goto="quiz">Take the quiz →</button></div>`;
     return;
   }
-  const c = calc(), n = need(), sp = SPACES[n ? n.space : "bills"];
-  const how = [];
-  how.push(S.freq === "month" ? `<b>${money(num(S.amt))}</b> a month × ${c.m} ${c.m === 1 ? "month" : "months"} = <b>${money(c.total)}</b>.` : `The bill is <b>${money(c.total)}</b>.`);
-  if (c.covered) how.push(`<b>${money(c.covered)}</b> is already covered.`);
-  if (c.rest > 0) how.push(`They give at most <b>${money(c.cap)}</b>, so ask them for that — and ask the next place for the other <b>${money(c.rest)}</b>.`);
-  else if (c.covered) how.push(`That's the gap — the part nobody has paid yet.`);
-  if (S.from === "guess") how.push(`Before you ask, get the bill or a quote. A number on paper is what they'll want to see.`);
-
-  el.innerHTML = `<div class="number-card"><span class="mono-label">Ask for</span><div class="big">${money(c.ask)}</div><p class="how">${how.join(" ")}</p></div>
+  el.innerHTML = `<div class="number-card"><span class="mono-label">Ask for</span><div class="big">${money(c.ask)}</div>
+      <p class="how">${c.rows.length} ${c.rows.length === 1 ? "problem" : "problems"} add up to <b>${money(c.total)}</b>.${c.have ? " You have <b>" + money(c.have) + "</b> of it." : ""} One bill = one ask — take each line to its own door.${c.missing ? " " + c.missing + (c.missing === 1 ? " line has" : " lines have") + " no amount yet." : ""}</p>
+      <ul class="budget" style="margin-top:14px">
+        ${c.rows.map((r) => `<li><span><span style="font-family:var(--suit-font);font-size:.8em;color:var(--ink-faint);margin-right:6px">${r.suit}</span>${esc(r.label)}</span><b>${r.amt ? money(r.amt) : "—"}</b></li>`).join("")}
+        <li class="total"><span>All together</span><b>${money(c.total)}</b></li>
+        ${c.have ? `<li class="minus"><span>What you have</span><b>− ${money(c.have)}</b></li><li class="total"><span>Ask for</span><b>${money(c.ask)}</b></li>` : ""}
+      </ul></div>
     <div class="card" style="max-width:820px"><span class="mono-label">Say it like this</span>
       <div class="say"><p class="said">“${esc(sentence(c))}”</p></div>
       <button class="btn ghost noprint" id="btn-copy-say">⧉ Copy the sentence</button></div>
-    <div class="mini t-yellow" data-suit="♦" style="max-width:820px"><span class="mono-label">Take your number here</span>
-      <p>${n ? `<a href="${n.guide.url}" target="_blank" rel="noopener">${esc(n.guide.n)}</a> · ` : ""}<a href="${sp.url}" target="_blank" rel="noopener">${esc(sp.n)}</a> · or paste your sentence in the <a href="${SPACES.questions.url}" target="_blank" rel="noopener">Questions Channel</a>.</p></div>
+    <div class="mini t-yellow" data-suit="♦" style="max-width:820px"><span class="mono-label">Take your budget here</span>
+      <p>Paste your sentence in the <a href="${SPACES.questions.url}" target="_blank" rel="noopener">Questions Channel</a>, or bring it to a <a href="${SPACES.callsheets.url}" target="_blank" rel="noopener">Call Sheet Class</a>. Not sure who to ask for each line? Take <a href="${SPACES.askfor.url}" target="_blank" rel="noopener">What Should I Ask For?</a></p></div>
     <div class="mini t-green" data-suit="♣" style="max-width:820px"><span class="mono-label">When you get a yes</span>
       <p>Post it in <a href="${SPACES.success.url}" target="_blank" rel="noopener">Success Stories</a> — your number is the map for the next member.</p></div>`;
   $("#btn-copy-say").addEventListener("click", () => copyText(sentence(c), "Copied. Say it just like that."));
 }
-
 async function copyText(txt, okMsg) {
   try { await navigator.clipboard.writeText(txt); toast(okMsg); }
   catch (e) {
@@ -456,22 +458,20 @@ async function copyText(txt, okMsg) {
   }
 }
 function sheetAsText() {
-  const c = calc(), n = need();
+  const c = calc();
   return ["HOW MUCH SHOULD I ASK FOR — Lesko Help", new Date().toLocaleDateString("en-US"), "",
-    "ASK FOR: " + money(c.ask) + (c.rest > 0 ? " (their most) · " + money(c.rest) + " still to ask for elsewhere" : ""),
-    "Total: " + money(c.total) + (c.covered ? " · Covered: " + money(c.covered) : ""), "",
+    ...c.rows.map((r) => "  " + r.label + ": " + (r.amt ? money(r.amt) : "—")),
+    "  All together: " + money(c.total), c.have ? "  What I have: − " + money(c.have) : "", "  ASK FOR: " + money(c.ask), "",
     "SAY: “" + sentence(c) + "”", "",
-    n ? "Guide: " + n.guide.url : "", "Questions Channel: " + SPACES.questions.url,
-    "— Lesko Help · One bill = one ask."].join("\n");
+    "Questions Channel: " + SPACES.questions.url, "— Lesko Help · One bill = one ask."].filter((l) => l !== "").join("\n");
 }
 $("#btn-copy").addEventListener("click", () => copyText(sheetAsText(), "Copied. Paste it into notes, a text, or an email to yourself."));
 $("#btn-print").addEventListener("click", () => window.print());
 $("#btn-wipe").addEventListener("click", () => {
-  if (!confirm("Erase your answers and your number from this device? There's no undo.")) return;
+  if (!confirm("Erase your answers and your budget from this device? There's no undo.")) return;
   try { localStorage.removeItem(LS_KEY); } catch (e) {}
   location.reload();
 });
-
 loadS(); renderWizard(); updateBub();
 </script>
 </body>
