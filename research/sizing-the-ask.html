@@ -1,0 +1,830 @@
+<title>Sizing the Ask</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap">
+<style>
+  :root {
+    --paper:    #faf6ec;
+    --card:     #fffefa;
+    --ink:      #16223f;
+    --ink-soft: #4a5570;
+    --ink-faint:#8a93a8;
+    --line:     rgba(22,34,63,.22);
+    --line-soft:rgba(22,34,63,.12);
+    --red:      #e8453c;
+    --yellow:   #f6c544;
+    --yellow-soft:#fdf1d4;
+    --blue:     #2e43c8;
+    --blue-soft:#e9edfc;
+    --green:    #2e9e5b;
+    --green-soft:#e3f3e9;
+    --red-soft: #fce7e5;
+    --gold:     #b8860b;
+    --gold-2:   #e9a725;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:    #131b30;
+      --card:     #1a2440;
+      --ink:      #f0ead9;
+      --ink-soft: #b8bfd2;
+      --ink-faint:#7e88a3;
+      --line:     rgba(240,234,217,.22);
+      --line-soft:rgba(240,234,217,.12);
+      --red:      #ff6b5e;
+      --yellow:   #f6c544;
+      --yellow-soft:#3a3114;
+      --blue:     #8ea2ff;
+      --blue-soft:#1e2a52;
+      --green:    #57c383;
+      --green-soft:#1d3a2c;
+      --red-soft: #3d1f1d;
+      --gold:     #e9c05a;
+      --gold-2:   #e9a725;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:    #131b30;
+    --card:     #1a2440;
+    --ink:      #f0ead9;
+    --ink-soft: #b8bfd2;
+    --ink-faint:#7e88a3;
+    --line:     rgba(240,234,217,.22);
+    --line-soft:rgba(240,234,217,.12);
+    --red:      #ff6b5e;
+    --yellow:   #f6c544;
+    --yellow-soft:#3a3114;
+    --blue:     #8ea2ff;
+    --blue-soft:#1e2a52;
+    --green:    #57c383;
+    --green-soft:#1d3a2c;
+    --red-soft: #3d1f1d;
+    --gold:     #e9c05a;
+    --gold-2:   #e9a725;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 34px 22px 70px; }
+
+  .serif { font-family: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  a { color: var(--red); }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* brand frame */
+  .brand-frame { position: fixed; inset: 0; pointer-events: none; z-index: 90; }
+  .brand-frame i { position: absolute; display: block; }
+  .brand-frame .t, .brand-frame .b {
+    left: 0; right: 0; height: 5px;
+    background: repeating-linear-gradient(90deg, #f6c544 0 44px, #2e9e5b 44px 88px, #2e43c8 88px 132px, #e8453c 132px 176px);
+  }
+  .brand-frame .t { top: 0; } .brand-frame .b { bottom: 0; }
+  .brand-frame .l, .brand-frame .r {
+    top: 0; bottom: 0; width: 5px;
+    background: repeating-linear-gradient(180deg, #f6c544 0 44px, #2e9e5b 44px 88px, #2e43c8 88px 132px, #e8453c 132px 176px);
+  }
+  .brand-frame .l { left: 0; } .brand-frame .r { right: 0; }
+
+  /* masthead */
+  .masthead { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+  .qmark {
+    width: 34px; height: 34px; flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: "Source Serif 4", Palatino, serif;
+    font-size: 19px; font-weight: 600;
+  }
+  .masthead .brand { line-height: 1.1; }
+  .masthead .brand i { display: block; color: var(--red); font-family: "Source Serif 4", Palatino, serif; font-size: 17px; }
+  .masthead .brand b { display: block; font-family: "Source Serif 4", Palatino, serif; font-size: 17px; font-weight: 400; }
+  .masthead .suits { margin-left: auto; font-size: 16px; display: flex; gap: 8px; font-family: "DejaVu Sans", "Segoe UI Symbol", "Apple Symbols", sans-serif; }
+  .suits span:nth-child(1){color:var(--blue)} .suits span:nth-child(2){color:var(--red)}
+  .suits span:nth-child(3){color:var(--yellow)} .suits span:nth-child(4){color:var(--green)}
+
+  h1 {
+    font-family: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(32px, 6vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -.015em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  h1 em, h2 em, h3 em { color: var(--red); font-style: italic; }
+  .dek { color: var(--ink-soft); max-width: 62ch; margin: 0 0 8px; font-size: 17px; }
+  .date { margin: 4px 0 0; }
+
+  h2 {
+    font-family: "Source Serif 4", Palatino, Georgia, serif;
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  .kicker { display: block; margin: 50px 0 6px; }
+  h2 + p.lede { color: var(--ink-soft); margin: 6px 0 20px; max-width: 64ch; }
+  h3 {
+    font-family: "Source Serif 4", Palatino, serif;
+    font-weight: 600; font-size: 18px; margin: 22px 0 6px;
+  }
+  p { max-width: 68ch; }
+  ul, ol { max-width: 68ch; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+
+  /* thesis */
+  .thesis {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--ink);
+    color: #fdfbf4;
+    padding: 20px 22px;
+    margin: 26px 0 8px;
+  }
+  .thesis .mono { color: var(--yellow); }
+  .thesis h3 { color: #fff; font-weight: 400; font-size: 22px; margin: 6px 0 8px; }
+  .thesis p { margin: 0; color: rgba(253,251,244,.88); font-size: 15px; }
+  .thesis b { color: #fff; }
+
+  /* two-kinds split */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 6px; }
+  @media (max-width: 620px) { .split { grid-template-columns: 1fr; } }
+  .kind {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 16px 18px 14px;
+  }
+  .kind::after {
+    content: attr(data-suit);
+    position: absolute; right: -8px; bottom: -28px;
+    font-family: "DejaVu Sans", "Segoe UI Symbol", "Apple Symbols", sans-serif;
+    font-size: 96px; line-height: 1; opacity: .08; pointer-events: none;
+    color: var(--k, var(--ink));
+  }
+  .kind.k-red { --k: var(--red); background: var(--red-soft); }
+  .kind.k-blue { --k: var(--blue); background: var(--blue-soft); }
+  .kind h3 { margin: 4px 0 6px; font-size: 19px; }
+  .kind p { margin: 0 0 8px; font-size: 14.5px; }
+  .kind p:last-child { margin: 0; }
+  .kind .who { color: var(--ink-soft); font-size: 13.5px; }
+  .kind .rule { font-family: "Source Serif 4", Palatino, serif; font-style: italic; font-size: 16px; }
+
+  /* landscape buckets */
+  .buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 6px; }
+  @media (max-width: 620px) { .buckets { grid-template-columns: 1fr; } }
+  .bucket {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 14px 16px;
+  }
+  .bucket h3 { margin: 6px 0 6px; font-size: 16.5px; }
+  .bucket p { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+  .bucket .mono { font-size: 9.5px; }
+  .bucket b { color: var(--ink); }
+
+  .note {
+    border-left: 3px solid var(--blue);
+    padding: 6px 0 6px 16px;
+    margin: 22px 0;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    max-width: 66ch;
+  }
+  .note b { color: var(--ink); }
+
+  /* rules */
+  .rules { list-style: none; padding: 0; margin: 16px 0 0; max-width: none; }
+  .rule-card {
+    display: grid; grid-template-columns: 44px 1fr; gap: 12px;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 14px;
+  }
+  .rule-card:last-child { border-bottom: 1px solid var(--line-soft); }
+  .rule-num {
+    font-family: "Source Serif 4", Palatino, serif;
+    font-size: 30px; line-height: 1; color: var(--gold-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .rule-card h3 { margin: 2px 0 6px; font-size: 18px; }
+  .rule-card p { margin: 0 0 6px; font-size: 14.5px; }
+  .rule-card .quote {
+    font-family: "Source Serif 4", Palatino, serif; font-style: italic;
+    font-size: 15.5px; color: var(--ink);
+    border-left: 2px solid var(--gold-2); padding-left: 12px; margin: 8px 0;
+  }
+  .rule-card .src { font-size: 12.5px; color: var(--ink-faint); }
+  .rule-card .src a { color: var(--ink-soft); }
+
+  /* numbers table */
+  .tablewrap { overflow-x: auto; margin: 16px 0 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+  th {
+    text-align: left; padding: 12px 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+    background: var(--yellow-soft);
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }
+  td.src { font-size: 12.5px; color: var(--ink-soft); }
+  td.src a { color: var(--ink-soft); }
+  .tgroup td { background: var(--paper); font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); padding: 8px 14px; }
+
+  /* quiz mock pages */
+  .qpage {
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--suit, var(--blue));
+    border-radius: 14px;
+    background: var(--card);
+    padding: 16px 18px 14px;
+    margin: 12px 0;
+  }
+  .qpage.s-red { --suit: var(--red); } .qpage.s-yellow { --suit: var(--gold-2); }
+  .qpage.s-green { --suit: var(--green); } .qpage.s-blue { --suit: var(--blue); }
+  .qpage-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .qpage h3 { margin: 0; font-size: 19px; }
+  .qpage h3 .s { color: var(--suit); margin-right: 6px; font-family: "DejaVu Sans", "Segoe UI Symbol", "Apple Symbols", sans-serif; }
+  .qpage .why { margin-left: auto; }
+  .chip {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px;
+    color: var(--ink-soft); white-space: nowrap; display: inline-block;
+  }
+  .chip.y { background: var(--yellow); border-color: transparent; color: #16223f; }
+  .chip.g { background: var(--green-soft); border-color: transparent; color: var(--green); font-weight: 700; }
+  .chip.r { background: var(--red); border-color: transparent; color: #fff; }
+  .chip.b { background: var(--blue-soft); border-color: transparent; color: var(--blue); }
+  .qpage .ask-line {
+    font-family: "Source Serif 4", Palatino, serif;
+    font-size: 17px; margin: 8px 0 8px; text-wrap: balance;
+  }
+  .pills { display: flex; flex-wrap: wrap; gap: 7px; margin: 6px 0 8px; }
+  .pill {
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper); padding: 6px 12px; font-size: 13.5px;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .pill i { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); display: inline-block; }
+  .pill.on { background: var(--yellow-soft); border-color: var(--gold-2); }
+  .pill.on i { background: var(--yellow); border-color: var(--ink); }
+  .pill.sq i { border-radius: 4px; }
+  .qpage .rows { display: grid; gap: 6px; margin: 6px 0 8px; }
+  .qpage .row {
+    display: grid; grid-template-columns: 1.4fr .8fr 1fr .7fr; gap: 8px;
+    font-size: 13px; align-items: center;
+  }
+  .qpage .row.hd { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .qpage .row span:not(.hd) { border: 1px solid var(--line-soft); border-radius: 8px; padding: 6px 9px; background: var(--paper); }
+  .qpage .row .ph { color: var(--ink-faint); }
+  @media (max-width: 560px) { .qpage .row { grid-template-columns: 1fr 1fr; } .qpage .row.hd { display: none; } }
+  .qpage .because { font-size: 13.5px; color: var(--ink-soft); margin: 4px 0 0; }
+  .qpage .because b { color: var(--ink); }
+
+  /* result mock */
+  .result {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 18px 20px;
+    margin: 14px 0;
+    box-shadow: 0 1px 2px rgba(22,34,63,.05), 0 14px 30px -20px rgba(22,34,63,.5);
+  }
+  .result .big { font-family: "Source Serif 4", Palatino, serif; font-size: 44px; line-height: 1; margin: 6px 0 2px; font-variant-numeric: tabular-nums; }
+  .result .big small { font-family: inherit; font-size: 15px; color: var(--ink-soft); }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+  @media (max-width: 560px) { .stat-row { grid-template-columns: 1fr; } }
+  .stat { border: 1px solid var(--line-soft); border-radius: 10px; padding: 10px 12px; background: var(--paper); }
+  .stat b { display: block; font-family: "Source Serif 4", Palatino, serif; font-weight: 400; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .stat span { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .say {
+    border-left: 2px solid var(--red); padding: 4px 0 4px 14px; margin: 12px 0 4px; max-width: 70ch;
+  }
+  .say .said { font-family: "Source Serif 4", Palatino, serif; font-style: italic; font-size: 16px; margin: 3px 0 0; }
+  .flag { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; margin: 6px 0; }
+  .flag .s { color: var(--red); font-family: "DejaVu Sans", "Segoe UI Symbol", sans-serif; }
+
+  /* mistakes */
+  .mistakes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 6px; }
+  @media (max-width: 620px) { .mistakes { grid-template-columns: 1fr; } }
+  .mistake { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 12px 14px; font-size: 13.5px; }
+  .mistake b { display: block; font-family: "Source Serif 4", Palatino, serif; font-weight: 600; font-size: 15.5px; margin-bottom: 3px; }
+  .mistake .fix { color: var(--green); font-weight: 600; }
+
+  /* open questions */
+  .oq {
+    border: 1px solid rgba(203,150,20,.5);
+    border-radius: 14px;
+    background: var(--yellow-soft);
+    padding: 16px 18px 12px;
+    margin: 12px 0;
+  }
+  .oq h3 { margin: 2px 0 6px; font-size: 18px; }
+  .oq p { margin: 0 0 6px; font-size: 14.5px; }
+  .oq .rec { font-size: 14px; }
+  .oq .rec b { color: var(--green); }
+
+  /* sources */
+  .sources { border-top: 1px solid var(--line); margin-top: 50px; padding-top: 18px; }
+  .sources ul { columns: 2; column-gap: 30px; padding-left: 18px; margin: 10px 0 0; max-width: none; }
+  @media (max-width: 620px) { .sources ul { columns: 1; } }
+  .sources li { font-size: 13px; color: var(--ink-soft); margin-bottom: 7px; break-inside: avoid; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; margin-top: 46px; border-top: 1px solid var(--line); padding-top: 16px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="brand-frame" aria-hidden="true"><i class="t"></i><i class="r"></i><i class="b"></i><i class="l"></i></div>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="qmark">?</div>
+    <div class="brand"><i>Lesko</i><b>Help</b></div>
+    <div class="suits" aria-hidden="true"><span>&spades;</span><span>&hearts;</span><span>&diams;</span><span>&clubs;</span></div>
+  </header>
+
+  <h1>How much should you <em>ask for?</em></h1>
+  <p class="dek">Research brief for the <b>Calculate My Funding Amount</b> tool in the Lesko Toolbox:
+  what the competition offers, what grant professionals and funders actually advise, the real
+  program numbers, and the question set that follows from all of it.</p>
+  <p class="mono date">7 September 2026 · prepared for Giulia and the Lesko Help team</p>
+
+  <div class="thesis">
+    <span class="mono">The finding that shapes the tool</span>
+    <h3 class="serif">Nobody has built this — and the honest answer is a method, not a number.</h3>
+    <p>No consumer tool anywhere helps a person decide the amount. Benefit screeners tell you
+    if you qualify. Nonprofit software tells organizations to read a funder's tax return.
+    Business-grant sites fix the amount for you. The professionals all teach the same thing:
+    <b>add up the real cost from real bills, subtract what is already covered, and ask for the
+    gap — inside what that door actually gives.</b> That is a worksheet. It fits the Lesko
+    pattern exactly: private, on the device, no account.</p>
+  </div>
+
+  <span class="mono kicker">The design decision</span>
+  <h2>Two kinds of money, two <em>different</em> questions</h2>
+  <p class="lede">Members ask "how much should I ask for?" about two very different things. The
+  research says they need different worksheets, so the tool must sort them on page one.</p>
+
+  <div class="split">
+    <div class="kind k-red" data-suit="♥">
+      <span class="mono">Kind one · most members</span>
+      <h3 class="serif">Help with a cost I already have</h3>
+      <p>Rent, a shut-off notice, a car repair, a medical bill, a funeral, a deposit, a roof.
+      Here the <b>program sets the number</b>, not the member. Rent help pays up to a set
+      number of months. A charity gives $200–$600 once a year. FEMA's average is $3,446.</p>
+      <p class="rule">"They prefer to be the last money in."</p>
+      <p class="who">So the tool's job is: total the real cost, subtract what is covered,
+      show the gap, then show what one door typically gives — and how many doors that means.</p>
+    </div>
+    <div class="kind k-blue" data-suit="♠">
+      <span class="mono">Kind two · Lesko Pro</span>
+      <h3 class="serif">Money for a business, nonprofit or project</h3>
+      <p>Here the <b>member sets the number</b> and a reviewer judges it. The rules are
+      professional: itemize from quotes, no round guesses, no "miscellaneous", never ask for
+      100% of the project, stay inside the funder's usual range, expect less the first time.</p>
+      <p class="rule">"If it's too large or too small, it won't do."</p>
+      <p class="who">So the tool's job is: build a line-item budget with a reason for each line,
+      compare the ask to the funder's typical award, and flag what a reviewer would flag.</p>
+    </div>
+  </div>
+
+  <p class="note"><b>What this is not:</b> a program directory, a phone list, or a script. Per the
+  product rule that governs every Lesko tool, it does one thing — turns the member's own numbers
+  into one clear amount with the reasons behind it — and hands the rest to the community: the
+  Quick Guides, the Questions Channel, the Call Sheet Classes.</p>
+
+  <span class="mono kicker">The landscape</span>
+  <h2>What the competition gives <em>their</em> people</h2>
+  <p class="lede">Every adjacent tool either fixes the amount for you, estimates a statutory
+  benefit, or tells nonprofits to read tax returns. None asks the member what things cost.</p>
+
+  <div class="buckets">
+    <div class="bucket">
+      <span class="mono">The direct competitor</span>
+      <h3 class="serif">Skip (helloskip.com)</h3>
+      <p>Grants marketplace plus an AI writing assistant. Its own grants are fixed at $1K, $5K
+      and $10K. The application vault covers six standard questions and "break down how the
+      funds will drive growth." <b>No amount help at all.</b></p>
+    </div>
+    <div class="bucket">
+      <span class="mono">Pro nonprofit suites</span>
+      <h3 class="serif">Candid · Instrumentl · Grantable · Granted AI</h3>
+      <p>Candid publishes a percentage-of-budget matrix (ask 40–60% of a project from a new
+      funder, 70–90% from an existing one). Instrumentl profiles a funder's past awards from
+      its 990-PF. Grantable and Granted AI take the budget as an <b>input</b>. Built for
+      development officers, priced $20–$500 a month.</p>
+    </div>
+    <div class="bucket">
+      <span class="mono">Small-business grant sites</span>
+      <h3 class="serif">Hello Alice · IFundWomen · Amber · Nav · FedEx</h3>
+      <p>The sponsor fixes the award: Hello Alice mostly flat $20,000; Amber $10,000 monthly;
+      Comcast RISE $5,000; FedEx $10,000. Applicants write a "use of funds" answer scored on
+      "clarity and feasibility of the plan" (30%) and "demonstrated need" (40%). <b>The number
+      is judged, never coached.</b></p>
+    </div>
+    <div class="bucket">
+      <span class="mono">Benefit screeners</span>
+      <h3 class="serif">findhelp · mRelief · BenefitsCheckUp · USA.gov</h3>
+      <p>Eligibility only. mRelief screens SNAP in three minutes; BenefitsCheckUp returns a
+      list of programs you "may get help from." The only tools that output a dollar figure are
+      SNAP and Pell estimators, because those benefits are formulas. <b>Nothing about what you
+      should request.</b></p>
+    </div>
+  </div>
+
+  <p class="note"><b>Also checked:</b> Grants.gov and SAM.gov (federal money "is not direct
+  assistance to individuals"; only SF-424A budget forms and budget-narrative rules), GrantWatch
+  and GrantStation (advice articles and an annual survey), and every "grant budget calculator"
+  search result — which turns up Pell estimators, a calculator <i>for funders</i>, and generic
+  AI line-item generators. The whitespace is real.</p>
+
+  <span class="mono kicker">The method</span>
+  <h2>What the professionals <em>actually</em> teach</h2>
+  <p class="lede">Eight rules, each one quoted from a funder, a grant-training body or a
+  federal regulation. Every question in the tool traces back to one of these.</p>
+
+  <ol class="rules">
+    <li class="rule-card">
+      <div class="rule-num">1</div>
+      <div>
+        <h3 class="serif">Ask for what it really costs — from a bill or a written quote</h3>
+        <p>The number comes from paper, not from the air. A round figure with no math behind it
+        reads as a guess and costs credibility.</p>
+        <p class="quote">"Costs should be based on actual quotes and/or estimates to ensure that
+        they aren't padded or underestimated."</p>
+        <p class="src">National Council on Aging, budget justification guidance · Grantboost: "'$10,000
+        for supplies' reads as a guess… show units and unit costs."</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">2</div>
+      <div>
+        <h3 class="serif">Never lowball, never pad</h3>
+        <p>The Grantsmanship Center calls it the Goldilocks rule. Asking for less than you need
+        to look modest sets the project up to fail; padding distorts what the work costs.</p>
+        <p class="quote">"If it's too large or too small, it won't do… an unrealistic budget in
+        either direction will kill the credibility of your proposal."</p>
+        <p class="src">The Grantsmanship Center · MonkeyPod: "Never, ever lowball your budget—but
+        don't pad it either." · Grantsights: funders "universally reject" a 'miscellaneous' or
+        'contingency' line.</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">3</div>
+      <div>
+        <h3 class="serif">Subtract what is already covered — they want to be the last money in</h3>
+        <p>Charities, churches and disaster programs pay the gap, not the bill. After a disaster
+        the order is fixed by law: insurance first, then FEMA, then an SBA loan — FEMA "cannot
+        pay for that same loss again."</p>
+        <p class="quote">"If you owe $1,000 and they can give $300, they will not give you a check
+        until you prove you have paid the other $700."</p>
+        <p class="src">Salvation Army rent-assistance practice · FEMA, "Understanding Duplication of
+        Benefits" · CRS report R45238.</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">4</div>
+      <div>
+        <h3 class="serif">One-time money does not pay ongoing bills</h3>
+        <p>Emergency aid is built for a one-off shortfall. Federal TANF emergency help "will not
+        extend beyond four months." Reviewers of business and nonprofit asks flag wages and rent
+        as "we'll worry about that when the grant ends."</p>
+        <p class="quote">Non-recurrent short-term benefits are "not intended to meet recurrent or
+        ongoing needs."</p>
+        <p class="src">Administration for Children and Families, TANF policy guidance · Bloom Grant
+        Consulting on sustainability flags.</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">5</div>
+      <div>
+        <h3 class="serif">Stay inside what that door actually gives</h3>
+        <p>Every program has a ceiling and a habit. Asking a $5,000 funder for $25,000 is a red
+        flag; asking rent help for a year when it caps at three months wastes a turn.</p>
+        <p class="quote">"If a foundation typically gives between $25,000 and $50,000 per grantee,
+        it's unlikely that they will suddenly award $200,000."</p>
+        <p class="src">GrantWatch · Candid: "if a foundation's top grant is $5,000, requesting $25,000
+        raises a red flag."</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">6</div>
+      <div>
+        <h3 class="serif">First-timers get less — and most doors open once a year</h3>
+        <p>Instrumentl's example: median first award $15,000, median repeat award over $150,000.
+        Most charities help once per 12 months, so an ask that is too small means a year's wait.</p>
+        <p class="quote">"Funders may want to test the relationship first and give lower amounts to
+        first-time grant awardees."</p>
+        <p class="src">Candid · Instrumentl · Salvation Army and Catholic Charities frequency rules
+        ("once in a 12-month period").</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">7</div>
+      <div>
+        <h3 class="serif">Count the costs people forget</h3>
+        <p>Deposits, first and last month, application fees, utility hook-ups, moving, the taxes on a
+        business grant. Rent help can cover "security deposit, monthly rent, and utilities" — but
+        only if you ask.</p>
+        <p class="quote">A member, in the community: "$8,100–$9,300 upfront prior to moving in and that
+        doesn't include… cleaning fee, pets… applications are $85–$120 per person."</p>
+        <p class="src">FEMA rental assistance fact sheet · USU Extension on grant taxation · Lesko
+        Help member post, Washington State.</p>
+      </div>
+    </li>
+    <li class="rule-card">
+      <div class="rule-num">8</div>
+      <div>
+        <h3 class="serif">Never ask for 100% of a project</h3>
+        <p>For business and nonprofit asks only. Show your own share, or in-kind help, so the
+        reviewer sees the project can stand without them.</p>
+        <p class="quote">"Avoid asking for 100% of project costs and show that your program can
+        stand beyond one grant."</p>
+        <p class="src">Candid · 2 CFR 200.306 on cost sharing and in-kind contributions.</p>
+      </div>
+    </li>
+  </ol>
+
+  <span class="mono kicker">The numbers</span>
+  <h2>What one door <em>typically</em> gives</h2>
+  <p class="lede">Real caps and averages, each with its source. These are what let the tool say
+  "your gap is $2,400 — that is roughly four charity doors, or one rent-help application." They
+  age, so the tool needs a "last checked" date on every figure.</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Door</th><th>Cap or typical amount</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr class="tgroup"><td colspan="3">Rent, housing &amp; utilities</td></tr>
+      <tr><td>Emergency rental assistance (state programs)</td><td class="num">avg $4,723 per household · up to 12–18 months</td><td class="src"><a href="https://nlihc.org/resource/treasury-data-show-emergency-rental-assistance-spending-slow-accelerating">NLIHC / Treasury</a></td></tr>
+      <tr><td>LIHEAP heating help</td><td class="num">$200–$1,000 (PA) · avg $450–$666 · state-set</td><td class="src"><a href="https://liheapch.acf.gov/tables/benefits.htm">LIHEAP Clearinghouse</a>, <a href="https://neuac.org/wp-content/uploads/2025/03/New-York-State-Sheet-2025.pdf">NEUAC</a></td></tr>
+      <tr><td>Utility hardship funds</td><td class="num">$250–$600 once</td><td class="src"><a href="https://www.dollarenergy.org/program/firstenergy-pennsylvania-hardship-program/">Dollar Energy Fund</a>, <a href="https://puco.ohio.gov/utilities/gas/resources/heatshare">HeatShare Ohio</a></td></tr>
+      <tr><td>Salvation Army rent/utility help</td><td class="num">$200–$600 · once per 12 months</td><td class="src"><a href="https://www.salvationarmyusa.org/utility-rent-assistance/">Salvation Army</a></td></tr>
+      <tr><td>Catholic Charities one-time help</td><td class="num">up to $1,500 (Chicago call center) · once a year</td><td class="src"><a href="https://provost.nd.edu/news/emergency-financial-aid-from-call-centers-effectively-prevents-homelessness/">Notre Dame study</a>, <a href="https://ccda.net/find-help/emergency-assistance/rent/">CC Arlington</a></td></tr>
+      <tr><td>Church benevolence funds</td><td class="num">$500 per year typical · ~$1,500 lifetime</td><td class="src"><a href="https://www.vancopayments.com/egiving/blog/benevolence-fund-church">Vanco</a>, <a href="https://www.xpastor.org/strategy/ministry-policy/benevolence-financial-assistance-policy-procedure/">XPastor</a></td></tr>
+      <tr><td>Modest Needs self-sufficiency grant</td><td class="num">max $1,000 · avg about $180 · paid to the vendor</td><td class="src"><a href="http://www.modestneeds.org/explore/intro/">Modest Needs</a></td></tr>
+      <tr><td>TANF emergency (non-recurrent) help</td><td class="num">state-set · never beyond 4 months</td><td class="src"><a href="https://acf.gov/ofa/policy-guidance/examples-non-recurrent-short-term-benefits">ACF</a></td></tr>
+      <tr class="tgroup"><td colspan="3">Home repair &amp; disaster</td></tr>
+      <tr><td>USDA Section 504 repair (age 62+, rural)</td><td class="num">grant max $10,000 · loan max $40,000 at 1%</td><td class="src"><a href="https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants">USDA Rural Development</a></td></tr>
+      <tr><td>Weatherization Assistance Program</td><td class="num">avg over $7,400 per home</td><td class="src"><a href="https://www.energy.gov/scep/wap/average-cost-dwelling-unit">US Dept. of Energy</a></td></tr>
+      <tr><td>FEMA Individuals &amp; Households Program</td><td class="num">max $43,600 housing + $43,600 other needs · avg award $3,446 · $770 serious-needs payment</td><td class="src"><a href="https://www.federalregister.gov/documents/2024/10/24/2024-24700/notice-of-maximum-amount-of-assistance-under-the-individuals-and-households-program">Federal Register</a>, <a href="https://www.congress.gov/crs-product/R48310">CRS R48310</a></td></tr>
+      <tr><td>SBA disaster loans</td><td class="num">home $500,000 · personal property $100,000 · business $2M</td><td class="src"><a href="https://www.sba.gov/funding-programs/disaster-assistance/physical-damage-loans">SBA</a></td></tr>
+      <tr class="tgroup"><td colspan="3">School, food &amp; phone</td></tr>
+      <tr><td>Federal Pell Grant</td><td class="num">max $7,395 (2025-26 and 2026-27)</td><td class="src"><a href="https://fsapartners.ed.gov/knowledge-center/library/dear-colleague-letters/2026-01-30/2026-27-federal-pell-grant-maximum-and-minimum-award-amounts">Federal Student Aid</a></td></tr>
+      <tr><td>SNAP</td><td class="num">max $994/month, family of four · avg ~$188 per person</td><td class="src"><a href="https://www.cbpp.org/research/food-assistance/a-quick-guide-to-snap-eligibility-and-benefits">CBPP / USDA FNS</a></td></tr>
+      <tr><td>Lifeline phone/internet</td><td class="num">$9.25/month · $34.25 Tribal</td><td class="src"><a href="https://www.fcc.gov/lifeline-consumers">FCC</a></td></tr>
+      <tr class="tgroup"><td colspan="3">Business &amp; nonprofit</td></tr>
+      <tr><td>Hello Alice sponsor grants</td><td class="num">$10,000–$50,000 · mostly flat $20,000</td><td class="src"><a href="https://opengrants.io/hello-alice-grant-marketplace-not-one-grant/">OpenGrants</a></td></tr>
+      <tr><td>Amber Grant (women)</td><td class="num">$10,000 monthly · $50,000 yearly · $15 fee</td><td class="src"><a href="https://ambergrantsforwomen.com/get-an-amber-grant/">WomensNet</a></td></tr>
+      <tr><td>Comcast RISE · FedEx</td><td class="num">$5,000 + services · $10,000</td><td class="src"><a href="https://corporate.comcast.com/press/releases/comcast-commitment-american-small-business-growth-500-grant-packages-entrepreneurs">Comcast</a>, <a href="https://helloalice.com/grants/fedex/">FedEx via Hello Alice</a></td></tr>
+      <tr><td>Small nonprofits, largest single award</td><td class="num">median $10,000 · median total $24,000/yr</td><td class="src"><a href="https://grantstation.com/sites/default/files/imageLibrary/SoG/2025/2025%20State%20of%20Grantseeking%20Report.pdf">GrantStation 2025</a></td></tr>
+      <tr><td>Odds by funder type</td><td class="num">state/local 52% · foundations 30% · federal 25% · corporate 22%</td><td class="src"><a href="https://www.instrumentl.com/blog/grant-funder-success-rates">Instrumentl</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>Brand rule applies:</b> dollar figures are real and sourced or bracketed as
+  [AMOUNT]. Everything above is sourced; the vendor claim that "40% of failed applications have
+  budget problems" has no primary source and is deliberately left out. Roger White's AI
+  prospecting prompt already forbids invented amounts and records a program's "maximum grant
+  available" — the tool should ask the member for that number when they have it.</p>
+
+  <span class="mono kicker">The mistakes</span>
+  <h2>How first-timers get the <em>amount</em> wrong</h2>
+  <p class="lede">Documented, not assumed. Each one becomes a flag the tool raises before the
+  member sends anything.</p>
+
+  <div class="mistakes">
+    <div class="mistake"><b>A round number with nothing behind it</b>"$5,000" with no bill. <span class="fix">Fix: every line asks where the number came from.</span></div>
+    <div class="mistake"><b>Asking for the whole bill</b>Charities pay the gap. <span class="fix">Fix: subtract what is covered before showing the ask.</span></div>
+    <div class="mistake"><b>Asking for rent forever</b>One-time money for a monthly hole. <span class="fix">Fix: separate one-time from monthly; count the months.</span></div>
+    <div class="mistake"><b>Asking outside the ceiling</b>$25,000 from a $5,000 funder. <span class="fix">Fix: compare the ask to the door's cap and typical award.</span></div>
+    <div class="mistake"><b>Forgetting the extras</b>Deposit, fees, hook-ups, taxes. <span class="fix">Fix: a checklist of related costs that adds lines.</span></div>
+    <div class="mistake"><b>Stacking after a disaster</b>FEMA and insurance for the same loss. <span class="fix">Fix: ask what insurance and FEMA already paid, in that order.</span></div>
+    <div class="mistake"><b>A "miscellaneous" line</b>Reviewers reject it. <span class="fix">Fix: the tool won't accept a line without a name.</span></div>
+    <div class="mistake"><b>Asking too little from a once-a-year door</b>Then waiting twelve months. <span class="fix">Fix: show the frequency rule next to the amount.</span></div>
+  </div>
+
+  <span class="mono kicker">The proposal</span>
+  <h2>The quiz, page by <em>page</em></h2>
+  <p class="lede">Same two-round shape as "What Should I Ask For?": one sorting page, then only the
+  pages that apply. Every page carries the rule it comes from. Short, plain, no account.</p>
+
+  <div class="qpage s-yellow">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&diams;</span>Page 1 · What is the money for?</h3><span class="why chip y">Sorts the path</span></div>
+    <p class="ask-line">What do you need money for?</p>
+    <div class="pills">
+      <span class="pill on"><i></i>A bill or cost I already have</span>
+      <span class="pill"><i></i>Fixing my home after a storm, fire or flood</span>
+      <span class="pill"><i></i>Starting or growing a business</span>
+      <span class="pill"><i></i>A nonprofit or community project</span>
+      <span class="pill"><i></i>School</span>
+    </div>
+    <p class="because"><b>Why:</b> the two kinds of money need different worksheets. Disaster gets its own path because the order of who pays is set by law.</p>
+  </div>
+
+  <h3 class="serif" style="margin-top:26px">Path one · a cost I already have</h3>
+
+  <div class="qpage s-red">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&hearts;</span>Page 2 · What does it cost, exactly?</h3><span class="why chip">Rule 1</span></div>
+    <p class="ask-line">Add each cost. Say where the number comes from.</p>
+    <div class="rows">
+      <div class="row hd"><span class="hd">What</span><span class="hd">Amount</span><span class="hd">Where the number is from</span><span class="hd">How often</span></div>
+      <div class="row"><span>Back rent, June–August</span><span>$3,600</span><span>The notice from my landlord</span><span>One time</span></div>
+      <div class="row"><span>Electric bill</span><span>$412</span><span>The shut-off letter</span><span>One time</span></div>
+      <div class="row"><span class="ph">Car repair…</span><span class="ph">$</span><span class="ph">A written quote · A bill · My best guess</span><span class="ph">One time · Every month</span></div>
+    </div>
+    <p class="because"><b>Why:</b> "my best guess" is allowed, but the result marks it — a reviewer will ask for the paper. Members type their own words; nothing is pre-filled.</p>
+  </div>
+
+  <div class="qpage s-red">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&hearts;</span>Page 3 · Is this a one-time hole, or every month?</h3><span class="why chip">Rule 4</span></div>
+    <p class="ask-line">For anything that comes every month: how many months are you behind, and how many months ahead do you need help?</p>
+    <div class="pills"><span class="pill"><i></i>Behind: 3 months</span><span class="pill on"><i></i>Ahead: 2 months</span></div>
+    <p class="because"><b>Why:</b> emergency money is one-time. Rent programs count months (up to 12–18); TANF help stops at four. The tool turns a monthly hole into a number of months, so the ask is finite.</p>
+  </div>
+
+  <div class="qpage s-green">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&clubs;</span>Page 4 · What is already covering part of it?</h3><span class="why chip">Rule 3</span></div>
+    <p class="ask-line">Has anyone already paid, or promised to pay, part of this?</p>
+    <div class="pills sq">
+      <span class="pill sq on"><i></i>Money I can put in myself · $300</span>
+      <span class="pill sq"><i></i>Insurance</span>
+      <span class="pill sq"><i></i>Another program already approved</span>
+      <span class="pill sq"><i></i>Family or friends</span>
+      <span class="pill sq"><i></i>A payment plan the company offered</span>
+      <span class="pill sq"><i></i>Nothing yet</span>
+    </div>
+    <p class="because"><b>Why:</b> helpers want to be the last money in. Showing your own $300 and a $500 church gift makes a $2,000 ask credible. On the disaster path this page asks about insurance and FEMA, in that order.</p>
+  </div>
+
+  <div class="qpage s-blue">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&spades;</span>Page 5 · The costs people forget</h3><span class="why chip">Rule 7</span></div>
+    <p class="ask-line">Do any of these come with it?</p>
+    <div class="pills">
+      <span class="pill sq"><i></i>Security deposit</span><span class="pill sq"><i></i>First or last month</span><span class="pill sq"><i></i>Late fees or court fees</span>
+      <span class="pill sq"><i></i>Reconnection or hook-up fee</span><span class="pill sq"><i></i>Moving costs</span><span class="pill sq"><i></i>Application fees</span><span class="pill sq"><i></i>Something else…</span>
+    </div>
+    <p class="because"><b>Why:</b> a rent program will pay a deposit — if it is on the list. Each check adds a line the member fills in.</p>
+  </div>
+
+  <div class="qpage s-blue">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&spades;</span>Page 6 · Have you asked here before?</h3><span class="why chip">Rule 6</span></div>
+    <p class="ask-line">Do you already know where you will ask? If so, have they helped you before, and do you know their limit?</p>
+    <div class="pills"><span class="pill"><i></i>I don't know yet</span><span class="pill on"><i></i>Yes — first time asking them</span><span class="pill"><i></i>Yes — they helped me before</span></div>
+    <div class="rows"><div class="row"><span class="ph">Their most they give (if you know it)…</span><span class="ph">$</span><span class="ph">From their website · From a call · From my AI prospecting list</span><span class="ph">Once a year?</span></div></div>
+    <p class="because"><b>Why:</b> most doors open once per 12 months and give less the first time. If the member has a cap from the Call Sheet Classes prompt, the ask is clamped to it.</p>
+  </div>
+
+  <h3 class="serif" style="margin-top:26px">Path two · a business, nonprofit or project</h3>
+
+  <div class="qpage s-red">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&hearts;</span>Page 2 · What will the money buy?</h3><span class="why chip">Rules 1 &amp; 2</span></div>
+    <p class="ask-line">One line per thing. A reason for every line.</p>
+    <div class="rows">
+      <div class="row hd"><span class="hd">Line</span><span class="hd">Amount</span><span class="hd">Where the number is from</span><span class="hd">Kind</span></div>
+      <div class="row"><span>Commercial fridge</span><span>$2,150</span><span>Quote from the supplier</span><span>One time</span></div>
+      <div class="row"><span>Food-handler licence</span><span>$185</span><span>County website</span><span>One time</span></div>
+      <div class="row"><span>Booth rent, 6 months</span><span>$1,800</span><span>Market's price list</span><span>Every month</span></div>
+    </div>
+    <p class="because"><b>Why:</b> categories mirror what reviewers expect (equipment, supplies, space, licences, marketing, wages, working capital). The tool refuses a line with no name and marks any amount tagged "my best guess".</p>
+  </div>
+
+  <div class="qpage s-green">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&clubs;</span>Page 3 · What can you cover yourself?</h3><span class="why chip">Rule 8</span></div>
+    <p class="ask-line">Of the total, how much can you put in — cash, savings, your own hours, borrowed equipment?</p>
+    <div class="pills"><span class="pill on"><i></i>Cash: $500</span><span class="pill"><i></i>My own hours (in-kind)</span><span class="pill"><i></i>Equipment I already own</span><span class="pill"><i></i>Nothing</span></div>
+    <p class="because"><b>Why:</b> never ask for 100%. Candid's guidance for a first-time ask from a new funder is 40–60% of the project; the tool shows where the member's ask sits.</p>
+  </div>
+
+  <div class="qpage s-blue">
+    <div class="qpage-top"><h3 class="serif"><span class="s">&spades;</span>Page 4 · The funder's habit</h3><span class="why chip">Rules 5 &amp; 6</span></div>
+    <p class="ask-line">Do you know what this funder usually gives?</p>
+    <div class="pills"><span class="pill"><i></i>I don't know yet</span><span class="pill on"><i></i>Their most: $10,000</span><span class="pill"><i></i>Their usual: $</span><span class="pill"><i></i>First time applying to them</span></div>
+    <p class="because"><b>Why:</b> the ask is compared to the ceiling and the habit. "I don't know yet" routes the member to find it — Roger White's prompt returns "maximum grant available" for every result.</p>
+  </div>
+
+  <h3 class="serif" style="margin-top:26px">The result · one number, with its reasons</h3>
+
+  <div class="result">
+    <span class="mono">Your number</span>
+    <div class="big serif">$3,712 <small>to ask for</small></div>
+    <div class="stat-row">
+      <div class="stat"><b>$4,512</b><span>Real cost, 5 lines</span></div>
+      <div class="stat"><b>− $800</b><span>Already covered</span></div>
+      <div class="stat"><b>2 of 5</b><span>Lines from a bill or quote</span></div>
+    </div>
+    <div class="say">
+      <span class="mono">Say it in one sentence</span>
+      <p class="said">"My total shortfall is $3,712 for back rent, my electric bill and a deposit. I have $800 covered. I have the notice and the shut-off letter to show you. What is the most you can help with, and who else should I call?"</p>
+    </div>
+    <div class="flag"><span class="s">&hearts;</span><span><b>Bigger than one door.</b> A single charity typically gives $200–$600 and rent help averages about $4,700 — plan on one rent-help application plus two or three smaller doors, and don't ask two doors for the same bill.</span></div>
+    <div class="flag"><span class="s">&hearts;</span><span><b>Three lines are guesses.</b> Get the paper before you apply: the quote, the bill, the letter.</span></div>
+    <p class="because" style="margin-top:10px">Then: a printable budget table for the application, a copy button, and one link per line into the community — the rent guide, the Questions Channel, the Call Sheet Classes. Never a phone directory, never the AI Grant Researcher.</p>
+  </div>
+
+  <span class="mono kicker">Before building</span>
+  <h2>Four decisions that are <em>yours</em></h2>
+  <p class="lede">Each one changes the build materially, so none is assumed.</p>
+
+  <div class="oq">
+    <h3 class="serif">1 · One path or both?</h3>
+    <p>Path one (a cost I already have) serves most of the 22,000 members. Path two (business and
+    nonprofit) serves Lesko Pro and is a bigger build with more rules.</p>
+    <p class="rec"><b>Recommendation:</b> both, with path one first and complete; path two ships in the same tool because the sorting page needs it.</p>
+  </div>
+  <div class="oq">
+    <h3 class="serif">2 · Show the real program numbers inside the tool?</h3>
+    <p>The table above lets the result say "that is roughly four doors." It is powerful and
+    sourced — but the figures age, and every one needs a "last checked" date and someone to
+    refresh them each year.</p>
+    <p class="rec"><b>Recommendation:</b> yes, as typical ranges with the date and source shown, never as a promise — the brand rule on amounts.</p>
+  </div>
+  <div class="oq">
+    <h3 class="serif">3 · Members-only, or a public taste?</h3>
+    <p>The space "Calculate My Funding Amount" already exists in the Lesko Toolbox (its page is
+    switched off for now). The App Lab roadmap listed this as a free tool.</p>
+    <p class="rec"><b>Recommendation:</b> members-only inside the Toolbox first, same as the quiz; a public version is a later decision.</p>
+  </div>
+  <div class="oq">
+    <h3 class="serif">4 · The name</h3>
+    <p>The space is titled "Calculate My Funding Amount". Next to "What Should I Ask For?" the
+    natural sister name is "How Much Should I Ask For?" — the question members actually type.</p>
+    <p class="rec"><b>Recommendation:</b> "How Much Should I Ask For?" in the tool; keep or rename the space to match.</p>
+  </div>
+
+  <p class="note"><b>Assumed unless you say otherwise:</b> same stack and pattern as the quiz
+  (one HTML file, vanilla JS, on-device storage, no sign-up, no SSN or bank data, iframe embed in
+  the Mighty space); state asked once, optionally, because heating help and rent help vary by
+  state; "the quiz" wording; results link to guides and the Questions Channel only.</p>
+
+  <section class="sources">
+    <span class="mono">Sources</span>
+    <ul>
+      <li><a href="https://candid.org/blogs/how-much-money-to-ask-for-grant-proposal-tips-for-success/">Candid — How much money to ask for in a grant proposal</a></li>
+      <li><a href="https://www.instrumentl.com/blog/how-much-to-ask-for-in-a-grant">Instrumentl — How much to ask for in a grant</a></li>
+      <li><a href="https://www.grantwatch.com/grantnews/how-much-funding-should-you-request-in-a-grant-application/">GrantWatch — How much funding should you request</a></li>
+      <li><a href="https://www.tgci.com/blog/2019/12/what-size-grant-request">The Grantsmanship Center — What size grant request?</a></li>
+      <li><a href="https://www.ncoa.org/article/tips-for-developing-a-compelling-budget-justification-presentation-for-a-grant-proposal/">NCOA — Budget justification tips</a></li>
+      <li><a href="https://www.grantboost.io/blog/grant-proposal-budget/">Grantboost — Grant proposal budgets</a></li>
+      <li><a href="https://grantsights.com/blog/how-to-write-a-grant-budget-justification">Grantsights — Budget justification</a></li>
+      <li><a href="https://monkeypod.io/articles/405-grant_writing_tips_for_nonprofits:_grant_budget_game_plan">MonkeyPod — Grant budget game plan</a></li>
+      <li><a href="https://www.ojp.gov/tfsc/matching_or_cost_sharing_requirements_guide_sheet_508">OJP — Matching and cost-sharing guide sheet (2 CFR 200.306)</a></li>
+      <li><a href="https://nationalreliefprogram.org/salvation-army-rental-assistance/">Salvation Army rental assistance practice</a></li>
+      <li><a href="https://www.salvationarmyusa.org/utility-rent-assistance/">Salvation Army — Utility and rent assistance</a></li>
+      <li><a href="https://www.fema.gov/fact-sheet/understanding-duplication-benefits-and-your-fema-individual-assistance">FEMA — Duplication of benefits</a></li>
+      <li><a href="https://www.fema.gov/fact-sheet/fema-rental-assistance-available">FEMA — Rental assistance fact sheet</a></li>
+      <li><a href="https://www.federalregister.gov/documents/2024/10/24/2024-24700/notice-of-maximum-amount-of-assistance-under-the-individuals-and-households-program">Federal Register — IHP maximum amounts</a></li>
+      <li><a href="https://www.congress.gov/crs-product/R48310">CRS R48310 — FEMA Individuals and Households Program</a></li>
+      <li><a href="https://acf.gov/ofa/policy-guidance/examples-non-recurrent-short-term-benefits">ACF — TANF non-recurrent short-term benefits</a></li>
+      <li><a href="https://nlihc.org/resource/treasury-data-show-emergency-rental-assistance-spending-slow-accelerating">NLIHC — Emergency rental assistance data</a></li>
+      <li><a href="https://liheapch.acf.gov/tables/benefits.htm">LIHEAP Clearinghouse — Benefit tables</a></li>
+      <li><a href="https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants">USDA — Section 504 repair loans and grants</a></li>
+      <li><a href="https://www.energy.gov/scep/wap/average-cost-dwelling-unit">DOE — Weatherization average cost per unit</a></li>
+      <li><a href="https://www.sba.gov/funding-programs/disaster-assistance/physical-damage-loans">SBA — Disaster physical damage loans</a></li>
+      <li><a href="https://fsapartners.ed.gov/knowledge-center/library/dear-colleague-letters/2026-01-30/2026-27-federal-pell-grant-maximum-and-minimum-award-amounts">Federal Student Aid — 2026-27 Pell maximum</a></li>
+      <li><a href="https://www.cbpp.org/research/food-assistance/a-quick-guide-to-snap-eligibility-and-benefits">CBPP — SNAP eligibility and benefits</a></li>
+      <li><a href="https://www.fcc.gov/lifeline-consumers">FCC — Lifeline</a></li>
+      <li><a href="http://www.modestneeds.org/explore/intro/">Modest Needs — Self-sufficiency grants</a></li>
+      <li><a href="https://provost.nd.edu/news/emergency-financial-aid-from-call-centers-effectively-prevents-homelessness/">Notre Dame — Emergency financial aid study (Chicago HPCC)</a></li>
+      <li><a href="https://www.vancopayments.com/egiving/blog/benevolence-fund-church">Vanco — Church benevolence funds</a></li>
+      <li><a href="https://help.helloskip.com/en/articles/8899656-how-do-i-apply-for-skip-s-10k-grants">Skip — $10K grants help article</a></li>
+      <li><a href="https://helloskip.com/blog/what-makes-a-good-grant-application-answer">Skip — What makes a good application answer</a></li>
+      <li><a href="https://opengrants.io/hello-alice-grant-marketplace-not-one-grant/">OpenGrants — Hello Alice marketplace explained</a></li>
+      <li><a href="https://helloalice.com/grant-tips-marsha-stephanson/">Hello Alice — Grant tips and scoring</a></li>
+      <li><a href="https://ambergrantsforwomen.com/get-an-amber-grant/">WomensNet — Amber Grant</a></li>
+      <li><a href="https://www.grants.gov/learn-grants/grant-programs">Grants.gov — Grant programs (not for individuals)</a></li>
+      <li><a href="https://grantstation.com/sites/default/files/imageLibrary/SoG/2025/2025%20State%20of%20Grantseeking%20Report.pdf">GrantStation — 2025 State of Grantseeking</a></li>
+      <li><a href="https://www.instrumentl.com/blog/grant-funder-success-rates">Instrumentl — Funder success rates</a></li>
+      <li><a href="https://www.ncoa.org/article/what-is-benefitscheckup-and-how-does-it-help-people-find-benefits-assistance/">NCOA — BenefitsCheckUp</a></li>
+      <li><a href="https://www.findhelp.org/mrelief--chicago-il--food-stamp-assistance/5286954907992064">mRelief SNAP screener</a></li>
+      <li><a href="https://lesko-help-2.mn.co/posts/call-sheet-classes-ai-grant-prospecting-prompt">Lesko Help — AI Grant Prospecting Prompt (Roger White)</a></li>
+      <li><a href="https://lesko-help-2.mn.co/spaces/16590945">Lesko Help — Grant Basics, Steps 0–9</a></li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <span class="mono">Lesko Help · app lab · research brief · one problem = one ask</span>
+    <div class="qmark" style="width:26px;height:26px;font-size:14px;">?</div>
+  </footer>
+
+</div>
