@@ -1,0 +1,806 @@
+[
+ {
+  "id": "housing",
+  "title": "Housing",
+  "suit": "♠",
+  "c": "blue",
+  "guides": [
+   {
+    "id": "housing_0",
+    "title": "Rent & Eviction Help",
+    "subs": [
+     "rent",
+     "shelter"
+    ]
+   },
+   {
+    "id": "housing_1",
+    "title": "Help With Buying a Home",
+    "subs": [
+     "buyhome"
+    ]
+   },
+   {
+    "id": "housing_2",
+    "title": "Home Repair & Energy Upgrade",
+    "subs": [
+     "repairs"
+    ]
+   },
+   {
+    "id": "housing_3",
+    "title": "Foreclosure Help & Home for $1",
+    "subs": [
+     "mortgage"
+    ]
+   },
+   {
+    "id": "housing_4",
+    "title": "Utility Assistance, Energy & Water",
+    "subs": [
+     "utilities"
+    ]
+   },
+   {
+    "id": "housing_5",
+    "title": "Get a Free HUD Counselor Appointment",
+    "subs": [
+     "mortgage"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cars",
+  "title": "Cars & transportation",
+  "suit": "♥",
+  "c": "red",
+  "guides": [
+   {
+    "id": "cars_0",
+    "title": "Car Repair & Vehicle Help",
+    "subs": [
+     "car"
+    ]
+   },
+   {
+    "id": "cars_1",
+    "title": "Free Cars & Car Repairs",
+    "subs": [
+     "getcar",
+     "car"
+    ]
+   },
+   {
+    "id": "cars_2",
+    "title": "Free Cars & Transportation Help",
+    "subs": [
+     "getcar",
+     "rides"
+    ]
+   },
+   {
+    "id": "cars_3",
+    "title": "How to Apply for a Modest Needs Grant & Other Options",
+    "subs": [
+     "car",
+     "workgear"
+    ]
+   },
+   {
+    "id": "cars_4",
+    "title": "Government Auctions & Surplus",
+    "subs": []
+   },
+   {
+    "id": "cars_5",
+    "title": "Foreclosures & Surpluses Series",
+    "subs": []
+   }
+  ]
+ },
+ {
+  "id": "bills",
+  "title": "Debt & bills",
+  "suit": "♦",
+  "c": "yellow",
+  "guides": [
+   {
+    "id": "bills_0",
+    "title": "Debt Help & Credit Counseling",
+    "subs": [
+     "debt"
+    ]
+   },
+   {
+    "id": "bills_1",
+    "title": "How to Get Companies to Forgive Debt & Bills",
+    "subs": [
+     "forgive"
+    ]
+   },
+   {
+    "id": "bills_2",
+    "title": "Learn How To Get Bill Collectors To Stop calling You And PAY YOU $1,000",
+    "subs": [
+     "collectors"
+    ]
+   },
+   {
+    "id": "bills_3",
+    "title": "Learn How to Get a Free Financial Counselor Appointment",
+    "subs": [
+     "debt"
+    ]
+   },
+   {
+    "id": "bills_4",
+    "title": "Phone, Internet & Devices Help",
+    "subs": [
+     "phone"
+    ]
+   },
+   {
+    "id": "bills_5",
+    "title": "Food & Grocery Help",
+    "subs": [
+     "income"
+    ]
+   },
+   {
+    "id": "bills_6",
+    "title": "Student Loan Help",
+    "subs": [
+     "loans"
+    ]
+   },
+   {
+    "id": "bills_7",
+    "title": "Contact these 10 Key Organizations First",
+    "subs": [
+     "income"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "health",
+  "title": "Health care",
+  "suit": "♣",
+  "c": "green",
+  "guides": [
+   {
+    "id": "health_0",
+    "title": "Find Free and Low-Cost Health Services",
+    "subs": [
+     "medical"
+    ]
+   },
+   {
+    "id": "health_1",
+    "title": "24/7 Crisis Help",
+    "subs": [
+     "mental"
+    ]
+   },
+   {
+    "id": "health_2",
+    "title": "Get Help With Paying Your Medical Bills",
+    "subs": [
+     "medbills"
+    ]
+   },
+   {
+    "id": "health_3",
+    "title": "Stress & Mental Health",
+    "subs": [
+     "mental"
+    ]
+   },
+   {
+    "id": "health_4",
+    "title": "Learn How to Eliminate Your Medical Bills & Debt",
+    "subs": [
+     "meddebt",
+     "forgive"
+    ]
+   },
+   {
+    "id": "health_5",
+    "title": "Addiction Recovery",
+    "subs": [
+     "addiction"
+    ]
+   },
+   {
+    "id": "health_6",
+    "title": "Quit Smoking & Vaping Help",
+    "subs": [
+     "medical"
+    ]
+   },
+   {
+    "id": "health_7",
+    "title": "Brain & Neuro Support",
+    "subs": [
+     "chronic"
+    ]
+   },
+   {
+    "id": "health_8",
+    "title": "5 Ways to Find Free & Low-Cost Dental Services",
+    "subs": [
+     "dental"
+    ]
+   },
+   {
+    "id": "health_9",
+    "title": "Healthy Food on a Budget",
+    "subs": [
+     "income"
+    ]
+   },
+   {
+    "id": "health_10",
+    "title": "Free & Low-Cost Dental Care",
+    "subs": [
+     "dental"
+    ]
+   },
+   {
+    "id": "health_11",
+    "title": "Free Clinics & Health Insurance",
+    "subs": [
+     "medical"
+    ]
+   },
+   {
+    "id": "health_12",
+    "title": "Prescription Drug Help",
+    "subs": [
+     "rx"
+    ]
+   },
+   {
+    "id": "health_13",
+    "title": "Vision & Hearing Care",
+    "subs": [
+     "vision"
+    ]
+   },
+   {
+    "id": "health_14",
+    "title": "Medicare & Benefits",
+    "subs": [
+     "medicare"
+    ]
+   },
+   {
+    "id": "health_15",
+    "title": "Medical Bills Assistance",
+    "subs": [
+     "medbills"
+    ]
+   },
+   {
+    "id": "health_16",
+    "title": "Medical Debt Relief",
+    "subs": [
+     "meddebt"
+    ]
+   },
+   {
+    "id": "health_17",
+    "title": "Serious & Chronic Illness",
+    "subs": [
+     "chronic"
+    ]
+   },
+   {
+    "id": "health_18",
+    "title": "Help for Caregivers",
+    "subs": [
+     "caregiver"
+    ]
+   },
+   {
+    "id": "health_19",
+    "title": "Pet & Veterinary Help",
+    "subs": [
+     "pets"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "legal",
+  "title": "Legal help & safety",
+  "suit": "♠",
+  "c": "blue",
+  "guides": [
+   {
+    "id": "legal_0",
+    "title": "Free Legal Help & Legal Aid",
+    "subs": [
+     "legal"
+    ]
+   },
+   {
+    "id": "legal_1",
+    "title": "Help With Specifics Legal Needs",
+    "subs": [
+     "legal",
+     "immigration",
+     "expunge",
+     "iddocs"
+    ]
+   },
+   {
+    "id": "legal_2",
+    "title": "Know Your Consumer Rights",
+    "subs": [
+     "consumer"
+    ]
+   },
+   {
+    "id": "legal_3",
+    "title": "Use the System | Free Legal Power",
+    "subs": [
+     "legal"
+    ]
+   },
+   {
+    "id": "legal_4",
+    "title": "Domestic Violence & Safety",
+    "subs": [
+     "dv"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "taxes",
+  "title": "Taxes",
+  "suit": "♣",
+  "c": "green",
+  "guides": [
+   {
+    "id": "taxes_0",
+    "title": "Start With the IRS",
+    "subs": [
+     "taxes"
+    ]
+   },
+   {
+    "id": "taxes_1",
+    "title": "Free Tax Filing & Preperation",
+    "subs": [
+     "taxes"
+    ]
+   },
+   {
+    "id": "taxes_2",
+    "title": "Tax Dept & IRS Relief",
+    "subs": [
+     "taxdebt"
+    ]
+   },
+   {
+    "id": "taxes_3",
+    "title": "Free Legal Help to Fight IRS",
+    "subs": [
+     "taxdebt"
+    ]
+   },
+   {
+    "id": "taxes_4",
+    "title": "Tax Credits You Might Be Missing",
+    "subs": [
+     "taxcredits"
+    ]
+   },
+   {
+    "id": "taxes_5",
+    "title": "Property & State Tax Relief",
+    "subs": [
+     "propertytax"
+    ]
+   },
+   {
+    "id": "taxes_6",
+    "title": "Taxes Support Unit — Your IRS Direct-Line Directory",
+    "subs": [
+     "taxes"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "school",
+  "title": "School & education",
+  "suit": "♦",
+  "c": "yellow",
+  "guides": [
+   {
+    "id": "school_0",
+    "title": "Financial Aid Basics, Federal & State Resources",
+    "subs": [
+     "college"
+    ]
+   },
+   {
+    "id": "school_1",
+    "title": "Scholarships & Grants Guide",
+    "subs": [
+     "scholarships"
+    ]
+   },
+   {
+    "id": "school_2",
+    "title": "Free & Low-Cost Alternative Training",
+    "subs": [
+     "training",
+     "ged"
+    ]
+   },
+   {
+    "id": "school_3",
+    "title": "Child Care & Homeschooling Guide",
+    "subs": [
+     "homeschool",
+     "childcare"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "business",
+  "title": "My business",
+  "suit": "♠",
+  "c": "blue",
+  "guides": [
+   {
+    "id": "business_0",
+    "title": "Your First Steps to Start a Business Legally",
+    "subs": [
+     "business"
+    ]
+   },
+   {
+    "id": "business_1",
+    "title": "How to Get Started With a Free Business Mentor",
+    "subs": [
+     "business"
+    ]
+   },
+   {
+    "id": "business_2",
+    "title": "Contact These 10 Key Organizations",
+    "subs": [
+     "business"
+    ]
+   },
+   {
+    "id": "business_3",
+    "title": "General Business Grants & Funding Opportunities",
+    "subs": [
+     "bizgrants"
+    ]
+   },
+   {
+    "id": "business_4",
+    "title": "Federal & Local Support for Small Business Owners",
+    "subs": [
+     "business",
+     "bizloans"
+    ]
+   },
+   {
+    "id": "business_5",
+    "title": "Federal Government Resources for Small Businesses",
+    "subs": [
+     "bizloans",
+     "business"
+    ]
+   },
+   {
+    "id": "business_6",
+    "title": "Alternative Loans & Funding Options",
+    "subs": [
+     "bizloans"
+    ]
+   },
+   {
+    "id": "business_7",
+    "title": "Accelerators, Incubators & Angel Investors",
+    "subs": [
+     "crowdfund",
+     "bizloans"
+    ]
+   },
+   {
+    "id": "business_8",
+    "title": "Raise Money With Crowdfunding",
+    "subs": [
+     "crowdfund"
+    ]
+   },
+   {
+    "id": "business_9",
+    "title": "Governement Contracting for Small Businesses",
+    "subs": [
+     "govcontract"
+    ]
+   },
+   {
+    "id": "business_10",
+    "title": "Grants & Support for Minority Groups",
+    "subs": [
+     "minoritybiz"
+    ]
+   },
+   {
+    "id": "business_11",
+    "title": "Grants & Resources for Female Entrepreneurs",
+    "subs": [
+     "womenbiz"
+    ]
+   },
+   {
+    "id": "business_12",
+    "title": "Grants & Resources for Farmers & Ranchers",
+    "subs": [
+     "farmbiz"
+    ]
+   },
+   {
+    "id": "business_13",
+    "title": "Industry-Specific Resources",
+    "subs": [
+     "bizgrants"
+    ]
+   },
+   {
+    "id": "business_14",
+    "title": "Gig Economy Learning Resources",
+    "subs": [
+     "bizliving"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "nonprofit",
+  "title": "A nonprofit",
+  "suit": "♣",
+  "c": "green",
+  "guides": [
+   {
+    "id": "nonprofit_0",
+    "title": "How to Get Started With a Nonprofit Today",
+    "subs": [
+     "nonprofit"
+    ]
+   },
+   {
+    "id": "nonprofit_1",
+    "title": "How to Register Your Nonprofit in 20 Minutes for Only $250",
+    "subs": [
+     "nonprofit"
+    ]
+   },
+   {
+    "id": "nonprofit_2",
+    "title": "The 10 Best Grants to Start a Nonprofit",
+    "subs": [
+     "npgrants"
+    ]
+   },
+   {
+    "id": "nonprofit_3",
+    "title": "Download Your Ultimate Checklist to Start a Nonprofit Here",
+    "subs": [
+     "nonprofit"
+    ]
+   },
+   {
+    "id": "nonprofit_4",
+    "title": "Foundations & Grants: Mission Driven Support",
+    "subs": [
+     "npgrants"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "vets",
+  "title": "Veterans",
+  "suit": "♠",
+  "c": "blue",
+  "guides": [
+   {
+    "id": "vets_0",
+    "title": "18 Things Every Veteran Should Know",
+    "subs": [
+     "vetcheck",
+     "vethousing"
+    ]
+   },
+   {
+    "id": "vets_1",
+    "title": "Business Support & Mentorship for Veterans",
+    "subs": [
+     "vetwork"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "disability",
+  "title": "Disabilities",
+  "suit": "♣",
+  "c": "green",
+  "guides": [
+   {
+    "id": "disability_0",
+    "title": "Seniors & Disabilities | Your Free Starting Points",
+    "subs": [
+     "disability",
+     "disequip"
+    ]
+   },
+   {
+    "id": "disability_1",
+    "title": "Explore the Core Federal Programs (by State)",
+    "subs": [
+     "disability",
+     "diswork"
+    ]
+   },
+   {
+    "id": "disability_2",
+    "title": "Special Education & IEP Help",
+    "subs": [
+     "iep"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "seniors",
+  "title": "Seniors (60+)",
+  "suit": "♦",
+  "c": "yellow",
+  "guides": [
+   {
+    "id": "seniors_0",
+    "title": "18 Things Every Senior Should Know",
+    "subs": [
+     "seniorcheck",
+     "seniorhome"
+    ]
+   },
+   {
+    "id": "seniors_1",
+    "title": "Seniors & Disabilities | Your Free Starting Points",
+    "subs": [
+     "seniorcheck",
+     "seniorrepair"
+    ]
+   },
+   {
+    "id": "seniors_2",
+    "title": "Explore the Core Federal Programs (by State)",
+    "subs": [
+     "seniorcheck",
+     "kinship"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "family",
+  "title": "Children & family",
+  "suit": "♥",
+  "c": "red",
+  "guides": [
+   {
+    "id": "family_0",
+    "title": "Help for Families & Children",
+    "subs": [
+     "famgen",
+     "schoolkids"
+    ]
+   },
+   {
+    "id": "family_1",
+    "title": "Childcare Assistance",
+    "subs": [
+     "childcare"
+    ]
+   },
+   {
+    "id": "family_2",
+    "title": "Pregnancy & Newborn Baby",
+    "subs": [
+     "baby"
+    ]
+   },
+   {
+    "id": "family_3",
+    "title": "Foster & Adoption Help",
+    "subs": [
+     "fosteradopt"
+    ]
+   },
+   {
+    "id": "family_4",
+    "title": "Special Education & IEP Help",
+    "subs": [
+     "iep"
+    ]
+   },
+   {
+    "id": "family_5",
+    "title": "Domestic Violence & Safety",
+    "subs": [
+     "dv"
+    ]
+   },
+   {
+    "id": "family_6",
+    "title": "Child Care & Homeschooling Guide",
+    "subs": [
+     "childcare",
+     "homeschool"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "work",
+  "title": "Work & career",
+  "suit": "♦",
+  "c": "yellow",
+  "guides": [
+   {
+    "id": "work_0",
+    "title": "How to Get Started With an Expert Career Advisor",
+    "subs": [
+     "job"
+    ]
+   },
+   {
+    "id": "work_1",
+    "title": "Contact These 10 Organizations to Get Career Help First",
+    "subs": [
+     "job"
+    ]
+   },
+   {
+    "id": "work_2",
+    "title": "Job Centers, Apprenticeships & Career Resources",
+    "subs": [
+     "job",
+     "training",
+     "workgear"
+    ]
+   },
+   {
+    "id": "work_3",
+    "title": "Free & Low-Cost Alternative Training",
+    "subs": [
+     "training"
+    ]
+   },
+   {
+    "id": "work_4",
+    "title": "Gig Economy Learning Resources",
+    "subs": [
+     "bizliving",
+     "uihelp"
+    ]
+   }
+  ]
+ }
+]
