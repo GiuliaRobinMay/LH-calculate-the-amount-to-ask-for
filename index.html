@@ -420,7 +420,8 @@ function amountHtml(r) {
 }
 function stateLine(r) {
   if (!r.state_note) return "";
-  return stateName() ? `<b>${esc(stateName())}:</b> ${esc(r.state_note)}` : `<b>Set by your state.</b> ${esc(r.state_note)}`;
+  const mine = S.state && (new RegExp("\\b" + S.state + "\\b").test(r.state_note) || r.state_note.includes(stateName()));
+  return mine ? `<b>${esc(stateName())} is listed:</b> ${esc(r.state_note)}` : `<b>Varies:</b> ${esc(r.state_note)}`;
 }
 function renderSheet() {
   const el = $("#sheet-body");
